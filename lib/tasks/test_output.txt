@@ -1,0 +1,38 @@
+[src/ActiveTrackingIdentifier.cpp:56]: (style) Unused variable: extractedO
+[src/FeatureTracking.cpp:73]: (style) Variable 'count' is assigned a value that is never used.
+[src/FeatureTracking.cpp:75]: (style) Unused variable: pointsIn
+[src/FeatureTracking.cpp:288]: (style) Unused variable: a
+[include/FeatureTracking.hpp:128]: (style) Unused private function: 'FeatureTracker::fastFeatureTracker'
+[src/PassiveTrackedObject.cpp:22]: (performance) Variable 'contour' is assigned in constructor body. Consider performing initialization in initialization list.
+[src/PassiveTrackedObject.cpp:26]: (performance) Variable 'contour' is assigned in constructor body. Consider performing initialization in initialization list.
+[src/TrackedObject.cpp:22]: (performance) Variable 'contour' is assigned in constructor body. Consider performing initialization in initialization list.
+[src/TrackedObject.cpp:26]: (performance) Variable 'contour' is assigned in constructor body. Consider performing initialization in initialization list.
+[src/Utility.cpp:67]: (error) Buffer is accessed out of bounds: stringAsInt
+[src/VideoDrawing.cpp:83]: (style) Unused variable: a
+[src/VideoDrawing.cpp:135]: (style) Unused variable: a
+[src/HistoryBuffer.cpp:8]: (style) The function 'addNew' is never used.
+[src/FeatureTracking.cpp:235]: (style) The function 'calcAverageVector' is never used.
+[src/Utility.cpp:226]: (style) The function 'createArrows' is never used.
+[src/GeoUtility.cpp:285]: (style) The function 'determineOptimalTriangle' is never used.
+[src/FeatureTracking.cpp:280]: (style) The function 'drawCenterG' is never used.
+[src/FeatureTracking.cpp:248]: (style) The function 'drawTrackedContours' is never used.
+[src/PassiveTracking.cpp:115]: (style) The function 'dumpSlopeHistory' is never used.
+[src/Utility.cpp:159]: (style) The function 'extractObjects' is never used.
+[src/FeatureTracking.cpp:199]: (style) The function 'fastFeatureTracker' is never used.
+[src/HistoryBuffer.cpp:24]: (style) The function 'findInstance' is never used.
+[src/PassiveTrackedObject.cpp:132]: (style) The function 'getArea' is never used.
+[src/HistoryBuffer.cpp:16]: (style) The function 'getBuffer' is never used.
+[src/HistoryBuffer.cpp:20]: (style) The function 'getBufferInstance' is never used.
+[src/VideoCaptureManager.cpp:48]: (style) The function 'getCapture' is never used.
+[src/VideoCaptureManager.cpp:33]: (style) The function 'getFrame' is never used.
+[src/ActiveTrackingIdentifier.cpp:85]: (style) The function 'getPrevGBS' is never used.
+[src/FeatureTracking.cpp:222]: (style) The function 'handleTrackedPoints' is never used.
+[src/PassiveTracking.cpp:170]: (style) The function 'increaseOffset' is never used.
+[src/ActiveTrackingIdentifier.cpp:46]: (style) The function 'process' is never used.
+[src/RedisInterface.cpp:29]: (style) The function 'saveEvent' is never used.
+[src/PassiveTrackedObject.cpp:69]: (style) The function 'setCOG' is never used.
+[src/PassiveTrackedObject.cpp:40]: (style) The function 'setContour' is never used.
+[src/FeatureTracking.cpp:244]: (style) The function 'setContours' is never used.
+[src/FeatureTracking.cpp:239]: (style) The function 'setInitPoints' is never used.
+[src/PassiveTrackedObject.cpp:113]: (style) The function 'setPrevCOG' is never used.
+(information) Cppcheck cannot find all the include files (use --check-config for details)

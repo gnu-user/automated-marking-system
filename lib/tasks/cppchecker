@@ -1,0 +1,9 @@
+# Use cppcheck to get information about to write to test_output.txt
+cppcheck --enable=all -I include/ --force src/ 2> test_output.txt
+
+# Use cppcheck to get information from single souce file
+cppcheck --enable=all --force ~/source_code/capstone/src/PassiveTrackedObject.cpp
+
+http://cppcheck.sourceforge.net/
+
+g++ -Wall -o "Example" example.cpp 2> output.txt

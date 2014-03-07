@@ -1,0 +1,14 @@
+example.cpp: In function ‘void add(int, int)’:
+example.cpp:7:13: error: return-statement with a value, in function returning 'void' [-fpermissive]
+  return a + b;
+             ^
+example.cpp: In function ‘int main(int, char**)’:
+example.cpp:13:2: error: ‘cout’ was not declared in this scope
+  cout << "Hello" << endl;
+  ^
+example.cpp:13:21: error: ‘endl’ was not declared in this scope
+  cout << "Hello" << endl;
+                     ^
+example.cpp:12:6: warning: unused variable ‘a’ [-Wunused-variable]
+  int a;
+      ^
