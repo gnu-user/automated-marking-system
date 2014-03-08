@@ -1,13 +1,13 @@
 Automated Marking System
 ========================
 
-The automatic marking system is intended to provide an easy to use web interface that teachers, teaching assistants, and students can use to mark assignments for courses that involve programming.
+The Automated Marking System (**AMS**) is intended to provide an easy to use web interface that teachers, teaching assistants, and students can use to mark assignments for courses that involve programming.
 
 
 Project Goals
 --------------
 
-The automatic marking system has four main goals that guide the design and development of the system.
+The automated marking system has four main goals that guide the design and development of the system.
 
 1. Scalability
 2. Automated marking
