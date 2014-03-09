@@ -1,4 +1,4 @@
-require_relative 'manager'
+require_relative '../manager'
 require_relative 'static_issues'
 
 class LintManager < Manager
@@ -47,7 +47,7 @@ class LintManager < Manager
   end
 end
 
-manager = LintManager.new('example_programs/example.cpp')
+manager = LintManager.new('../example_programs/example.cpp')
 
 manager.applyLint
 
