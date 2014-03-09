@@ -49,14 +49,6 @@ end
 
 manager = LintManager.new('example_programs/example.cpp')
 
-#output = Array.new
-
-#File.open("test_output.txt", "r").each_line do |line|
-#    output.push(line)
-#end
-
-#manager.output = output
-
 manager.applyLint
 
 issuesList = manager.parseOutput
