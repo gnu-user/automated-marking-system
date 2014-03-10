@@ -52,7 +52,7 @@ class CompilerManager < Manager
     end
 
     # Delete the temp file created
-    #File.delete(FILE)
+    File.delete(FILE)
     @output
   end
 
