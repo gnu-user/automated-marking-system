@@ -1,14 +1,15 @@
-require_relative 'test.rb'
-require_relative 'io_element.rb'
+require_relative '../manager'
+require_relative 'test'
+require_relative 'io_element'
 
-class UnitTester
-    attr_accessor :path, :testCases
+class UnitTester < Manager
+    attr_accessor :testCases
 
     FILE_FLAG = "r+"
 
     # testCases is a list of Test elements.
     def initialize(path="", testCases=Array.new)
-        @path = path
+        super(path)
         @testCases = testCases
     end
 
@@ -55,10 +56,11 @@ class UnitTester
         return test
     end
 
-    def process()
+    def process
+        super
         testCases.each do |testCase|
             
-            io = IO.popen(path, FILE_FLAG)
+            io = IO.popen(@path_to_file, FILE_FLAG)
             test = true
 
             #puts testCase.ioList
@@ -91,15 +93,6 @@ class UnitTester
     end
 end
 
-#class TestCase
-    #IO list must be ordered
-#    attr_accessor :ioList
-
-#    def initialize(list=Array.new)
-#        @ioList = list
-#    end
-#end
-
 =begin
 test = Test.new
 
@@ -116,16 +109,22 @@ testers = Array.new
 
 testers.push(test)
 
-utester = UnitTester.new("example_programs/Example", testers)
+test = Test.new
+
+test.name = "Add large"
+test.description = "Add two large number"
+test.result = false
+test.ioList = Array.new
+
+test.ioList.push(IOElement.new(10, true))
+test.ioList.push(IOElement.new(200, true))
+test.ioList.push(IOElement.new(210, false))
+
+testers.push(test)
+
+utester = UnitTester.new("../example_programs/Example", testers)
 
 utester.process
 
 puts test
 =end
-
-#io = IO.popen("./Example", "r+")
-#io.puts 1
-#io.puts 2
-#result = io.readline.to_i
-
-#io.close
