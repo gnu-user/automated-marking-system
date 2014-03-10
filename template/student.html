@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Dashboard - AMS Administration</title>
+    <title>Dashboard - AMS Student</title>
   
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
@@ -29,18 +29,18 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.html">AMS Administration </a>
+          <a class="navbar-brand" href="index.html">AMS Student </a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
             <li class="active"><a href="index.html"><i class="fa fa-edit"></i> Assignments</a></li>
-            <li><a href="grading.html"><i class="fa fa-bar-chart-o"></i> Grading</a></li>
+            <li><a href="grading.html"><i class="fa fa-bar-chart-o"></i> Grades</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right navbar-user">
             <li class="dropdown alerts-dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> Alerts <span class="badge">3</span> <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> Alerts <span class="badge">2</span> <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="#">Default <span class="label label-default">Default</span></a></li>
                 <li><a href="#">Primary <span class="label label-primary">Primary</span></a></li>
@@ -53,7 +53,7 @@
               </ul>
             </li>
             <li class="dropdown user-dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Dr. Eyhab Al-Masri <b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Robert Matthews <b class="caret"></b></a>
               <ul class="dropdown-menu">
                 <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
                 <li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
@@ -84,8 +84,8 @@
                     <i class="fa fa-check fa-5x"></i>
                   </div>
                   <div class="col-xs-6 text-right">
-                    <p class="announcement-heading">12</p>
-                    <p class="announcement-text">Submissions</p>
+                    <p class="announcement-heading">2</p>
+                    <p class="announcement-text">Assignments Graded</p>
                   </div>
                 </div>
               </div>
@@ -93,7 +93,7 @@
                 <div class="panel-footer announcement-bottom">
                   <div class="row">
                     <div class="col-xs-6">
-                      Review Submissions
+                      Review Grades
                     </div>
                     <div class="col-xs-6 text-right">
                       <i class="fa fa-arrow-circle-right"></i>
@@ -111,8 +111,8 @@
                     <i class="fa fa-exclamation-triangle fa-5x"></i>
                   </div>
                   <div class="col-xs-6 text-right">
-                    <p class="announcement-heading">9</p>
-                    <p class="announcement-text">Not Submitted!</p>
+                    <p class="announcement-heading">1</p>
+                    <p class="announcement-text">Assignment Not Submitted!</p>
                   </div>
                 </div>
               </div>
@@ -120,7 +120,7 @@
                 <div class="panel-footer announcement-bottom">
                   <div class="row">
                     <div class="col-xs-6">
-                      View Assignment Posting
+                      View Assignments
                     </div>
                     <div class="col-xs-6 text-right">
                       <i class="fa fa-arrow-circle-right"></i>
@@ -138,7 +138,7 @@
                     <i class="fa fa-tasks fa-5x"></i>
                   </div>
                   <div class="col-xs-6 text-right">
-                    <p class="announcement-heading">2</p>
+                    <p class="announcement-heading">1</p>
                     <p class="announcement-text">Submission Errors</p>
                   </div>
                 </div>
@@ -147,7 +147,7 @@
                 <div class="panel-footer announcement-bottom">
                   <div class="row">
                     <div class="col-xs-6">
-                      Resolve Issues
+                      Review Issues
                     </div>
                     <div class="col-xs-6 text-right">
                       <i class="fa fa-arrow-circle-right"></i>
@@ -171,41 +171,41 @@
                     <thead>
                       <tr>
                         <th>Assignment</th>
-                        <th>Date Posted</th>
                         <th>Date Due</th>
-                        <th>Submissions</th>
+                        <th>Date Submitted</th>
+                        <th>Grade</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
+                      <tr class="success">
                         <td> <a href="#">Assignment 1</a></td>
-                        <td>10/11/2013 3:29 PM</td>
                         <td>10/20/2013 11:59 PM</td>
-                        <td>33</td>
-                      </tr>
-                      <tr>
-                        <td><a href="#">Assignment 2</a></td>
-                        <td>10/22/2013 9:12 AM</td>
-                        <td>10/29/2013 11:59 PM</td>
-                        <td>22</td>
-                      </tr>
-                      <tr>
-                        <td><a href="#">Assignment 3</a></td>
-                        <td>11/05/2013 11:22 AM</td>
-                        <td>11/15/2013 11:59 PM</td>
-                        <td>21</td>
+                        <td>10/15/2013 3:29 PM</td>
+                        <td>84%</td>
                       </tr>
                       <tr class="success">
+                        <td><a href="#">Assignment 2</a></td>
+                        <td>10/29/2013 11:59 PM</td>
+                        <td>10/29/2013 11:57 PM</td>
+                        <td>71%</td>
+                      </tr>
+                      <tr class="danger">
+                        <td><a href="#">Assignment 3</a></td>
+                        <td>11/15/2013 11:59 PM</td>
+                        <td><span class="label label-danger"><span class="fa fa-warning"></span> NOT SUBMITTED</span></td>
+                        <td>0%</td>
+                      </tr>
+                      <tr class="warning">
                         <td><a href="#">Assignment 4</a></td>
-                        <td>11/21/2013 1:12 PM</td>
                         <td>11/28/2013 11:59 PM</td>
-                        <td>12</td>
+                        <td><span class="label label-warning"><span class="fa fa-warning"></span> NOT SUBMITTED</span></td>
+                        <td></td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
                 <div class="text-right">
-                  <a href="#">Add New Assignment <i class="fa fa-arrow-circle-right"></i></a>
+                  <a href="#">Review Assignments <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
               </div>
             </div>
