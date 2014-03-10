@@ -1,7 +1,7 @@
 #!/bin/env ruby
 # encoding: utf-8
 
-require_relative 'manager'
+require_relative '../manager'
 require_relative 'compiler_issues'
 
 class CompilerManager < Manager
@@ -29,12 +29,8 @@ class CompilerManager < Manager
   FILE = 'temp.txt'
 
   def initialize(path='')
-    @path_to_file = path
+    super(path)
     @executable_name = ''
-  end
-
-  def checkFileExist
-    File.exist?(@path_to_file)
   end
 
   def applyCompiler
@@ -56,11 +52,13 @@ class CompilerManager < Manager
     end
 
     # Delete the temp file created
-    File.delete(FILE)
+    #File.delete(FILE)
     @output
   end
 
   def parseOutput
+    super
+
     # Valid compiling no errors
     if @output == ''
       return true
@@ -103,7 +101,7 @@ class CompilerManager < Manager
             issue = Issues.new
             compiler_issue.filename = filename
             issue.method_name = method_name
-            #puts [filename, where, method_name]
+            puts [filename, where, method_name]
           end
         when 1
           parsed = line.scan(LINE_PARSER)
@@ -115,7 +113,7 @@ class CompilerManager < Manager
             issue.col_number = col_number
             issue.issue_type = issue_type
             issue.message = message
-            #puts [filename, line_number, col_number, issue_type, message]
+            puts [filename, line_number, col_number, issue_type, message]
           end
         when 2
           parsed = line.scan(CODE_LINE_PARSER)
@@ -123,28 +121,31 @@ class CompilerManager < Manager
             #2. Use CODE_LINE_PARSER on the next line
             code = parsed[0]
             issue.relavent_code = code
-            #puts code
+            puts code
           end
         when 3
           #3. Use POINTER_LINE on the next line (or just skip the line)
           parsed = line.match(POINTER_LINE)
       end
 
+      a = gets
       start += 1
     end
+
+    #puts compiler_issue
 
     # Handle last one
     compiler_issue.issueList.push(issue)
     
-    if newOne     
+    #if newOne     
       issuesList.push(compiler_issue)
-    end
+    #end
 
     issuesList
   end
 end
 
-compiler = CompilerManager.new('example_programs/bad_compile_example.cpp')
+compiler = CompilerManager.new('../example_programs/bad_compile_example.cpp')
 
 compiler.applyCompiler
 
