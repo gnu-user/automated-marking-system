@@ -7,4 +7,8 @@ class IOElement
         @value = value
         @input = input
     end
+
+    def to_s
+        "value = #{@value}, input = #{@input}"
+    end
 end
