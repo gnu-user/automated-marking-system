@@ -1,4 +1,10 @@
 AutomatedMarkingSystem::Application.routes.draw do
+  # Uncomment when enabling HTTPS
+  # scope constraints: {protocol: 'https'}
+
+  root 'student#index'
+  get 'student' => 'student#index'
+  get 'admin' => 'admin#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
