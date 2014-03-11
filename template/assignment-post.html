@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard - AMS Administration</title>
+  
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Add custom CSS here -->
+    <link href="css/sb-admin.css" rel="stylesheet">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+    <!-- Page Specific CSS -->
+    <link rel="stylesheet" href="css/morris-0.4.3.min.css">
+    <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
+  </head>
+  <body>
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">AMS Administration </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav side-nav">
+            <li class="active"><a href="index.html"><i class="fa fa-edit"></i> Assignments</a></li>
+            <li><a href="grading.html"><i class="fa fa-bar-chart-o"></i> Grading</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right navbar-user">
+            <li class="dropdown alerts-dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> Alerts <span class="badge">3</span> <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Default <span class="label label-default">Default</span></a></li>
+                <li><a href="#">Primary <span class="label label-primary">Primary</span></a></li>
+                <li><a href="#">Success <span class="label label-success">Success</span></a></li>
+                <li><a href="#">Info <span class="label label-info">Info</span></a></li>
+                <li><a href="#">Warning <span class="label label-warning">Warning</span></a></li>
+                <li><a href="#">Danger <span class="label label-danger">Danger</span></a></li>
+                <li class="divider"></li>
+                <li><a href="#">View All</a></li>
+              </ul>
+            </li>
+            <li class="dropdown user-dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Dr. Eyhab Al-Masri <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
+                <li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
+                <li class="divider"></li>
+                <li><a href="#"><i class="fa fa-power-off"></i> Log Out</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </nav>
+
+      <div id="page-wrapper">
+        <div class="row">
+          <div class="col-lg-12">
+            <h1>Add New Assignment <small>Create a New Submission</small></h1>
+            <ol class="breadcrumb">
+              <li><a href="index.html"><i class="fa fa-edit"></i> Assignments</a></li>
+              <li class="active"><i class="fa fa-plus"></i> Add New Assignment </li>
+            </ol>
+          </div>       
+        </div><!-- /.row -->
+        
+        <form role="form">
+          <div class="row">
+            <div class="col-lg-6">
+              <!-- DESCRIPTION -->
+              <h2>Description</h2>
+              <div class="alert alert-info alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                Specify the assignment name, description, dates, and programming language below.
+              </div>
+              <div class="form-group">
+                <label>Submission Name</label>
+                <input type="text" name="name" class="form-control" required placeholder="Assignment 1...">
+                <p class="help-block">The name of the assignment.</p>
+              </div>
+              <div class="form-group">
+                <label>Description</label>
+                <textarea name="description" class="form-control" required rows="8"></textarea>
+                <p class="help-block">Assignment description, markdown format is supported.</p>
+              </div>
+              <div class="form-group">
+                <label>Post Date</label>
+                <div class='input-group date' required id='postdatepicker'>
+                  <input name="postdate" type='text' class="form-control" />
+                  <span class="input-group-addon"><span class="fa fa-calendar"></span>
+                  </span>
+                </div>
+                <p class="help-block">The date the assignment will become available.</p>
+              </div>
+              <div class="form-group">
+                <label>Due Date</label>
+                <div class='input-group date' required id='duedatepicker'>
+                  <input name="duedate" type='text' class="form-control" />
+                  <span class="input-group-addon"><span class="fa fa-calendar"></span>
+                  </span>
+                </div>
+                <p class="help-block">The deadline for the assignment.</p>
+              </div>
+              <div class="form-group">
+                <label>Language</label>
+                <select class="form-control" required>
+                  <option>C++</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <!-- EVALUATION TEST CASES-->
+              <h2>Evaluation</h2>
+              <div class="alert alert-info alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                Specify the input and expected output for each test case to evaulate the code against.
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Add a Test Case</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="form-group">
+                    <label>Test Case Name</label>
+                    <input type="text" name="testname" class="form-control" required placeholder="Test case...">
+                    <p class="help-block">The name of the test case, must be unique.</p>
+                  </div>
+                  <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="testdescription" class="form-control" required rows="3"></textarea>
+                    <p class="help-block">Description of the test case.</p>
+                  </div>
+                  <div class="form-group">
+                    <label>Test Case</label>
+                    <textarea name="testcase" class="form-control" required rows="8"></textarea>
+                      <p class="help-block">Test cases uses YAML notation, press help for more details
+                        <button type="reset" class="btn btn-primary">Help <span class="fa fa-code"></span></button>
+                      </p>
+                  </div>
+                  <p class="help-block"><strong>Tip:</strong> You can save a time by uploading all of the the test cases at once.</p>
+                </div>
+              </div>
+              <center>
+                <button type="submit" class="btn btn-success">ADD</button>
+                <button type="reset" class="btn btn-primary">Upload</button>
+              </center>
+            </div>
+            <div class="col-lg-6">
+              <!-- SAMPLE TEST CASES -->
+              <h2>Sample</h2>
+              <div class="alert alert-info alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                Specify the input and expected output for sample tests that students can use to evaulate their
+                work before they submit it.
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Add a Test Case</h3>
+                </div>
+                <div class="panel-body">
+                  <div class="form-group">
+                    <label>Test Case Name</label>
+                    <input type="text" name="samplename" class="form-control" required placeholder="Test case...">
+                    <p class="help-block">The name of the test case, must be unique.</p>
+                  </div>
+                  <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="sampledescription" class="form-control" required rows="3"></textarea>
+                    <p class="help-block">Description of the test case.</p>
+                  </div>
+                  <div class="form-group">
+                    <label>Test Case</label>
+                    <textarea name="samplecase" class="form-control" required rows="8"></textarea>
+                      <p class="help-block">Test cases uses YAML notation, press help for more details
+                        <button type="reset" class="btn btn-primary">Help <span class="fa fa-code"></span></button>
+                      </p>
+                  </div>
+                  <p class="help-block"><strong>Tip:</strong> You can save a time by uploading all of the the test cases at once.</p>
+                </div>
+              </div>
+              <center>
+                <button type="button" class="btn btn-success">ADD</button>
+                <button type="button" class="btn btn-primary">Upload</button>
+              </center>
+            </div>
+            <div class="col-lg-6">
+              <!-- GRADING -->
+              <h2>Grading</h2>
+              <div class="alert alert-info alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                Specify the assignment requirements, number of attempts, evaluation breakdown and weights.
+              </div>
+              <label>Maximum Execution Time</label>
+              <div class="form-group input-group">
+                <input type="text" name="maxtime" class="form-control" required value="60">
+                <span class="input-group-addon">Seconds</span>
+              </div>
+              <label>Maximum Attempts</label>
+              <div class="form-group input-group">
+                <input type="text" name="maxattempts" class="form-control" required value="1">
+                <span class="input-group-addon">Attempts</span>
+              </div>
+              <p class="help-block">The maximum number of attempts the student can have to re-submit.</p>
+              <div class="form-group">
+                <label>Code Analysis Metrics</label>
+                <select name="metrics" multiple="" class="form-control">
+                  <option>Memory Leaks</option>
+                  <option>Performance</option>
+                  <option>Sytlistic Guidelines</option>
+                  <option>Array Bounds Checking</option>
+                  <option>Code Duplication</option>
+                  <option>Cyclomatic Complexity</option>
+                </select>
+              </div>
+              <p class="help-block">The code analysis metrics to apply when grading.</p>
+              <label>Code Analysis Weight</label>
+              <div class="form-group input-group">
+                <input type="text" name="metricweight" class="form-control" required value="10">
+                <span class="input-group-addon">%</span>
+              </div>
+              <p class="help-block">The weight code analysis metrics have on the overall grade.</p>
+              <label>Test Case Evaluation Weight</label>
+              <div class="form-group input-group">
+                <input type="text" name="testweight" class="form-control" required value="90">
+                <span class="input-group-addon">%</span>
+              </div>
+              <p class="help-block">The weight test cases have on the overall grade.</p>
+              <br>
+              <center>
+                <button name="submit" type="submit" class="btn btn-primary btn-lg">Submit Assignment</button>
+              </center>
+            </div>
+          </div>
+        </form>
+      </div><!-- /#page-wrapper -->
+
+    </div><!-- /#wrapper -->
+
+    <!-- JavaScript -->
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/bootstrap.js"></script>
+
+    <!-- Page Specific Plugins -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
+    <script src="js/morris/chart-data-morris.js"></script>
+    <script src="js/tablesorter/jquery.tablesorter.js"></script>
+    <script src="js/tablesorter/tables.js"></script>
+    <script src="js/moment.min.js"></script>
+    <script src="js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#postdatepicker').datetimepicker();
+            $('#duedatepicker').datetimepicker();
+            $('#datetimepicker1').datetimepicker();
+        });
+    </script>
+  </body>
+</html>
