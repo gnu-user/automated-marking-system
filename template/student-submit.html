@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard - AMS Student</title>
+  
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+
+    <!-- Add custom CSS here -->
+    <link href="css/sb-admin.css" rel="stylesheet">
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+    <!-- Page Specific CSS -->
+    <link rel="stylesheet" href="css/morris-0.4.3.min.css">
+  </head>
+  <body>
+    <div id="wrapper">
+      <!-- Sidebar -->
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">AMS Student </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav side-nav">
+            <li class="active"><a href="index.html"><i class="fa fa-edit"></i> Assignments</a></li>
+            <li><a href="grading.html"><i class="fa fa-bar-chart-o"></i> Grades</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right navbar-user">
+            <li class="dropdown alerts-dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> Alerts <span class="badge">2</span> <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Default <span class="label label-default">Default</span></a></li>
+                <li><a href="#">Primary <span class="label label-primary">Primary</span></a></li>
+                <li><a href="#">Success <span class="label label-success">Success</span></a></li>
+                <li><a href="#">Info <span class="label label-info">Info</span></a></li>
+                <li><a href="#">Warning <span class="label label-warning">Warning</span></a></li>
+                <li><a href="#">Danger <span class="label label-danger">Danger</span></a></li>
+                <li class="divider"></li>
+                <li><a href="#">View All</a></li>
+              </ul>
+            </li>
+            <li class="dropdown user-dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Richard Burt <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#"><i class="fa fa-user"></i> Profile</a></li>
+                <li><a href="#"><i class="fa fa-gear"></i> Settings</a></li>
+                <li class="divider"></li>
+                <li><a href="#"><i class="fa fa-power-off"></i> Log Out</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </nav>
+
+      <div id="page-wrapper">
+        <div class="row">
+          <div class="col-lg-12">
+            <h1>Submit Assignment <small>Submit your Assignment</small></h1>
+            <ol class="breadcrumb">
+              <li><a href="index.html"><i class="fa fa-edit"></i> Assignments</a></li>
+              <li class="active"><i class="fa fa-plus"></i> Submit Assignment </li>
+            </ol>
+          </div>       
+        </div><!-- /.row -->
+        
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- DESCRIPTION -->
+            <h2>Assignment 1</h2>
+            <div class="alert alert-info alert-dismissable">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+              Please make sure that you test and evaluate your submission thoroughly before the final submission,
+              your code <strong>must</strong> not have any compiler errors in order for it to be evaluated. <strong>
+              Any submissions that do not compile cannot be evaluated and will receive a grade of zero.</strong>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-7">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Description</h3>
+              </div>
+              <div class="panel-body">
+                <p>For your assignment you must create a commandline calculator program which will accept any two
+                numbers as input (both integers and floating point values) and perform one of the following 
+                requested operations <em>add, subtract, multiply, divide</em> and display the results.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Requirements</h3>
+              </div>
+              <div class="panel-body">
+                <div class="bs-example">
+                  <ul class="list-group">
+                    <li class="list-group-item">
+                      <span class="badge">60</span>
+                      Maximum execution time (seconds)
+                    </li>
+                    <li class="list-group-item">
+                      <span class="badge">1</span>
+                      Maximum attempts
+                    </li>
+                    <li class="list-group-item">
+                      <span class="badge">C++</span>
+                      Language
+                    </li>
+                    <li class="list-group-item">
+                      <span class="badge">10%</span>
+                      Code analysis weight
+                    </li>
+                    <li class="list-group-item">
+                      <span class="badge">90%</span>
+                      Test case weight
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- TODO add css for more spacing before/after button -->
+        <div class="row">
+          <div class="col-lg-12">
+            <br>
+            <center>
+              <button name="submit" type="submit" class="btn btn-primary btn-lg">Upload Submission</button>
+            </center>
+            <br>
+            <br>
+          </div>
+        </div>
+        <!-- COMPILER OUTPUT -->
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-gear"></i> Compiler Output</h3>
+              </div>
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-bordered table-hover table-striped tablesorter">
+                    <thead>
+                      <tr>
+                        <th>Type</th>
+                        <th>File</th>
+                        <th>Line, Column</th>
+                        <th>Code</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="warning">
+                        <td>Warning</td>
+                        <td>calculator.cpp</td>
+                        <td>23, 5</td>
+                        <td>int number3 = 0;</td>
+                        <td>Unused variable 'number3' [-Wunused-variable]</td>
+                      </tr>
+                      <tr class="warning">
+                        <td>Warning</td>
+                        <td>calculator.cpp</td>
+                        <td>24, 5</td>
+                        <td>int number4 = 0;</td>
+                        <td>Unused variable 'number4' [-Wunused-variable]</td>
+                      </tr>
+                      <tr class="danger">
+                        <td>Error</td>
+                        <td>calculator.cpp</td>
+                        <td>42, 12</td>
+                        <td>number1 * str_number2</td>
+                        <td>Invalid conversion from 'string' to 'int' [-fpermissive]</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- QUALITY METRICS -->
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-check-circle"></i> Quality Assessment</h3>
+              </div>
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-bordered table-hover table-striped tablesorter">
+                    <thead>
+                      <tr>
+                        <th>Type</th>
+                        <th>File</th>
+                        <th>Line</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="warning">
+                        <td>Warning</td>
+                        <td>calculator.cpp</td>
+                        <td>23</td>
+                        <td>Unused variable 'number3'</td>
+                      </tr>
+                      <tr class="warning">
+                        <td>Warning</td>
+                        <td>calculator.cpp</td>
+                        <td>24</td>
+                        <td>Unused variable 'number4'</td>
+                      </tr>
+                      <tr class="warning">
+                        <td>Warning</td>
+                        <td>calculator.cpp</td>
+                        <td>32</td>
+                        <td>Inconsistent use of tab and space indentation.</td>
+                      </tr>
+                      <tr class="danger">
+                        <td>Error</td>
+                        <td>calculator.cpp</td>
+                        <td>42</td>
+                        <td>Invalid conversion from 'string' to 'int'</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>        
+        <!-- SAMPLE EVALUATION -->
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-flag"></i> Sample Evalution</h3>
+              </div>
+              <div class="panel-body">
+                <div class="table-responsive">
+                  <table class="table table-bordered table-hover table-striped tablesorter">
+                    <thead>
+                      <tr>
+                        <th>Test Name</th>
+                        <th>Description</th>
+                        <th>Test Case</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Add</td>
+                        <td>Adds two integers</td>
+                        <td>
+                          <ul class="list-unstyled">
+                            <li>input: 5</li>
+                            <li>input: 5</li>
+                            <li>output: 10</li>
+                          </ul>
+                        </td>
+                        <td><span class="label label-success"><span class="fa fa-check"></span> PASS</span></td>
+                      </tr>
+                      <tr>
+                        <td>Subtract</td>
+                        <td>Subtracts two integers</td>
+                        <td>
+                          <ul class="list-unstyled">
+                            <li>input: 5</li>
+                            <li>input: 5</li>
+                            <li>output: 0</li>
+                          </ul>
+                        </td>
+                        <td><span class="label label-success"><span class="fa fa-check"></span> PASS</span></td>
+                      </tr>
+                      <tr>
+                        <td>Multiply</td>
+                        <td>Multiply two integers</td>
+                        <td>
+                          <ul class="list-unstyled">
+                            <li>input: 5</li>
+                            <li>input: 5</li>
+                            <li>output: 25</li>
+                          </ul>
+                        </td>
+                        <td><span class="label label-success"><span class="fa fa-check"></span> PASS</span></td>
+                      </tr>
+                      <tr class="danger">
+                        <td>Divide</td>
+                        <td>Divide two integers</td>
+                        <td>
+                          <ul class="list-unstyled">
+                            <li>input: 0</li>
+                            <li>input: 5</li>
+                            <li>output: 0</li>
+                          </ul>
+                        </td>
+                        <td><span class="label label-danger"><span class="fa fa-warning"></span> FAIL</span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- TEST OR SUBMIT -->
+        <!-- TODO more button spacing between and above/below -->
+        <div class="row">
+          <div class="col-log-12">
+            <br>
+            <center>
+              <button name="test" type="button" class="btn btn-primary btn-lg">Test</button>
+              <button name="submit" type="submit" class="btn btn-success btn-lg">Submit</button>
+            </center>
+          </div>
+        </div>
+      </div><!-- /#page-wrapper -->
+
+    </div><!-- /#wrapper -->
+
+    <!-- JavaScript -->
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/bootstrap.js"></script>
+
+    <!-- Page Specific Plugins -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
+    <script src="js/morris/chart-data-morris.js"></script>
+    <script src="js/tablesorter/jquery.tablesorter.js"></script>
+    <script src="js/tablesorter/tables.js"></script>
+
+  </body>
+</html>
