@@ -1,0 +1,25 @@
+CHEATING DETECTION
+========================================
+
+1. Install the following source code cloning/cheating detection tool, it was
+created by a professor partially to detect cheating on assignments, it
+can be installed on Ubuntu using the following.
+
+    sudo apt-get install similarity-tester
+
+2. You can also download the source from github: https://github.com/lambdafu/similarity-tester
+
+3. I've found the optimal parameters for detecting cheating (% similarity) out
+of a list of source files is the following. It will display the source files as well
+as the % similarity between them. I've noticed that it sometimes will compare the same set
+of files twice which may bias the results.
+
+    sim_c -e -n -P -R -T -t 1 -r 12 source_files/
+
+4. After you've got all of the %'s you can do some fun statistics and mark the outliers
+as cheating or just do it based on some kind of a threshold (80% or higher is cheating).
+
+5. To display the side by side comparison of the source files suspected of cheating use
+the following.
+
+    sim_c -T -t 1 -r 12 cheating/cheating_1.cpp cheating/cheating_2.cpp 
