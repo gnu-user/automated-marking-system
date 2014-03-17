@@ -1,4 +1,4 @@
-require_relative 'manager'
+require_relative '../manager'
 
 class CloneIncident
     attr_accessor :first_file, :second_file, :similarity
@@ -131,7 +131,7 @@ end
 
 =end
 
-cloneDetector = CloneDetector.new("/mnt/home/data/source_code/automated-marking-system/lib/tasks/example_programs/cheating/")
+cloneDetector = CloneDetector.new("../example_programs/cheating/")
 
 cloneDetector.applyCloneDetection
 
