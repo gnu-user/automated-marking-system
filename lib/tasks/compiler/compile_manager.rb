@@ -3,6 +3,7 @@
 
 require_relative '../manager'
 require_relative 'compiler_issues'
+require_relative 'issues'
 
 class CompilerManager < Manager
   attr_accessor :executable_name

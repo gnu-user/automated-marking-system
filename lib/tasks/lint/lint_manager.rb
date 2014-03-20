@@ -3,7 +3,7 @@ require_relative 'static_issues'
 
 class LintManager < Manager
 
-  # Format [relative_path/filename]: (issue_flag) description...
+  # Format [relative_path/filename:lineNumber]:  (issue_flag) description...
   LINE_PARSER = /\[(.+):([0-9]+)\]: \((.+)\) (.*)/
 
   COMMAND = 'cppcheck'
@@ -17,7 +17,6 @@ class LintManager < Manager
 
   def process
     super
-
     @output = Array.new
     %x(#{COMMAND} #{OPTIONS} #{@path_to_file} #{OUTPUT} #{FILE})
 
@@ -33,13 +32,25 @@ class LintManager < Manager
   def parseOutput
 
     issuesList = Array.new
+    filenameList = Hash.new
+
     @output.each do |line|
       parsed = line.scan(LINE_PARSER)
+
 
       # There should only be 1 value
       if parsed.size == 1
         filename, line, type, description = parsed[0]
-        issuesList.push(StaticIssues.new(filename, line, type, description))
+
+        value = filenameList[filename]
+        if value != nil 
+          #Use the index
+          issuesList[value].issue_list.push(StaticIssue.new(line, type, description))
+        else
+          filenameList[filename] = issuesList.size
+          issuesList.push(StaticAnalysis.new(filename, StaticIssue.new(line, type, description)))
+        end        
+        
       end
     end
 
@@ -47,7 +58,7 @@ class LintManager < Manager
   end
 end
 
-manager = LintManager.new('../example_programs/example.cpp')
+manager = LintManager.new('~/source_code/capstone/src/')
 
 manager.applyLint
 
