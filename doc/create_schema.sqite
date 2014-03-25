@@ -1,0 +1,107 @@
+/*Clone Detection */
+
+/*
+ */
+CREATE TABLE CloneIncident
+(
+	clone_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
+    similarity NUMBER
+)
+
+/*
+ */
+CREATE TABLE DiffFile
+(
+    diff_file_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
+	clone_ref INTEGER REFERENCES CloneIncident (clone_id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    name TEXT
+)
+
+/*
+ */
+CREATE TABLE DiffEntry
+(
+    diff_entry_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
+    file_ref INTEGER REFERENCES DiffFile (diff_file_id)
+		ON DELETE CASCADE ON UPDATE CASCADE,
+    position TEXT
+)
+
+/*
+ */
+CREATE TABLE Line
+(
+    diff_entry_ref INTEGER REFERENCES DiffEntry (diff_entry_id)
+		ON DELETE CASCADE ON UPDATE CASCADE,
+    line TEXT
+)
+
+
+/* Compiler Issues */
+
+/*
+ */
+CREATE TABLE CompilerIssue
+(
+	compiler_issue_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
+    filename TEXT
+)
+
+/*
+ */
+CREATE TABLE Issue
+(
+    compiler_issue_ref INTEGER REFERENCES CompilerIssue (compiler_issue_id)
+		ON DELETE CASCADE ON UPDATE CASCADE,
+    method_name TEXT,
+    line_number INTEGER,
+    col_number INTEGER,
+    issue_type TEXT,
+    message TEXT,
+    relevant_code TEXT
+)
+
+/* Static Analysis */
+
+/*
+ */
+CREATE TABLE StaticAnalysis
+(
+    static_issue_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
+    filename TEXT
+)
+
+/*
+ */
+CREATE TABLE StaticIssue
+(
+    static_issue_ref INTEGER REFERENCES StaticAnalysis (static_issue_id)
+		ON DELETE CASCADE ON UPDATE CASCADE,
+    line_number INTEGER,
+    type TEXT,
+    descirption TEXT
+)
+
+
+/* Test */
+
+/*
+ */
+CREATE TABLE Test
+(
+    test_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
+   	name TEXT,
+   	descirption TEXT, 
+   	result BOOLEAN
+)
+
+/*
+ */
+CREATE TABLE IO_Element
+(
+    test_ref INTEGER REFERENCES StaticAnalysis (static_issue_id)
+		ON DELETE CASCADE ON UPDATE CASCADE,
+    value TEXT,
+    input BOOLEAN
+)
