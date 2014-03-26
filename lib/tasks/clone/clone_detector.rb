@@ -46,7 +46,7 @@ class CloneDetector < Manager
 
     #This could break if they have a line similar to the output file
     #[0] => first file path, [1] = first line location, [2] => second file path, [3] => second line location, [4] => diff percent
-    CLONE_DIFF_PARSER = /(.*?.cpp): line ([0-9\-]+)\s*\|(.*?.cpp): line ([0-9\-]+)\[([0-9]+)\]/
+    CLONE_DIFF_PARSER = /(.*?.cpp): line ([0-9\-]+)\s*\|(.*?.cpp): line ([0-9\-]+)[\s]*\[([0-9]+)\]/
     COMMAND = 'sim_c'
     OPTIONS = '-e -n -P -R -T -t 1 -r 12'
     OPTIONS_DIFF = "-T -t 1 -r 12"
@@ -105,8 +105,8 @@ class CloneDetector < Manager
 
                 if diff_parser != []
                     size = line.split("|")[0].size
-                    incidents[-1].first_file.content.push(DiffEntry.new(line[0][1]))
-                    incidents[-1].second_file.content.push(DiffEntry.new(line[0][1]))
+                    incidents[-1].first_file.content.push(DiffEntry.new(diff_parser[0][1]))
+                    incidents[-1].second_file.content.push(DiffEntry.new(diff_parser[0][3]))
                 else
                     f1_line = line[0..size-1]
                     f2_line = line[size+1..-1]
