@@ -1,0 +1,39 @@
+# Clone Detection
+
+rails generate model CloneIncident similarity:number
+#Needs 2 DiffFiles 
+
+rails generate model DiffFile name:string
+#Needs many DiffEntry
+#Links to 1 CloneIncident
+
+rails generate model DiffEntry position:string
+#Needs many Line
+#Links to 1 DiffFile
+
+rails generate model Line text_line:text
+#Links to 1 DiffEntry
+
+# Compiler Issues
+
+rails generate model CompilerIssue filename:text
+#Needs many Issue
+
+rails generate model Issue method:string line_number:integer col_number:integer issue_type:string message:text relavent_code:text
+#Links to 1 CompilerIssue
+
+# Static Analysis
+
+rails generate model StaticAnalysis filename:string
+#Needs many StaticIssue
+
+rails generate model StaticIssue line_number:integer type:string description:text
+#Links to 1 CompilerIssue
+
+# Test
+
+rails generate model Test name:string description:text result:boolean
+# Needs many IO_Elements
+
+rails generate model IO_Element value:text input:boolean
+# Links to 1 Test

@@ -1,10 +1,10 @@
-/*Clone Detection */
+/* Clone Detection */
 
 /*
  */
 CREATE TABLE CloneIncident
 (
-	clone_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
+	#clone_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
     similarity NUMBER
 )
 
@@ -12,8 +12,8 @@ CREATE TABLE CloneIncident
  */
 CREATE TABLE DiffFile
 (
-    diff_file_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
-	clone_ref INTEGER REFERENCES CloneIncident (clone_id)
+    #diff_file_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
+	clone_ref INTEGER REFERENCES CloneIncident (_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
     name TEXT
 )
@@ -22,8 +22,8 @@ CREATE TABLE DiffFile
  */
 CREATE TABLE DiffEntry
 (
-    diff_entry_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
-    file_ref INTEGER REFERENCES DiffFile (diff_file_id)
+    #diff_entry_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
+    file_ref INTEGER REFERENCES DiffFile (_d)
 		ON DELETE CASCADE ON UPDATE CASCADE,
     position TEXT
 )
@@ -32,9 +32,9 @@ CREATE TABLE DiffEntry
  */
 CREATE TABLE Line
 (
-    diff_entry_ref INTEGER REFERENCES DiffEntry (diff_entry_id)
+    diff_entry_ref INTEGER REFERENCES DiffEntry (_id)
 		ON DELETE CASCADE ON UPDATE CASCADE,
-    line TEXT
+    text_line TEXT
 )
 
 
@@ -44,7 +44,7 @@ CREATE TABLE Line
  */
 CREATE TABLE CompilerIssue
 (
-	compiler_issue_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
+	#compiler_issue_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
     filename TEXT
 )
 
@@ -52,7 +52,7 @@ CREATE TABLE CompilerIssue
  */
 CREATE TABLE Issue
 (
-    compiler_issue_ref INTEGER REFERENCES CompilerIssue (compiler_issue_id)
+    compiler_issue_ref INTEGER REFERENCES CompilerIssue (_id)
 		ON DELETE CASCADE ON UPDATE CASCADE,
     method_name TEXT,
     line_number INTEGER,
@@ -68,7 +68,7 @@ CREATE TABLE Issue
  */
 CREATE TABLE StaticAnalysis
 (
-    static_issue_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
+    #static_issue_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
     filename TEXT
 )
 
@@ -76,11 +76,11 @@ CREATE TABLE StaticAnalysis
  */
 CREATE TABLE StaticIssue
 (
-    static_issue_ref INTEGER REFERENCES StaticAnalysis (static_issue_id)
+    static_issue_ref INTEGER REFERENCES StaticAnalysis (_id)
 		ON DELETE CASCADE ON UPDATE CASCADE,
     line_number INTEGER,
     type TEXT,
-    descirption TEXT
+    description TEXT
 )
 
 
@@ -90,9 +90,9 @@ CREATE TABLE StaticIssue
  */
 CREATE TABLE Test
 (
-    test_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
+    #test_id INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE NOT NULL,
    	name TEXT,
-   	descirption TEXT, 
+   	description TEXT, 
    	result BOOLEAN
 )
 
@@ -100,8 +100,8 @@ CREATE TABLE Test
  */
 CREATE TABLE IO_Element
 (
-    test_ref INTEGER REFERENCES StaticAnalysis (static_issue_id)
-		ON DELETE CASCADE ON UPDATE CASCADE,
+    test_ref INTEGER REFERENCES StaticAnalysis (_id)
+		ON DELETE CASCA  ON UPDATE CASCADE,
     value TEXT,
     input BOOLEAN
 )
