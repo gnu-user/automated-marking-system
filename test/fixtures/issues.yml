@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  method: MyString
+  line_number: 1
+  col_number: 1
+  issue_type: MyString
+  message: MyText
+  relavent_code: MyText
+
+two:
+  method: MyString
+  line_number: 1
+  col_number: 1
+  issue_type: MyString
+  message: MyText
+  relavent_code: MyText
