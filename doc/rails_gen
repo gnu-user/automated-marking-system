@@ -1,39 +1,54 @@
 # Clone Detection
 
 rails generate model CloneIncident similarity:number
-#Needs 2 DiffFiles 
+#Needs 2 DiffFiles
+has_many :diff_files
+has_many :diff_entries, through: :diff_files
+has_many :lines, through: :diff_entries
 
 rails generate model DiffFile name:string
 #Needs many DiffEntry
 #Links to 1 CloneIncident
+belongs_to clone_incidents
+has_many :diff_entries
+has_many :lines, through: :diff_entries
 
 rails generate model DiffEntry position:string
 #Needs many Line
 #Links to 1 DiffFile
+belongs_to diff_files
+has_many :lines
 
 rails generate model Line text_line:text
 #Links to 1 DiffEntry
+belongs_to diff_entries
 
 # Compiler Issues
 
 rails generate model CompilerIssue filename:text
 #Needs many Issue
+has_many :issues
 
 rails generate model Issue method:string line_number:integer col_number:integer issue_type:string message:text relavent_code:text
 #Links to 1 CompilerIssue
+belongs_to :compiler_issues
 
 # Static Analysis
 
 rails generate model StaticAnalysis filename:string
 #Needs many StaticIssue
+has_many :static_issues
 
 rails generate model StaticIssue line_number:integer type:string description:text
 #Links to 1 CompilerIssue
+belongs_to :static_analyses
 
 # Test
 
 rails generate model Test name:string description:text result:boolean
 # Needs many IO_Elements
+has_many :io_elements
 
 rails generate model IO_Element value:text input:boolean
 # Links to 1 Test
+belongs_to :tests
