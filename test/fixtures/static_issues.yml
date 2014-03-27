@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  line_number: 1
+  type: 
+  description: MyText
+
+two:
+  line_number: 1
+  type: 
+  description: MyText
