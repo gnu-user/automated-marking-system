@@ -1,6 +1,6 @@
 # Clone Detection
 
-rails generate model CloneIncident similarity:number
+rails generate model CloneIncident similarity:float
 #Needs 2 DiffFiles
 has_many :diff_files
 has_many :diff_entries, through: :diff_files

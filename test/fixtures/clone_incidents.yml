@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  similarity: 
+  similarity: 1.5
 
 two:
-  similarity: 
+  similarity: 1.5

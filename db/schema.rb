@@ -11,10 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140327135622) do
+ActiveRecord::Schema.define(version: 20140329011541) do
 
   create_table "clone_incidents", force: true do |t|
-    t.integer  "similarity"
+    t.float    "similarity"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
