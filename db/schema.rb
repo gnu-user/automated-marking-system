@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140329011541) do
+ActiveRecord::Schema.define(version: 20140402191412) do
 
   create_table "clone_incidents", force: true do |t|
     t.float    "similarity"
@@ -26,39 +26,34 @@ ActiveRecord::Schema.define(version: 20140329011541) do
   end
 
   create_table "diff_entries", force: true do |t|
-    t.string   "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string  "position"
+    t.integer "diff_file_id"
   end
 
   create_table "diff_files", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string  "name"
+    t.integer "clone_incident_id"
   end
 
   create_table "io_elements", force: true do |t|
-    t.text     "value"
-    t.boolean  "input"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.text    "value"
+    t.boolean "input"
+    t.integer "test_id"
   end
 
   create_table "issues", force: true do |t|
-    t.string   "method"
-    t.integer  "line_number"
-    t.integer  "col_number"
-    t.string   "issue_type"
-    t.text     "message"
-    t.text     "relavent_code"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string  "method"
+    t.integer "line_number"
+    t.integer "col_number"
+    t.string  "issue_type"
+    t.text    "message"
+    t.text    "relavent_code"
+    t.integer "compiler_issue_id"
   end
 
   create_table "lines", force: true do |t|
-    t.text     "text_line"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.text    "text_line"
+    t.integer "diff_entry_id"
   end
 
   create_table "static_analyses", force: true do |t|
@@ -68,11 +63,10 @@ ActiveRecord::Schema.define(version: 20140329011541) do
   end
 
   create_table "static_issues", force: true do |t|
-    t.integer  "line_number"
-    t.string   "type"
-    t.text     "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "line_number"
+    t.string  "type"
+    t.text    "description"
+    t.integer "static_analysis_id"
   end
 
   create_table "tests", force: true do |t|

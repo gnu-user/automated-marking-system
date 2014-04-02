@@ -9,19 +9,21 @@ has_many :lines, through: :diff_entries
 rails generate model DiffFile name:string
 #Needs many DiffEntry
 #Links to 1 CloneIncident
-belongs_to clone_incidents
+belongs_to :clone_incident
 has_many :diff_entries
 has_many :lines, through: :diff_entries
 
 rails generate model DiffEntry position:string
 #Needs many Line
 #Links to 1 DiffFile
-belongs_to diff_files
+belongs_to :diff_file
 has_many :lines
 
 rails generate model Line text_line:text
 #Links to 1 DiffEntry
-belongs_to diff_entries
+belongs_to :diff_entry
+
+rails generate migration AddCloneIncidentRelationships
 
 # Compiler Issues
 
@@ -31,7 +33,9 @@ has_many :issues
 
 rails generate model Issue method:string line_number:integer col_number:integer issue_type:string message:text relavent_code:text
 #Links to 1 CompilerIssue
-belongs_to :compiler_issues
+belongs_to :compiler_issue
+
+rails generate migration AddCompilerIssueRelationships
 
 # Static Analysis
 
@@ -41,7 +45,9 @@ has_many :static_issues
 
 rails generate model StaticIssue line_number:integer type:string description:text
 #Links to 1 CompilerIssue
-belongs_to :static_analyses
+belongs_to :static_analysis
+
+rails generate migration AddStaticAnalysisRelationships
 
 # Test
 
@@ -51,4 +57,6 @@ has_many :io_elements
 
 rails generate model IO_Element value:text input:boolean
 # Links to 1 Test
-belongs_to :tests
+belongs_to :test
+
+rails generate migration AddTestRelationships
