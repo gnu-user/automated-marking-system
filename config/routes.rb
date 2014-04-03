@@ -12,7 +12,9 @@ AutomatedMarkingSystem::Application.routes.draw do
   get 'student/grades' => 'student#grading'
   get 'admin' => 'admin#index'
   get 'admin/new' => 'admin#new'
-  get 'admin/grades' => 'admin#grading'
+  get 'admin/grades/:id' => 'admin#grading'
+  get 'admin/grades/:id/cheating' => 'admin#cheat'
+  get 'admin/assignment/:id' => 'admin#show'
 
   #get "/404", :to => "errors#not_found"
   #get "/422", :to => "errors#unacceptable"
