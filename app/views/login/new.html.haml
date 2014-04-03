@@ -1,0 +1,74 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}
+      %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+        %meta{:content => "", :name => "description"}
+          %meta{:content => "", :name => "author"}
+            %title Register - AMS
+
+  %body
+    .container
+      .row
+        .col-xs-12.col-sm-8.col-md-6.col-sm-offset-2.col-md-offset-3
+          %form{:role => "form"}
+            %h2
+              Please Register
+              %small An account is required.
+            %hr.colorgraph
+              .row
+                .col-xs-12.col-sm-6.col-md-6
+                  .form-group
+                    %input#first_name.form-control.input-lg{:name => "first_name", :placeholder => "First Name", :tabindex => "1", :type => "text"}
+                .col-xs-12.col-sm-6.col-md-6
+                  .form-group
+                    %input#last_name.form-control.input-lg{:name => "last_name", :placeholder => "Last Name", :tabindex => "2", :type => "text"}
+              .form-group
+                %input#student_id.form-control.input-lg{:name => "student_id", :placeholder => "Student ID", :tabindex => "3", :type => "text"}
+              .form-group
+                %input#email.form-control.input-lg{:name => "email", :placeholder => "Email Address", :tabindex => "4", :type => "email"}
+              .row
+                .col-xs-12.col-sm-6.col-md-6
+                  .form-group
+                    %input#password.form-control.input-lg{:name => "password", :placeholder => "Password", :tabindex => "5", :type => "password"}
+                .col-xs-12.col-sm-6.col-md-6
+                  .form-group
+                    %input#password_confirmation.form-control.input-lg{:name => "password_confirmation", :placeholder => "Confirm Password", :tabindex => "6", :type => "password"}
+              .row
+                .col-xs-4.col-sm-3.col-md-3
+                  %span.button-checkbox
+                    %button.btn{"data-color" => "info", :tabindex => "7", :type => "button"} I Agree
+                    %input#t_and_c.hidden{:name => "t_and_c", :type => "checkbox", :value => "1"}
+                .col-xs-8.col-sm-9.col-md-9
+                  By clicking
+                  = succeed "," do
+                    %strong.label.label-primary Register
+                  you agree to the
+                  %a{"data-target" => "#t_and_c_m", "data-toggle" => "modal", :href => "#"} Terms and Conditions
+                  set out by the University of Ontario Institute of Technology.
+              %hr.colorgraph
+                .row
+                  .col-xs-12.col-md-6
+                    %input.btn.btn-primary.btn-block.btn-lg{:tabindex => "7", :type => "submit", :value => "Register"}/
+                  .col-xs-12.col-md-6
+                    %a.btn.btn-success.btn-block.btn-lg{:href => "#"} Sign In
+      / Modal
+      #t_and_c_m.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+        .modal-dialog.modal-lg
+          .modal-content
+            .modal-header
+              %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+              %h4#myModalLabel.modal-title Terms & Conditions
+            .modal-body
+              %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.
+              %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.
+              %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.
+              %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.
+              %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.
+              %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.
+              %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.
+            .modal-footer
+              %button.btn.btn-primary{"data-dismiss" => "modal", :type => "button"} I Agree
+          / /.modal-content
+        / /.modal-dialog
+      / /.modal
