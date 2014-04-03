@@ -18,7 +18,7 @@
             %i.fa.fa-edit
             Assignments
         %li
-          %a{:href => "/student/grades"}
+          %a{:href => "/student/grades/4"}
             %i.fa.fa-bar-chart-o
             Grades
       %ul.nav.navbar-nav.navbar-right.navbar-user
@@ -95,28 +95,31 @@
                 %tbody
                   %tr.success
                     %td
-                      %a{:href => "student/:id"} Assignment 1
+                      %a{:href => "/student/assignment_1.cpp"} Assignment 1
                     %td 10/20/2013 11:59 PM
                     %td 10/15/2013 3:29 PM
-                    %td 84%
+                    %td
+                      %a{:href => "/admin/grades/1"} 84%
                   %tr.success
                     %td
-                      %a{:href => "#"} Assignment 2
+                      %a{:href => "/student/assignment_2.cpp"} Assignment 2
                     %td 10/29/2013 11:59 PM
                     %td 10/29/2013 11:57 PM
-                    %td 71%
+                    %td
+                      %a{:href => "/admin/grades/2"} 74%
                   %tr.danger
                     %td
-                      %a{:href => "#"} Assignment 3
+                      %a{:href => "404-html"} Assignment 3
                     %td 11/15/2013 11:59 PM
                     %td
                       %span.label.label-danger
                         %span.fa.fa-warning
                         NOT SUBMITTED
-                    %td 0%
+                    %td
+                      %a{:href => "/admin/grades/3"} 0%
                   %tr.warning
                     %td
-                      %a{:href => "#"} Assignment 4
+                      %a{:href => "student/assignment/4"} Assignment 4
                     %td 11/28/2013 11:59 PM
                     %td
                       %span.label.label-warning
