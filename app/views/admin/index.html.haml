@@ -18,16 +18,16 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.navbar-brand{:href => "index.html"} AMS Administration
+          %a.navbar-brand{:href => "admin"} AMS Administration
         / Collect the nav links, forms, and other content for toggling
         .collapse.navbar-collapse.navbar-ex1-collapse
           %ul.nav.navbar-nav.side-nav
             %li.active
-              %a{:href => "index.html"}
+              %a{:href => "admin"}
                 %i.fa.fa-edit
                 Assignments
             %li
-              %a{:href => "grading.html"}
+              %a{:href => "/admin/grades"}
                 %i.fa.fa-bar-chart-o
                 Grading
           %ul.nav.navbar-nav.navbar-right.navbar-user
@@ -188,7 +188,7 @@
                         %td 11/28/2013 11:59 PM
                         %td 12
                 .text-right
-                  %a{:href => "assignment-post.html"}
+                  %a{:href => "/admin/new"}
                     Add New Assignment
                     %i.fa.fa-arrow-circle-right
         / /.row
