@@ -9,8 +9,13 @@
 //
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
-//
+
 //= require jquery
+//= require bootstrap
+//= require jquery-tablesorter
+//= require tables
 //= require jquery_ujs
-//= require turbolinks
+//= require moment
+//= require bootstrap-datetimepicker
+//= require custom
 //= require_tree .
