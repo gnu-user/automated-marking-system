@@ -8,9 +8,22 @@
 
     %title="Dashboard - AMS #{@title}"
     %link{:href => "//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css", :rel => "stylesheet"}
-    %link{:href => "//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css", :rel => "stylesheet"}
+    %link{:href => "//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.min.css", :rel => "stylesheet"}
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
     = yield
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    %script{:src => "//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"}
+    %script{:src => "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.1/js/bootstrap.min.js"}
+    %script{:src => "//cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.13.3/jquery.tablesorter.min.js"}
+    %script{:src => "//cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"}
+    %script{:src => "//cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.0.0/js/bootstrap-datetimepicker.min.js"}
+    :javascript
+      $(function () {
+          $('#postdatepicker').datetimepicker();
+          $('#duedatepicker').datetimepicker();
+          $('#datetimepicker1').datetimepicker();
+      });
+      $(function() {
+          $("table").tablesorter({debug: true});
+      });
