@@ -1,132 +1,97 @@
 -# This file is app/view/student/index.html.haml
-#wrapper
-  / Sidebar
-  %nav.navbar.navbar-inverse.navbar-fixed-top{:role => "navigation"}
-    / Brand and toggle get grouped for better mobile display
-    .navbar-header
-      %button.navbar-toggle{"data-target" => ".navbar-ex1-collapse", "data-toggle" => "collapse", :type => "button"}
-        %span.sr-only Toggle navigation
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      %a.navbar-brand{:href => "/student"} AMS Student
-    / Collect the nav links, forms, and other content for toggling
-    .collapse.navbar-collapse.navbar-ex1-collapse
-      %ul.nav.navbar-nav.side-nav
+#page-wrapper
+  .row
+    .col-lg-12
+      %h1
+        Assignments
+        %small Overview
+      %ol.breadcrumb
         %li.active
-          %a{:href => "/student"}
-            %i.fa.fa-edit
-            Assignments
-        %li
-          %a{:href => "/student/grades/4"}
-            %i.fa.fa-bar-chart-o
-            Grades
-      %ul.nav.navbar-nav.navbar-right.navbar-user
-        %li.dropdown.user-dropdown
-          %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-            %i.fa.fa-user
-            Richard Burt
-            %b.caret
-          %ul.dropdown-menu
-            %li
-              %a{:href => "#"}
-                %i.fa.fa-power-off
-                Log Out
-    / /.navbar-collapse
-  #page-wrapper
-    .row
-      .col-lg-12
-        %h1
+          %i.fa.fa-edit
           Assignments
-          %small Overview
-        %ol.breadcrumb
-          %li.active
+  / /.row
+  .row
+    .col-lg-4
+      .panel.panel-success
+        .panel-heading
+          .row
+            .col-xs-6
+              %i.fa.fa-check.fa-5x  
+            .col-xs-6.text-right
+              %p.announcement-heading 2
+              %p.announcement-text Assignments Graded
+        
+    .col-lg-4
+      .panel.panel-warning
+        .panel-heading
+          .row
+            .col-xs-6
+              %i.fa.fa-exclamation-triangle.fa-5x
+            .col-xs-6.text-right
+              %p.announcement-heading 1
+              %p.announcement-text Assignment Not Submitted!
+
+    .col-lg-4
+      .panel.panel-danger
+        .panel-heading
+          .row
+            .col-xs-6
+              %i.fa.fa-tasks.fa-5x
+            .col-xs-6.text-right
+              %p.announcement-heading 1
+              %p.announcement-text Submission Errors
+
+  / /.row
+  .row
+    .col-lg-12
+      .panel.panel-primary
+        .panel-heading
+          %h3.panel-title
             %i.fa.fa-edit
-            Assignments
-    / /.row
-    .row
-      .col-lg-4
-        .panel.panel-success
-          .panel-heading
-            .row
-              .col-xs-6
-                %i.fa.fa-check.fa-5x
-              .col-xs-6.text-right
-                %p.announcement-heading 2
-                %p.announcement-text Assignments Graded
+            Posted Assignments
+        .panel-body
+          .table-responsive
+            %table.table.table-bordered.table-hover.table-striped.tablesorter
+              %thead
+                %tr
+                  %th Assignment
+                  %th Date Due
+                  %th Date Submitted
+                  %th Grade
+              %tbody
+                %tr.success
+                  %td
+                    %a{:href => "/student/assignment_1.cpp"} Assignment 1
+                  %td 10/20/2013 11:59 PM
+                  %td 10/15/2013 3:29 PM
+                  %td
+                    %a{:href => "/admin/grades/1"} 84%
+                %tr.success
+                  %td
+                    %a{:href => "/student/assignment_2.cpp"} Assignment 2
+                  %td 10/29/2013 11:59 PM
+                  %td 10/29/2013 11:57 PM
+                  %td
+                    %a{:href => "/admin/grades/2"} 74%
+                %tr.danger
+                  %td
+                    %a{:href => "404-html"} Assignment 3
+                  %td 11/15/2013 11:59 PM
+                  %td
+                    %span.label.label-danger
+                      %span.fa.fa-warning
+                      NOT SUBMITTED
+                  %td
+                    %a{:href => "/admin/grades/3"} 0%
+                %tr.warning
+                  %td
+                    %a{:href => "student/assignment/4"} Assignment 4
+                  %td 11/28/2013 11:59 PM
+                  %td
+                    %span.label.label-warning
+                      %span.fa.fa-warning
+                      NOT SUBMITTED
+                  %td
           
-      .col-lg-4
-        .panel.panel-warning
-          .panel-heading
-            .row
-              .col-xs-6
-                %i.fa.fa-exclamation-triangle.fa-5x
-              .col-xs-6.text-right
-                %p.announcement-heading 1
-                %p.announcement-text Assignment Not Submitted!
-
-      .col-lg-4
-        .panel.panel-danger
-          .panel-heading
-            .row
-              .col-xs-6
-                %i.fa.fa-tasks.fa-5x
-              .col-xs-6.text-right
-                %p.announcement-heading 1
-                %p.announcement-text Submission Errors
-
-    / /.row
-    .row
-      .col-lg-12
-        .panel.panel-primary
-          .panel-heading
-            %h3.panel-title
-              %i.fa.fa-edit
-              Posted Assignments
-          .panel-body
-            .table-responsive
-              %table.table.table-bordered.table-hover.table-striped.tablesorter
-                %thead
-                  %tr
-                    %th Assignment
-                    %th Date Due
-                    %th Date Submitted
-                    %th Grade
-                %tbody
-                  %tr.success
-                    %td
-                      %a{:href => "/student/assignment_1.cpp"} Assignment 1
-                    %td 10/20/2013 11:59 PM
-                    %td 10/15/2013 3:29 PM
-                    %td
-                      %a{:href => "/admin/grades/1"} 84%
-                  %tr.success
-                    %td
-                      %a{:href => "/student/assignment_2.cpp"} Assignment 2
-                    %td 10/29/2013 11:59 PM
-                    %td 10/29/2013 11:57 PM
-                    %td
-                      %a{:href => "/admin/grades/2"} 74%
-                  %tr.danger
-                    %td
-                      %a{:href => "404-html"} Assignment 3
-                    %td 11/15/2013 11:59 PM
-                    %td
-                      %span.label.label-danger
-                        %span.fa.fa-warning
-                        NOT SUBMITTED
-                    %td
-                      %a{:href => "/admin/grades/3"} 0%
-                  %tr.warning
-                    %td
-                      %a{:href => "student/assignment/4"} Assignment 4
-                    %td 11/28/2013 11:59 PM
-                    %td
-                      %span.label.label-warning
-                        %span.fa.fa-warning
-                        NOT SUBMITTED
-                    %td
-            
-    / /.row
-  / /#page-wrapper
-  / /#wrapper
+  / /.row
+/ /#page-wrapper

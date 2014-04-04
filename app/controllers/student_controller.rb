@@ -1,8 +1,9 @@
 class StudentController < ApplicationController
+  layout "student"
   layout "code", only: [:show]
 
   def index
-    @title = 'Student'
+    #@title = 'AMSStudent'
   end
 
   def assignment 
