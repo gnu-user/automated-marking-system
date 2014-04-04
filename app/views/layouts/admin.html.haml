@@ -30,11 +30,12 @@
         .collapse.navbar-collapse.navbar-ex1-collapse
           %ul.nav.navbar-nav.side-nav
             / Fix this to properly switch
-            %li.active
+            %li.active{:id => "assignment_tab"}
               %a{:href => "/admin"}
                 %i.fa.fa-edit
                 Assignments
-            %li
+            }
+            %li{:id => "grading_tab"}
               %a{:href => "/admin/grades/4"}
                 %i.fa.fa-bar-chart-o
                 Grading
