@@ -18,7 +18,8 @@
             .col-xs-6
               %i.fa.fa-check.fa-5x
             .col-xs-6.text-right
-              %p.announcement-heading 12
+              %p.announcement-heading
+                = @review_submissions
               %p.announcement-text Submissions
         %a{:href => "/admin/grades/4"}
           .panel-footer.announcement-bottom
@@ -34,7 +35,8 @@
             .col-xs-6
               %i.fa.fa-exclamation-triangle.fa-5x
             .col-xs-6.text-right
-              %p.announcement-heading 9
+              %p.announcement-heading 
+                = @view_assignment
               %p.announcement-text Not Submitted
         %a{:href => "/admin/assignment/4"}
           .panel-footer.announcement-bottom
@@ -50,7 +52,8 @@
             .col-xs-6
               %i.fa.fa-tasks.fa-5x
             .col-xs-6.text-right
-              %p.announcement-heading 2
+              %p.announcement-heading 
+                = @resolve_issues
               %p.announcement-text Submission Errors
         %a{:href => "/admin/grades/4/cheating"}
           .panel-footer.announcement-bottom
@@ -73,10 +76,10 @@
               %thead
                 %tr
                   %th Assignment
-                  %th Average Grade
                   %th Date Posted
                   %th Date Due
                   %th Submissions
+                  %th Average Grade                  
               %tbody
                 %tr
                   %td

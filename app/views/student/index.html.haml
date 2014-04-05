@@ -18,7 +18,8 @@
             .col-xs-6
               %i.fa.fa-check.fa-5x  
             .col-xs-6.text-right
-              %p.announcement-heading 2
+              %p.announcement-heading
+                = @assignmnet_graded
               %p.announcement-text Assignments Graded
         
     .col-lg-4
@@ -28,7 +29,8 @@
             .col-xs-6
               %i.fa.fa-exclamation-triangle.fa-5x
             .col-xs-6.text-right
-              %p.announcement-heading 1
+              %p.announcement-heading 
+                = @assignment_left
               %p.announcement-text Assignment Not Submitted!
 
     .col-lg-4
@@ -38,7 +40,8 @@
             .col-xs-6
               %i.fa.fa-tasks.fa-5x
             .col-xs-6.text-right
-              %p.announcement-heading 1
+              %p.announcement-heading 
+                = @assignment_error
               %p.announcement-text Submission Errors
 
   / /.row
@@ -68,7 +71,7 @@
                     %a{:href => "/admin/grades/1"} 84%
                 %tr.success
                   %td
-                    %a{:href => "/student/assignment_2.cpp"} Assignment 2
+                    %a{:href => ""} Assignment 2
                   %td 10/29/2013 11:59 PM
                   %td 10/29/2013 11:57 PM
                   %td

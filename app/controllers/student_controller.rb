@@ -11,6 +11,12 @@ class StudentController < ApplicationController
     # handle links for finished assignments
     # handle links for active assignments
     # handle grade links for finished assignments
+    # Generate the number of assignments graded
+    # Generate the number of assignments not submitted
+    # Generate the number of assignments submission errors
+    @assignmnet_graded = 2
+    @assignment_left = 1
+    @assignment_error = 1
   end
 
   def assignment 
@@ -23,6 +29,7 @@ class StudentController < ApplicationController
 
   def show
   	# TODO get the code and populate the %pre element, id='code'
+    @code = "cout << \"winning\" << endl;"
   end
 
   def grading

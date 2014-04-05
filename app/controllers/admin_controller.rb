@@ -1,5 +1,4 @@
 class AdminController < ApplicationController
-  @grading = false
 	# TODO FOR ALL
 	# handle Grades link for latest assignments (better define)
 	# handle logout
@@ -10,6 +9,9 @@ class AdminController < ApplicationController
     # hanlde view assignment positing (go to latest assignment)
     # handle link to assignment page (for review)
     # handle link to grades for each finished asssignment
+    @review_submissions = 12
+    @view_assignment = 9
+    @resolve_issues = 2
   end
 
   def new
@@ -20,7 +22,6 @@ class AdminController < ApplicationController
   end
 
   def grading
-  	@grading = true
     # TODO handle grades page using param[:id]
   end
 
