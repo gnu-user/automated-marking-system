@@ -1,154 +1,120 @@
 -# This file is app/view/admin/index.html.haml
-#wrapper
-  / Sidebar
-  %nav.navbar.navbar-inverse.navbar-fixed-top{:role => "navigation"}
-    / Brand and toggle get grouped for better mobile display
-    .navbar-header
-      %button.navbar-toggle{"data-target" => ".navbar-ex1-collapse", "data-toggle" => "collapse", :type => "button"}
-        %span.sr-only Toggle navigation
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      %a.navbar-brand{:href => "/admin"} AMS Administration
-    / Collect the nav links, forms, and other content for toggling
-    .collapse.navbar-collapse.navbar-ex1-collapse
-      %ul.nav.navbar-nav.side-nav
+#page-wrapper
+  .row
+    .col-lg-12
+      %h1
+        Assignments
+        %small Overview
+      %ol.breadcrumb
         %li.active
-          %a{:href => "/admin"}
-            %i.fa.fa-edit
-            Assignments
-        %li
-          %a{:href => "/admin/grades/4"}
-            %i.fa.fa-bar-chart-o
-            Grading
-      %ul.nav.navbar-nav.navbar-right.navbar-user
-        %li.dropdown.user-dropdown
-          %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-            %i.fa.fa-user
-            Dr. Eyhab Al-Masri
-            %b.caret
-          %ul.dropdown-menu
-            %li
-              %a{:href => "#"}
-                %i.fa.fa-power-off
-                Log Out
-    / /.navbar-collapse
-  #page-wrapper
-    .row
-      .col-lg-12
-        %h1
+          %i.fa.fa-edit
           Assignments
-          %small Overview
-        %ol.breadcrumb
-          %li.active
-            %i.fa.fa-edit
-            Assignments
-    / /.row
-    .row
-      .col-lg-4
-        .panel.panel-success
-          .panel-heading
+  / /.row
+  .row
+    .col-lg-4
+      .panel.panel-success
+        .panel-heading
+          .row
+            .col-xs-6
+              %i.fa.fa-check.fa-5x
+            .col-xs-6.text-right
+              %p.announcement-heading
+                = @review_submissions
+              %p.announcement-text Submissions
+        %a{:href => "/admin/grades/4"}
+          .panel-footer.announcement-bottom
             .row
               .col-xs-6
-                %i.fa.fa-check.fa-5x
+                Review Submissions
               .col-xs-6.text-right
-                %p.announcement-heading 12
-                %p.announcement-text Submissions
-          %a{:href => "/admin/grades/4"}
-            .panel-footer.announcement-bottom
-              .row
-                .col-xs-6
-                  Review Submissions
-                .col-xs-6.text-right
-                  %i.fa.fa-arrow-circle-right
-      .col-lg-4
-        .panel.panel-warning
-          .panel-heading
-            .row
-              .col-xs-6
-                %i.fa.fa-exclamation-triangle.fa-5x
-              .col-xs-6.text-right
-                %p.announcement-heading 9
-                %p.announcement-text Not Submitted
-          %a{:href => "/admin/assignment/4"}
-            .panel-footer.announcement-bottom
-              .row
-                .col-xs-6
-                  View Assignment Posting
-                .col-xs-6.text-right
-                  %i.fa.fa-arrow-circle-right
-      .col-lg-4
-        .panel.panel-danger
-          .panel-heading
-            .row
-              .col-xs-6
-                %i.fa.fa-tasks.fa-5x
-              .col-xs-6.text-right
-                %p.announcement-heading 2
-                %p.announcement-text Submission Errors
-                / grades /cheating
-          %a{:href => "/admin/grades/4"}
-            .panel-footer.announcement-bottom
-              .row
-                .col-xs-6
-                  Resolve Issues
-                .col-xs-6.text-right
-                  %i.fa.fa-arrow-circle-right
-    / /.row
-    .row
-      .col-lg-12
-        .panel.panel-primary
-          .panel-heading
-            %h3.panel-title
-              %i.fa.fa-edit
-              Posted Assignments
-          .panel-body
-            .table-responsive
-              %table.table.table-bordered.table-hover.table-striped.tablesorter
-                %thead
-                  %tr
-                    %th Assignment
-                    %th Average Grade
-                    %th Date Posted
-                    %th Date Due
-                    %th Submissions
-                %tbody
-                  %tr
-                    %td
-                      %a{:href => "/admin/assignment/1"} Assignment 1
-                    %td
-                      %a{:href => "/admin/grades/1"} 80%
-                    %td 10/11/2013 3:29 PM
-                    %td 10/20/2013 11:59 PM
-                    %td 33
-                  %tr
-                    %td
-                      %a{:href => "/admin/assignment/2"} Assignment 2
-                    %td
-                      %a{:href => "/admin/grades/2"} 70%
-                    %td 10/22/2013 9:12 AM
-                    %td 10/29/2013 11:59 PM
-                    %td 22
-                  %tr
-                    %td
-                      %a{:href => "/admin/assignment/3"} Assignment 3
-                    %td
-                      %a{:href => "/admin/grades/3"} 55%
-                    %td 11/05/2013 11:22 AM
-                    %td 11/15/2013 11:59 PM
-                    %td 21
-                  %tr.success
-                    %td
-                      %a{:href => "/admin/assignment/4"} Assignment 4
-                    %td
-                      
-                    %td 11/21/2013 1:12 PM
-                    %td 11/28/2013 11:59 PM
-                    %td 12
-            .text-right
-              %a{:href => "/admin/new"}
-                Add New Assignment
                 %i.fa.fa-arrow-circle-right
-    / /.row
-  / /#page-wrapper
-/ /#wrapper
+    .col-lg-4
+      .panel.panel-warning
+        .panel-heading
+          .row
+            .col-xs-6
+              %i.fa.fa-exclamation-triangle.fa-5x
+            .col-xs-6.text-right
+              %p.announcement-heading 
+                = @view_assignment
+              %p.announcement-text Not Submitted
+        %a{:href => "/admin/assignment/4"}
+          .panel-footer.announcement-bottom
+            .row
+              .col-xs-6
+                View Assignment Posting
+              .col-xs-6.text-right
+                %i.fa.fa-arrow-circle-right
+    .col-lg-4
+      .panel.panel-danger
+        .panel-heading
+          .row
+            .col-xs-6
+              %i.fa.fa-tasks.fa-5x
+            .col-xs-6.text-right
+              %p.announcement-heading 
+                = @resolve_issues
+              %p.announcement-text Submission Errors
+        %a{:href => "/admin/grades/4/cheating"}
+          .panel-footer.announcement-bottom
+            .row
+              .col-xs-6
+                Resolve Issues
+              .col-xs-6.text-right
+                %i.fa.fa-arrow-circle-right
+  / /.row
+  .row
+    .col-lg-12
+      .panel.panel-primary
+        .panel-heading
+          %h3.panel-title
+            %i.fa.fa-edit
+            Posted Assignments
+        .panel-body
+          .table-responsive
+            %table.table.table-bordered.table-hover.table-striped.tablesorter
+              %thead
+                %tr
+                  %th Assignment
+                  %th Date Posted
+                  %th Date Due
+                  %th Submissions
+                  %th Average Grade                  
+              %tbody
+                %tr
+                  %td
+                    %a{:href => "/admin/assignment/1"} Assignment 1
+                  %td 10/11/2013 3:29 PM
+                  %td 10/20/2013 11:59 PM
+                  %td 33
+                  %td
+                    %a{:href => "/admin/grades/1"} 80%
+                %tr
+                  %td
+                    %a{:href => "/admin/assignment/2"} Assignment 2
+                  %td 10/22/2013 9:12 AM
+                  %td 10/29/2013 11:59 PM
+                  %td 22
+                  %td
+                    %a{:href => "/admin/grades/2"} 70%
+                %tr
+                  %td
+                    %a{:href => "/admin/assignment/3"} Assignment 3
+                  %td 11/05/2013 11:22 AM
+                  %td 11/15/2013 11:59 PM
+                  %td 21
+                  %td
+                    %a{:href => "/admin/grades/3"} 55%
+                %tr.success
+                  %td
+                    %a{:href => "/admin/assignment/4"} Assignment 4                    
+                  %td 11/21/2013 1:12 PM
+                  %td 11/28/2013 11:59 PM
+                  %td 12
+                  %td
+          .text-right
+            %a{:href => "/admin/new"}
+              Add New Assignment
+              %i.fa.fa-arrow-circle-right
+  / /.row
+/ /#page-wrapper

@@ -8,8 +8,9 @@ AutomatedMarkingSystem::Application.routes.draw do
   root to: redirect('/login')
   #root 'student#index'
   get 'student' => 'student#index', :as => :student
-  get 'student/assignment' => 'student#assignment'
-  get 'student/grades' => 'student#grading'
+  get 'student/:file' => 'student#show'
+  get 'student/assignment/:id' => 'student#assignment'
+  get 'student/grades/:id' => 'student#grading'
   get 'admin' => 'admin#index'
   get 'admin/new' => 'admin#new'
   get 'admin/grades/:id' => 'admin#grading'

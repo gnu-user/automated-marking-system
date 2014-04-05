@@ -1,255 +1,220 @@
--# This file is app/view/student/index.html.haml
-#wrapper
-  / Sidebar
-  %nav.navbar.navbar-inverse.navbar-fixed-top{:role => "navigation"}
-    / Brand and toggle get grouped for better mobile display
-    .navbar-header
-      %button.navbar-toggle{"data-target" => ".navbar-ex1-collapse", "data-toggle" => "collapse", :type => "button"}
-        %span.sr-only Toggle navigation
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      %a.navbar-brand{:href => "/student"} AMS Student
-    / Collect the nav links, forms, and other content for toggling
-    .collapse.navbar-collapse.navbar-ex1-collapse
-      %ul.nav.navbar-nav.side-nav
-        %li.active
+-# This file is app/view/student/assignment.html.haml
+#page-wrapper
+  .row
+    .col-lg-12
+      %h1
+        Submit Assignment
+        %small Submit your Assignment
+      %ol.breadcrumb
+        %li
           %a{:href => "/student"}
             %i.fa.fa-edit
             Assignments
-        %li
-          %a{:href => "/student/grades"}
-            %i.fa.fa-bar-chart-o
-            Grades
-      %ul.nav.navbar-nav.navbar-right.navbar-user
-        %li.dropdown.user-dropdown
-          %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-            %i.fa.fa-user
-            Richard Burt
-            %b.caret
-          %ul.dropdown-menu
-            %li
-              %a{:href => "#"}
-                %i.fa.fa-power-off
-                Log Out
-    / /.navbar-collapse
-  #page-wrapper
-    .row
-      .col-lg-12
-        %h1
+        %li.active
+          %i.fa.fa-plus
           Submit Assignment
-          %small Submit your Assignment
-        %ol.breadcrumb
-          %li
-            %a{:href => "/student"}
-              %i.fa.fa-edit
-              Assignments
-          %li.active
-            %i.fa.fa-plus
-            Submit Assignment
-    / /.row
-    .row
-      .col-lg-12
-        / DESCRIPTION
-        %h2 Assignment 1
-        .alert.alert-info.alert-dismissable
-          %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
-          Please make sure that you test and evaluate your submission thoroughly before the final submission,
-          your code
-          %strong must
-          not have any compiler errors in order for it to be evaluated.
-          %strong
-            Any submissions that do not compile cannot be evaluated and will receive a grade of zero.
-    .row
-      .col-lg-7
-        .panel.panel-default
-          .panel-heading
-            %h3.panel-title Description
-          .panel-body
-            %p
-              For your assignment you must create a commandline calculator program which will accept any two
-              numbers as input (both integers and floating point values) and perform one of the following
-              requested operations
-              %em add, subtract, multiply, divide
-              and display the results.
-      .col-lg-5
-        .panel.panel-default
-          .panel-heading
-            %h3.panel-title Requirements
-          .panel-body
-            .bs-example
-              %ul.list-group
-                %li.list-group-item
-                  %span.badge 60
-                  Maximum execution time (seconds)
-                %li.list-group-item
-                  %span.badge 1
-                  Maximum attempts
-                %li.list-group-item
-                  %span.badge C++
-                  Language
-                %li.list-group-item
-                  %span.badge 10%
-                  Code analysis weight
-                %li.list-group-item
-                  %span.badge 90%
-                  Test case weight
-    / TODO add css for more spacing before/after button
-    .row
-      .col-lg-12
+  / /.row
+  .row
+    .col-lg-12
+      / DESCRIPTION
+      %h2 Assignment 4
+      .alert.alert-info.alert-dismissable
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
+        Please make sure that you test and evaluate your submission thoroughly before the final submission,
+        your code
+        %strong must
+        not have any compiler errors in order for it to be evaluated.
+        %strong
+          Any submissions that do not compile cannot be evaluated and will receive a grade of zero.
+  .row
+    .col-lg-7
+      .panel.panel-default
+        .panel-heading
+          %h3.panel-title Description
+        .panel-body
+          %p
+            For your assignment you must create a commandline calculator program which will accept any two
+            numbers as input (both integers and floating point values) and perform one of the following
+            requested operations
+            %em add, subtract, multiply, divide
+            and display the results.
+    .col-lg-5
+      .panel.panel-default
+        .panel-heading
+          %h3.panel-title Requirements
+        .panel-body
+          .bs-example
+            %ul.list-group
+              %li.list-group-item
+                %span.badge 60
+                Maximum execution time (seconds)
+              %li.list-group-item
+                %span.badge 1
+                Maximum attempts
+              %li.list-group-item
+                %span.badge C++
+                Language
+              %li.list-group-item
+                %span.badge 10%
+                Code analysis weight
+              %li.list-group-item
+                %span.badge 90%
+                Test case weight
+  / TODO add css for more spacing before/after button
+  .row
+    .col-lg-12
+      %br
+        %center
+          %button.btn.btn-primary.btn-lg{:name => "submit", :type => "submit"} Upload Submission
         %br
-          %center
-            %button.btn.btn-primary.btn-lg{:name => "submit", :type => "submit"} Upload Submission
           %br
-            %br
-    / COMPILER OUTPUT
-    .row
-      .col-lg-12
-        .panel.panel-primary
-          .panel-heading
-            %h3.panel-title
-              %i.fa.fa-gear
-              Compiler Output
-          .panel-body
-            .table-responsive
-              %table.table.table-bordered.table-hover.table-striped.tablesorter
-                %thead
-                  %tr
-                    %th Type
-                    %th File
-                    %th Line, Column
-                    %th Code
-                    %th Description
-                %tbody
-                  %tr.warning
-                    %td Warning
-                    %td calculator.cpp
-                    %td 23, 5
-                    %td int number3 = 0;
-                    %td Unused variable 'number3' [-Wunused-variable]
-                  %tr.warning
-                    %td Warning
-                    %td calculator.cpp
-                    %td 24, 5
-                    %td int number4 = 0;
-                    %td Unused variable 'number4' [-Wunused-variable]
-                  %tr.danger
-                    %td Error
-                    %td calculator.cpp
-                    %td 42, 12
-                    %td number1 * str_number2
-                    %td Invalid conversion from 'string' to 'int' [-fpermissive]
-    / QUALITY METRICS
-    .row
-      .col-lg-12
-        .panel.panel-primary
-          .panel-heading
-            %h3.panel-title
-              %i.fa.fa-check-circle
-              Quality Assessment
-          .panel-body
-            .table-responsive
-              %table.table.table-bordered.table-hover.table-striped.tablesorter
-                %thead
-                  %tr
-                    %th Type
-                    %th File
-                    %th Line
-                    %th Description
-                %tbody
-                  %tr.warning
-                    %td Warning
-                    %td calculator.cpp
-                    %td 23
-                    %td Unused variable 'number3'
-                  %tr.warning
-                    %td Warning
-                    %td calculator.cpp
-                    %td 24
-                    %td Unused variable 'number4'
-                  %tr.warning
-                    %td Warning
-                    %td calculator.cpp
-                    %td 32
-                    %td Inconsistent use of tab and space indentation.
-                  %tr.danger
-                    %td Error
-                    %td calculator.cpp
-                    %td 42
-                    %td Invalid conversion from 'string' to 'int'
-    / SAMPLE EVALUATION
-    .row
-      .col-lg-12
-        .panel.panel-primary
-          .panel-heading
-            %h3.panel-title
-              %i.fa.fa-flag
-              Sample Evalution
-          .panel-body
-            .table-responsive
-              %table.table.table-bordered.table-hover.table-striped.tablesorter
-                %thead
-                  %tr
-                    %th Test Name
-                    %th Description
-                    %th Test Case
-                    %th Status
-                %tbody
-                  %tr
-                    %td Add
-                    %td Adds two integers
-                    %td
-                      %ul.list-unstyled
-                        %li input: 5
-                        %li input: 5
-                        %li output: 10
-                    %td
-                      %span.label.label-success
-                        %span.fa.fa-check
-                        PASS
-                  %tr
-                    %td Subtract
-                    %td Subtracts two integers
-                    %td
-                      %ul.list-unstyled
-                        %li input: 5
-                        %li input: 5
-                        %li output: 0
-                    %td
-                      %span.label.label-success
-                        %span.fa.fa-check
-                        PASS
-                  %tr
-                    %td Multiply
-                    %td Multiply two integers
-                    %td
-                      %ul.list-unstyled
-                        %li input: 5
-                        %li input: 5
-                        %li output: 25
-                    %td
-                      %span.label.label-success
-                        %span.fa.fa-check
-                        PASS
-                  %tr.danger
-                    %td Divide
-                    %td Divide two integers
-                    %td
-                      %ul.list-unstyled
-                        %li input: 0
-                        %li input: 5
-                        %li output: 0
-                    %td
-                      %span.label.label-danger
-                        %span.fa.fa-warning
-                        FAIL
-    / TEST OR SUBMIT
-    / TODO more button spacing between and above/below
-    .row
-      .col-log-12
-        %br
-          %center
-            %button.btn.btn-primary.btn-lg{:name => "test", :type => "button"} Test
-            %button.btn.btn-success.btn-lg{:name => "submit", :type => "submit"} Submit
-  / /#page-wrapper
-/ /#wrapper
+  / COMPILER OUTPUT
+  .row
+    .col-lg-12
+      .panel.panel-primary
+        .panel-heading
+          %h3.panel-title
+            %i.fa.fa-gear
+            Compiler Output
+        .panel-body
+          .table-responsive
+            %table.table.table-bordered.table-hover.table-striped.tablesorter
+              %thead
+                %tr
+                  %th Type
+                  %th File
+                  %th Line, Column
+                  %th Code
+                  %th Description
+              %tbody
+                %tr.warning
+                  %td Warning
+                  %td calculator.cpp
+                  %td 23, 5
+                  %td int number3 = 0;
+                  %td Unused variable 'number3' [-Wunused-variable]
+                %tr.warning
+                  %td Warning
+                  %td calculator.cpp
+                  %td 24, 5
+                  %td int number4 = 0;
+                  %td Unused variable 'number4' [-Wunused-variable]
+                %tr.danger
+                  %td Error
+                  %td calculator.cpp
+                  %td 42, 12
+                  %td number1 * str_number2
+                  %td Invalid conversion from 'string' to 'int' [-fpermissive]
+  / QUALITY METRICS
+  .row
+    .col-lg-12
+      .panel.panel-primary
+        .panel-heading
+          %h3.panel-title
+            %i.fa.fa-check-circle
+            Quality Assessment
+        .panel-body
+          .table-responsive
+            %table.table.table-bordered.table-hover.table-striped.tablesorter
+              %thead
+                %tr
+                  %th Type
+                  %th File
+                  %th Line
+                  %th Description
+              %tbody
+                %tr.warning
+                  %td Warning
+                  %td calculator.cpp
+                  %td 23
+                  %td Unused variable 'number3'
+                %tr.warning
+                  %td Warning
+                  %td calculator.cpp
+                  %td 24
+                  %td Unused variable 'number4'
+                %tr.warning
+                  %td Warning
+                  %td calculator.cpp
+                  %td 32
+                  %td Inconsistent use of tab and space indentation.
+                %tr.danger
+                  %td Error
+                  %td calculator.cpp
+                  %td 42
+                  %td Invalid conversion from 'string' to 'int'
+  / SAMPLE EVALUATION
+  .row
+    .col-lg-12
+      .panel.panel-primary
+        .panel-heading
+          %h3.panel-title
+            %i.fa.fa-flag
+            Sample Evalution
+        .panel-body
+          .table-responsive
+            %table.table.table-bordered.table-hover.table-striped.tablesorter
+              %thead
+                %tr
+                  %th Test Name
+                  %th Description
+                  %th Test Case
+                  %th Status
+              %tbody
+                %tr
+                  %td Add
+                  %td Adds two integers
+                  %td
+                    %ul.list-unstyled
+                      %li input: 5
+                      %li input: 5
+                      %li output: 10
+                  %td
+                    %span.label.label-success
+                      %span.fa.fa-check
+                      PASS
+                %tr
+                  %td Subtract
+                  %td Subtracts two integers
+                  %td
+                    %ul.list-unstyled
+                      %li input: 5
+                      %li input: 5
+                      %li output: 0
+                  %td
+                    %span.label.label-success
+                      %span.fa.fa-check
+                      PASS
+                %tr
+                  %td Multiply
+                  %td Multiply two integers
+                  %td
+                    %ul.list-unstyled
+                      %li input: 5
+                      %li input: 5
+                      %li output: 25
+                  %td
+                    %span.label.label-success
+                      %span.fa.fa-check
+                      PASS
+                %tr.danger
+                  %td Divide
+                  %td Divide two integers
+                  %td
+                    %ul.list-unstyled
+                      %li input: 0
+                      %li input: 5
+                      %li output: 0
+                  %td
+                    %span.label.label-danger
+                      %span.fa.fa-warning
+                      FAIL
+  / TEST OR SUBMIT
+  / TODO more button spacing between and above/below
+  .row
+    .col-log-12
+      %br
+        %center
+          %button.btn.btn-primary.btn-lg{:name => "test", :type => "button"} Test
+          %button.btn.btn-success.btn-lg{:name => "submit", :type => "submit"} Submit
+/ /#page-wrapper

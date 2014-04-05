@@ -1,191 +1,156 @@
 -# This file is app/view/admin/new.html.haml
-#wrapper
-  / Sidebar
-  %nav.navbar.navbar-inverse.navbar-fixed-top{:role => "navigation"}
-    / Brand and toggle get grouped for better mobile display
-    .navbar-header
-      %button.navbar-toggle{"data-target" => ".navbar-ex1-collapse", "data-toggle" => "collapse", :type => "button"}
-        %span.sr-only Toggle navigation
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      %a.navbar-brand{:href => "/admin"} AMS Administration
-    / Collect the nav links, forms, and other content for toggling
-    .collapse.navbar-collapse.navbar-ex1-collapse
-      %ul.nav.navbar-nav.side-nav
-        %li.active
+#page-wrapper
+  .row
+    .col-lg-12
+      %h1
+        Add New Assignment
+        %small Create a New Submission
+      %ol.breadcrumb
+        %li
           %a{:href => "/admin"}
             %i.fa.fa-edit
             Assignments
-        %li
-          %a{:href => "/admin/grades/4"}
-            %i.fa.fa-bar-chart-o
-            Grading
-      %ul.nav.navbar-nav.navbar-right.navbar-user
-        %li.dropdown.user-dropdown
-          %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-            %i.fa.fa-user
-            Dr. Eyhab Al-Masri
-            %b.caret
-          %ul.dropdown-menu
-            %li
-              %a{:href => "#"}
-                %i.fa.fa-power-off
-                Log Out
-    / /.navbar-collapse
-  #page-wrapper
-    .row
-      .col-lg-12
-        %h1
+        %li.active
+          %i.fa.fa-plus
           Add New Assignment
-          %small Create a New Submission
-        %ol.breadcrumb
-          %li
-            %a{:href => "/admin"}
-              %i.fa.fa-edit
-              Assignments
-          %li.active
-            %i.fa.fa-plus
-            Add New Assignment
-    / /.row
-    %form{:role => "form"}
-      .row
-        .col-lg-6
-          / DESCRIPTION
-          %h2 Description
-          .alert.alert-info.alert-dismissable
-            %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
-            Specify the assignment name, description, dates, and programming language below.
-          .form-group
-            %label Submission Name
-            %input.form-control{:name => "name", :placeholder => "Assignment 1...", :required => "", :type => "text"}
-              %p.help-block The name of the assignment.
-          .form-group
-            %label Description
-            %textarea.form-control{:name => "description", :required => "", :rows => "8"}
-            %p.help-block Assignment description, markdown format is supported.
-          .form-group
-            %label Post Date
-            #postdatepicker.input-group.date{:required => ""}
-              %input.form-control{:name => "postdate", :type => "text"}/
-              %span.input-group-addon
-                %span.fa.fa-calendar
-            %p.help-block The date the assignment will become available.
-          .form-group
-            %label Due Date
-            #duedatepicker.input-group.date{:required => ""}
-              %input.form-control{:name => "duedate", :type => "text"}/
-              %span.input-group-addon
-                %span.fa.fa-calendar
-            %p.help-block The deadline for the assignment.
-          .form-group
-            %label Language
-            %select.form-control{:required => ""}
-              %option C++
-        .col-lg-6
-          / EVALUATION TEST CASES
-          %h2 Evaluation
-          .alert.alert-info.alert-dismissable
-            %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
-            Specify the input and expected output for each test case to evaulate the code against.
-            %strong These test cases will be used for grading purposes.
-          .panel.panel-default
-            .panel-heading
-              %h3.panel-title Add a Test Case
-            .panel-body
-              .form-group
-                %label Test Case Name
-                %input.form-control{:name => "testname", :placeholder => "Test case...", :required => "", :type => "text"}
-                  %p.help-block The name of the test case, must be unique.
-              .form-group
-                %label Description
-                %textarea.form-control{:name => "testdescription", :required => "", :rows => "3"}
-                %p.help-block Description of the test case.
-              .form-group
-                %label Test Case
-                %textarea.form-control{:name => "testcase", :required => "", :rows => "8"}
-                %p.help-block
-                  Test cases uses YAML notation, press help for more details
-                  %button.btn.btn-primary{:type => "reset"}
-                    Help
-                    %span.fa.fa-code
+  / /.row
+  %form{:role => "form"}
+    .row
+      .col-lg-6
+        / DESCRIPTION
+        %h2 Description
+        .alert.alert-info.alert-dismissable
+          %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
+          Specify the assignment name, description, dates, and programming language below.
+        .form-group
+          %label Submission Name
+          %input.form-control{:name => "name", :placeholder => "Assignment 1...", :required => "", :type => "text"}
+            %p.help-block The name of the assignment.
+        .form-group
+          %label Description
+          %textarea.form-control{:name => "description", :required => "", :rows => "8"}
+          %p.help-block Assignment description, markdown format is supported.
+        .form-group
+          %label Post Date
+          #postdatepicker.input-group.date{:required => ""}
+            %input.form-control{:name => "postdate", :type => "text"}/
+            %span.input-group-addon
+              %span.fa.fa-calendar
+          %p.help-block The date the assignment will become available.
+        .form-group
+          %label Due Date
+          #duedatepicker.input-group.date{:required => ""}
+            %input.form-control{:name => "duedate", :type => "text"}/
+            %span.input-group-addon
+              %span.fa.fa-calendar
+          %p.help-block The deadline for the assignment.
+        .form-group
+          %label Language
+          %select.form-control{:required => ""}
+            %option C++
+      .col-lg-6
+        / EVALUATION TEST CASES
+        %h2 Evaluation
+        .alert.alert-info.alert-dismissable
+          %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
+          Specify the input and expected output for each test case to evaulate the code against.
+          %strong These test cases will be used for grading purposes.
+        .panel.panel-default
+          .panel-heading
+            %h3.panel-title Add a Test Case
+          .panel-body
+            .form-group
+              %label Test Case Name
+              %input.form-control{:name => "testname", :placeholder => "Test case...", :required => "", :type => "text"}
+                %p.help-block The name of the test case, must be unique.
+            .form-group
+              %label Description
+              %textarea.form-control{:name => "testdescription", :required => "", :rows => "3"}
+              %p.help-block Description of the test case.
+            .form-group
+              %label Test Case
+              %textarea.form-control{:name => "testcase", :required => "", :rows => "8"}
               %p.help-block
-                %strong Tip:
-                You can save a time by uploading all of the the test cases at once.
-          %center
-            %button.btn.btn-success{:type => "submit"} ADD
-            %button.btn.btn-primary{:type => "reset"} Upload
-        .col-lg-6
-          / SAMPLE TEST CASES
-          %h2 Sample
-          .alert.alert-info.alert-dismissable
-            %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
-            Specify the input and expected output for sample tests that students can use to evaulate their
-            work before they submit it.
-            %strong These test cases are not used for grading they are for instructional purposes only.
-          .panel.panel-default
-            .panel-heading
-              %h3.panel-title Add a Test Case
-            .panel-body
-              .form-group
-                %label Test Case Name
-                %input.form-control{:name => "samplename", :placeholder => "Test case...", :required => "", :type => "text"}
-                  %p.help-block The name of the test case, must be unique.
-              .form-group
-                %label Description
-                %textarea.form-control{:name => "sampledescription", :required => "", :rows => "3"}
-                %p.help-block Description of the test case.
-              .form-group
-                %label Test Case
-                %textarea.form-control{:name => "samplecase", :required => "", :rows => "8"}
-                %p.help-block
-                  Test cases uses YAML notation, press help for more details
-                  %button.btn.btn-primary{:type => "reset"}
-                    Help
-                    %span.fa.fa-code
+                Test cases uses YAML notation, press help for more details
+                %button.btn.btn-primary{:type => "reset"}
+                  Help
+                  %span.fa.fa-code
+            %p.help-block
+              %strong Tip:
+              You can save a time by uploading all of the the test cases at once.
+        %center
+          %button.btn.btn-success{:type => "submit"} ADD
+          %button.btn.btn-primary{:type => "reset"} Upload
+      .col-lg-6
+        / SAMPLE TEST CASES
+        %h2 Sample
+        .alert.alert-info.alert-dismissable
+          %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
+          Specify the input and expected output for sample tests that students can use to evaulate their
+          work before they submit it.
+          %strong These test cases are not used for grading they are for instructional purposes only.
+        .panel.panel-default
+          .panel-heading
+            %h3.panel-title Add a Test Case
+          .panel-body
+            .form-group
+              %label Test Case Name
+              %input.form-control{:name => "samplename", :placeholder => "Test case...", :required => "", :type => "text"}
+                %p.help-block The name of the test case, must be unique.
+            .form-group
+              %label Description
+              %textarea.form-control{:name => "sampledescription", :required => "", :rows => "3"}
+              %p.help-block Description of the test case.
+            .form-group
+              %label Test Case
+              %textarea.form-control{:name => "samplecase", :required => "", :rows => "8"}
               %p.help-block
-                %strong Tip:
-                You can save a time by uploading all of the the test cases at once.
+                Test cases uses YAML notation, press help for more details
+                %button.btn.btn-primary{:type => "reset"}
+                  Help
+                  %span.fa.fa-code
+            %p.help-block
+              %strong Tip:
+              You can save a time by uploading all of the the test cases at once.
+        %center
+          %button.btn.btn-success{:type => "button"} ADD
+          %button.btn.btn-primary{:type => "button"} Upload
+      .col-lg-6
+        / GRADING
+        %h2 Grading
+        .alert.alert-info.alert-dismissable
+          %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
+          Specify the assignment requirements, number of attempts, evaluation breakdown and weights.
+        %label Maximum Execution Time
+        .form-group.input-group
+          %input.form-control{:name => "maxtime", :required => "", :type => "text", :value => "60"}
+            %span.input-group-addon Seconds
+        %label Maximum Attempts
+        .form-group.input-group
+          %input.form-control{:name => "maxattempts", :required => "", :type => "text", :value => "1"}
+            %span.input-group-addon Attempts
+        %p.help-block The maximum number of attempts the student can have to re-submit.
+        .form-group
+          %label Code Analysis Metrics
+          %select.form-control{:multiple => "", :name => "metrics"}
+            %option Memory Leaks
+            %option Performance
+            %option Stylistic Guidelines
+            %option Array Bounds Checking
+            %option Code Duplication
+        %p.help-block The code analysis metrics to apply when grading.
+        %label Code Analysis Weight
+        .form-group.input-group
+          %input.form-control{:name => "metricweight", :required => "", :type => "text", :value => "10"}
+            %span.input-group-addon %
+        %p.help-block The weight code analysis metrics have on the overall grade.
+        %label Test Case Evaluation Weight
+        .form-group.input-group
+          %input.form-control{:name => "testweight", :required => "", :type => "text", :value => "90"}
+            %span.input-group-addon %
+        %p.help-block The weight test cases have on the overall grade.
+        %br
           %center
-            %button.btn.btn-success{:type => "button"} ADD
-            %button.btn.btn-primary{:type => "button"} Upload
-        .col-lg-6
-          / GRADING
-          %h2 Grading
-          .alert.alert-info.alert-dismissable
-            %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
-            Specify the assignment requirements, number of attempts, evaluation breakdown and weights.
-          %label Maximum Execution Time
-          .form-group.input-group
-            %input.form-control{:name => "maxtime", :required => "", :type => "text", :value => "60"}
-              %span.input-group-addon Seconds
-          %label Maximum Attempts
-          .form-group.input-group
-            %input.form-control{:name => "maxattempts", :required => "", :type => "text", :value => "1"}
-              %span.input-group-addon Attempts
-          %p.help-block The maximum number of attempts the student can have to re-submit.
-          .form-group
-            %label Code Analysis Metrics
-            %select.form-control{:multiple => "", :name => "metrics"}
-              %option Memory Leaks
-              %option Performance
-              %option Stylistic Guidelines
-              %option Array Bounds Checking
-              %option Code Duplication
-              %option Cyclomatic Complexity
-          %p.help-block The code analysis metrics to apply when grading.
-          %label Code Analysis Weight
-          .form-group.input-group
-            %input.form-control{:name => "metricweight", :required => "", :type => "text", :value => "10"}
-              %span.input-group-addon %
-          %p.help-block The weight code analysis metrics have on the overall grade.
-          %label Test Case Evaluation Weight
-          .form-group.input-group
-            %input.form-control{:name => "testweight", :required => "", :type => "text", :value => "90"}
-              %span.input-group-addon %
-          %p.help-block The weight test cases have on the overall grade.
-          %br
-            %center
-              %button.btn.btn-primary.btn-lg{:name => "submit", :type => "submit"} Submit Assignment
-  / /#page-wrapper
-/ /#wrapper
+            %button.btn.btn-primary.btn-lg{:name => "submit", :type => "submit"} Submit Assignment
+/ /#page-wrapper
+
