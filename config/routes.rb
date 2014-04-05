@@ -5,7 +5,7 @@ AutomatedMarkingSystem::Application.routes.draw do
   get 'login' => 'login#index'
   get 'login/new' => 'login#new'
   #resources :student
-  root :to => redirect('/login')
+  root to: redirect('/login')
   #root 'student#index'
   get 'student' => 'student#index', :as => :student
   get 'student/assignment' => 'student#assignment'
