@@ -7,6 +7,7 @@ class StudentController < ApplicationController
     # handle logout
 
   def index
+    validate
     # TODO handle student page layout
     # handle links for finished assignments
     # handle links for active assignments
@@ -20,6 +21,7 @@ class StudentController < ApplicationController
   end
 
   def assignment 
+    validate
   	# TODO handle active assignment
   	# Show activity related to id stored in 'param[:id]'
   	# handle upload submission on click
@@ -33,7 +35,20 @@ class StudentController < ApplicationController
   end
 
   def grading
+    validate
   	# TODO handle showing latest grade
   	# Show grade for the activiy related to id stored in 'param[:id]'
   end
+
+private
+
+  def validate
+    @user = Student.find_by_id(session[:user_id])
+
+    if @user == nil
+      # User not logged in
+      redirect_to root_url, :notice => "Sign in first!"
+    end
+  end
+
 end
