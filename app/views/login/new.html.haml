@@ -6,6 +6,12 @@
         %small An account is required.
       %hr.colorgraph
         = form_for @user, url: {action: "create"} do |s|
+          - if @user.errors.any?
+            .error_messages
+              %h2 Form is invalid
+              %ul
+                - for message in @user.errors.full_messages
+                  %li= message
           .row
             .col-xs-12.col-sm-6.col-md-6
               .form-group
@@ -16,7 +22,7 @@
           .form-group
             = s.text_field :student_id, class: "form-control input-lg",placeholder: "Student ID", tabindex: "3"
           .form-group
-            = s.text_field :email, class: "form-control input-lg",placeholder: "Email Address", :tabindex => "4"
+            = s.email_field :email, class: "form-control input-lg",placeholder: "Email Address", :tabindex => "4"
           .row
             .col-xs-12.col-sm-6.col-md-6
               .form-group

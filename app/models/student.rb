@@ -1,7 +1,8 @@
 class Student < ActiveRecord::Base
 
-  attr_accessor :password, :last_name, :first_name, :email, :student_id, :password_confirmation
+  attr_accessor :password, :password_confirmation
   before_save :encrypt_password
+  after_save :clear_password
 
   validates :password, :confirmation => true
 
@@ -10,6 +11,15 @@ class Student < ActiveRecord::Base
   validates_presence_of :student_id
   validates_uniqueness_of :student_id
 
+  def self.authenticate(email, password)
+    user = find_by_email(email)
+    if user && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
+      user
+    else
+      nil
+    end
+  end
+
   def encrypt_password
     if password.present?
       self.password_salt = BCrypt::Engine.generate_salt
@@ -17,4 +27,8 @@ class Student < ActiveRecord::Base
     end
   end
 
+  def clear_password
+    self.password = nil
+    self.password_confirmation = nil
+  end
 end
