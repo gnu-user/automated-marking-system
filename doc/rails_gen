@@ -1,10 +1,11 @@
 # Clone Detection
 
-rails generate model CloneIncident similarity:float
+rails generate model CloneIncident similarity:float assignment_id:integer
 #Needs 2 DiffFiles
 has_many :diff_files
 has_many :diff_entries, through: :diff_files
 has_many :lines, through: :diff_entries
+belongs_to :assignment
 
 rails generate model DiffFile name:string
 #Needs many DiffEntry
@@ -51,7 +52,7 @@ rails generate migration AddStaticAnalysisRelationships
 
 # Test
 #TODO update
-rails generate model Test name:string description:text result:boolean sample:boolean
+rails generate model Test name:string description:text result:boolean
 # Needs many IO_Elements
 has_many :io_elements
 
@@ -63,7 +64,6 @@ rails generate migration AddTestRelationships
 
 # Student
 
-#TODO fix this to properly handle passwords
 rails generate model Student first_name:string last_name:string student_id:string email:string password_hash:string password_salt:string
 has_many :submissions
 belongs_to :admin
@@ -74,7 +74,7 @@ has_one :assignment
 has_one :feedback
 
 # Should this show how the student faired at the prof's testing stuff / static and code analysis
-rails generate model Feedback ?
+rails generate model grade final:float testcase:float code:floatgbt
 
 # Admin
 
@@ -82,12 +82,10 @@ rails generate model Admin first_name:string last_name:string prof_id:string ema
 has_many :assignments
 has_many :students
 
-rails generate model Assignment name:string posted:date due:date submissions:integer avg_grade:integer 
+rails generate model Assignment name:string posted:date due:date description:text max_time:integer attempts:integer code_weight:integer test_case_weight:integer 
 belongs_to :admin
-has_many :compiler_issues
-has_many :static_analyses
 has_many :test #both sample and actual
-has_one :grading_breadown
+has_one :clone_incident
 
-rails generate model GradingBreakdown max_time:integer attempts:integer memory_leaks:boolean performance:boolean stylistic:boolean bounds:boolean duplication:boolean code_weight:integer test_case_weight:integer
-belongs_to :assignment
+//rails generate model GradingBreakdown max_time:integer attempts:integer memory_leaks:boolean performance:boolean stylistic:boolean bounds:boolean duplication:boolean code_weight:integer test_case_weight:integer
+//belongs_to :assignment
