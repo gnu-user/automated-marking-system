@@ -1,5 +1,4 @@
 class Student < ActiveRecord::Base
-
   attr_accessor :password, :password_confirmation
   before_save :encrypt_password
   after_save :clear_password

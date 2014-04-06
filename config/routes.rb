@@ -10,6 +10,7 @@ AutomatedMarkingSystem::Application.routes.draw do
   get "log_out" => "sessions#destroy", :as => "log_out"
   # Create a new admin
   get 'admin/login/new' => 'admin_login#new'
+  post 'admin/login/create' => 'admin_login#create'
   #resources :student
   root to: redirect('/login')
   #root 'student#index'

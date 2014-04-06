@@ -13,7 +13,7 @@ class AdminLoginController < ApplicationController
 	def create
 		@user = Admin.new(params[:admin])
 
-		if @user.save
+		if @user.save!
 	      redirect_to root_url, :notice => "Signed up!"
 	    else
 	      render "new"

@@ -1,7 +1,7 @@
 .container
   .row
     .col-xs-12.col-sm-8.col-md-6.col-sm-offset-2.col-md-offset-3
-      %form{:role => "form"}
+      %form{:role => "form", method: "post", action: "create"}
         %h2
           Please Register
           %small An account is required.
@@ -14,7 +14,7 @@
               .form-group
                 %input#last_name.form-control.input-lg{:name => "last_name", :placeholder => "Last Name", :tabindex => "2", :type => "text"}
           .form-group
-            %input#student_id.form-control.input-lg{:name => "student_id", :placeholder => "Professor ID", :tabindex => "3", :type => "text"}
+            %input#prof_id.form-control.input-lg{:name => "prof_id", :placeholder => "Professor ID", :tabindex => "3", :type => "text"}
           .form-group
             %input#email.form-control.input-lg{:name => "email", :placeholder => "Email Address", :tabindex => "4", :type => "email"}
           .row
@@ -46,7 +46,7 @@
       .modal-content
         .modal-header
           %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-          %h4#myModalLabel.modal-title Terms & Conditions
+          %h4#myModalLabel.modal-title Terms &amp; Conditions
         .modal-body
           %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.
           %p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.
