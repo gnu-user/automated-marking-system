@@ -11,7 +11,7 @@ AutomatedMarkingSystem::Application.routes.draw do
   # Create a new admin
   get 'admin/login/new' => 'admin_login#new'
   #resources :student
-  root :to => redirect('/login')
+  root to: redirect('/login')
   #root 'student#index'
   get 'student' => 'student#index', :as => :student
   get 'student/:file' => 'student#show'
