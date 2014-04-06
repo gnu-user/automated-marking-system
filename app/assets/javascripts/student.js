@@ -2,7 +2,6 @@
 // All this logic will automatically be available in application.js.
 $(document).ready(function () {
 
-	//Set the grading tab to active
 	$('#upload_assignment').click(function(event) {
 		alert("Upload clicked, Don't Click Me!");
 	});
@@ -14,5 +13,4 @@ $(document).ready(function () {
 	$('#submit_assigment').click(function(event) {
 		alert("Submit clicked, Harassment!");
 	});
-	//$('#grading_tab').attr('class', "active")
 });

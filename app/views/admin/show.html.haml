@@ -11,5 +11,63 @@
             %i.fa.fa-edit
             Assignments
         %li.active
-          Assignment Name
+          Assignment 4
+  / /.row
+  %form{:role => "form"}
+    .row
+      .col-lg-6
+        / DESCRIPTION
+        %h2 Description
+        .form-group
+          %label Submission Name
+          %input.form-control{disabled: "true", :name => "name", :value => "Assignment 4", :required => "", :type => "text",}
+            %p.help-block The name of the assignment.
+        .form-group
+          %label Description
+          %textarea.form-control{disabled: "true", :name => "description", :required => "", :rows => "8"}
+            For your assignment you must create a commandline calculator program which will accept any two numbers as input (both integers and floating point values) and perform one of the following requested operations add, subtract, multiply, divide and display the results.
+          %p.help-block Assignment description, markdown format is supported.
+        .form-group
+          %label Post Date
+          %input.form-control{disabled: "true", :name => "postdate", :type => "text", :value => "11/21/2013 1:12 PM"}/
+          %p.help-block The date the assignment will become available.
+        .form-group
+          %label Due Date
+          %input.form-control{disabled: "true", :name => "duedate", :type => "text", :value => "11/28/2013 11:59 PM"}/
+          %p.help-block The deadline for the assignment.
+        .form-group
+          %label Language
+          %select.form-control{disabled: "true", :required => ""}
+            %option C++
+      .col-lg-6
+        / GRADING
+        %h2 Grading
+        %label Maximum Execution Time
+        .form-group.input-group
+          %input.form-control{disabled: "true", :name => "maxtime", :required => "", :type => "text", :value => "60"}
+            %span.input-group-addon Seconds
+        %label Maximum Attempts
+        .form-group.input-group
+          %input.form-control{disabled: "true", :name => "maxattempts", :required => "", :type => "text", :value => "1"}
+            %span.input-group-addon Attempts
+        %p.help-block The maximum number of attempts the student can have to re-submit.
+        .form-group
+          %label Code Analysis Metrics
+          %select.form-control{disabled: "true", :multiple => "", :name => "metrics"}
+            %option Memory Leaks
+            %option Performance
+            %option Stylistic Guidelines
+            %option Array Bounds Checking
+            %option Code Duplication
+        %p.help-block The code analysis metrics to apply when grading.
+        %label Code Analysis Weight
+        .form-group.input-group
+          %input.form-control{disabled: "true", :name => "metricweight", :required => "", :type => "text", :value => "10"}
+            %span.input-group-addon %
+        %p.help-block The weight code analysis metrics have on the overall grade.
+        %label Test Case Evaluation Weight
+        .form-group.input-group
+          %input.form-control{disabled: "true", :name => "testweight", :required => "", :type => "text", :value => "90"}
+            %span.input-group-addon %
+        %p.help-block The weight test cases have on the overall grade.
 / /#page-wrapper
