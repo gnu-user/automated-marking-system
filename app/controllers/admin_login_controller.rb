@@ -11,12 +11,16 @@ class AdminLoginController < ApplicationController
 	end
 
 	def create
-		@user = Admin.new(params[:admin])
+		@user = Admin.new(user_params)
 
 		if @user.save!
-	      redirect_to root_url, :notice => "Signed up!"
+	      redirect_to admin_login_url, :notice => "Signed up!"
 	    else
 	      render "new"
 	    end
 	end
+
+  def user_params
+      params.require(:admin).permit(:first_name, :last_name, :prof_id, :email, :password, :password_confirmation)
+  end
 end
