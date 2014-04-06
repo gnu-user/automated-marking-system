@@ -4,6 +4,10 @@ AutomatedMarkingSystem::Application.routes.draw do
   #resources :phone_book
   get 'login' => 'login#index'
   get 'login/new' => 'login#new'
+  post 'login/create' => 'login#create'
+  get 'admin/login' => 'admin_login#index'
+  # Create a new admin
+  get 'admin/login/new' => 'admin_login#new'
   #resources :student
   root :to => redirect('/login')
   #root 'student#index'

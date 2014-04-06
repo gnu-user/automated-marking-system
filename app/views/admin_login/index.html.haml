@@ -1,17 +1,11 @@
--# This file is app/view/login/index.html.haml            
+-# This file is app/view/admin_login/index.html.haml            
 .container
   .row{:style => "margin-top:20px"}
     .col-xs-12.col-sm-8.col-md-6.col-sm-offset-2.col-md-offset-3
-      %fieldset
-        %h2 Please Sign In
-        %hr.colorgraph
-          = form_for @student, url: {action: "create"} do |s|
-            /- if @student.errors.any?
-            /  .error_messages
-            /    %h2 Form is invalid
-            /    %ul
-            /      - for message in @student.errors.full_messages
-            /        %li= message
+      %form{:role => "form"}
+        %fieldset
+          %h2 Please Sign In
+          %hr.colorgraph
             .form-group
               %input#email.form-control.input-lg{:name => "email", :placeholder => "Email Address", :type => "email"}
             .form-group
@@ -25,5 +19,3 @@
                   %input.btn.btn-lg.btn-success.btn-block{:type => "submit", :value => "Sign In"}
                 .col-xs-6.col-sm-6.col-md-6
                   %a.btn.btn-lg.btn-primary.btn-block{:href => "/login/new"} Register
-  %p
-    = @value
