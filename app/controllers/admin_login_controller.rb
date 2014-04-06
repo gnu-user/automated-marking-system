@@ -1,8 +1,11 @@
 class AdminLoginController < ApplicationController
+  include Login
+
 	layout "login"
 
 	def index
 		# TODO handle login logic
+    @admin = Admin.new
 	end
 
 	def new
@@ -11,16 +14,8 @@ class AdminLoginController < ApplicationController
 	end
 
 	def create
-		@user = Admin.new(user_params)
-
-		if @user.save!
-	      redirect_to admin_login_url, :notice => "Signed up!"
-	    else
-	      render "new"
-	    end
+    #@value = params[:admin]
+		@user = Admin.new(user_params(:admin))
+    save(@user, admin_login_url)
 	end
-
-  def user_params
-      params.require(:admin).permit(:first_name, :last_name, :prof_id, :email, :password, :password_confirmation)
-  end
 end
