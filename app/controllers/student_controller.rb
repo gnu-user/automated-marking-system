@@ -2,12 +2,11 @@ class StudentController < ApplicationController
   layout "student"
   layout "code", only: [:show]
 
-    # TODO FOR ALL (except show)
-    # handle Grades link for latest finished assignments
-    # handle logout
+  # TODO FOR ALL (except show)
+  # handle Grades link for latest finished assignments
 
   def index
-    validate
+    validateUser
     # TODO handle student page layout
     # handle links for finished assignments
     # handle links for active assignments
@@ -21,7 +20,7 @@ class StudentController < ApplicationController
   end
 
   def assignment 
-    validate
+    validateUser
   	# TODO handle active assignment
   	# Show activity related to id stored in 'param[:id]'
   	# handle upload submission on click
@@ -35,14 +34,14 @@ class StudentController < ApplicationController
   end
 
   def grading
-    validate
+    validateUser
   	# TODO handle showing latest grade
   	# Show grade for the activiy related to id stored in 'param[:id]'
   end
 
 private
 
-  def validate
+  def validateUser
     @user = Student.find_by_id(session[:user_id])
 
     if @user == nil
