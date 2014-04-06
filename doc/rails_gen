@@ -64,7 +64,7 @@ rails generate migration AddTestRelationships
 # Student
 
 #TODO fix this to properly handle passwords
-rails generate model Student student_id:string password:string
+rails generate model Student first_name:string last_name:string student_id:string email:string password_hash:string password_salt:string
 has_many :submissions
 belongs_to :admin
 
@@ -78,7 +78,7 @@ rails generate model Feedback ?
 
 # Admin
 
-rails generate model Admin student_id:string password:string
+rails generate model Admin first_name:string last_name:string prof_id:string email:string password_hash:string password_salt:string
 has_many :assignments
 has_many :students
 

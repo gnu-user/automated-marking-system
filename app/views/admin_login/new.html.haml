@@ -1,35 +1,29 @@
 .container
   .row
     .col-xs-12.col-sm-8.col-md-6.col-sm-offset-2.col-md-offset-3
-      %h2
-        Please Register
-        %small An account is required.
-      %hr.colorgraph
-        = form_for @user, url: {action: "create"} do |s|
-          - if @user.errors.any?
-            .error_messages
-              %h2 Form is invalid
-              %ul
-                - for message in @user.errors.full_messages
-                  %li= message
+      %form{:role => "form"}
+        %h2
+          Please Register
+          %small An account is required.
+        %hr.colorgraph
           .row
             .col-xs-12.col-sm-6.col-md-6
               .form-group
-                = s.text_field :first_name, class: "form-control input-lg",placeholder: "First Name", :tabindex => "1"
+                %input#first_name.form-control.input-lg{:name => "first_name", :placeholder => "First Name", :tabindex => "1", :type => "text"}
             .col-xs-12.col-sm-6.col-md-6
               .form-group
-                = s.text_field :last_name, class: "form-control input-lg",placeholder: "Last Name", :tabindex => "2"
+                %input#last_name.form-control.input-lg{:name => "last_name", :placeholder => "Last Name", :tabindex => "2", :type => "text"}
           .form-group
-            = s.text_field :student_id, class: "form-control input-lg",placeholder: "Student ID", tabindex: "3"
+            %input#student_id.form-control.input-lg{:name => "student_id", :placeholder => "Professor ID", :tabindex => "3", :type => "text"}
           .form-group
-            = s.email_field :email, class: "form-control input-lg",placeholder: "Email Address", :tabindex => "4"
+            %input#email.form-control.input-lg{:name => "email", :placeholder => "Email Address", :tabindex => "4", :type => "email"}
           .row
             .col-xs-12.col-sm-6.col-md-6
               .form-group
-                = s.password_field :password, class: "form-control input-lg",placeholder: "Password", :tabindex => "5"
+                %input#password.form-control.input-lg{:name => "password", :placeholder => "Password", :tabindex => "5", :type => "password"}
             .col-xs-12.col-sm-6.col-md-6
               .form-group
-                = s.password_field :password_confirmation, class: "form-control input-lg",placeholder: "Confirm Password", :tabindex => "6"
+                %input#password_confirmation.form-control.input-lg{:name => "password_confirmation", :placeholder => "Confirm Password", :tabindex => "6", :type => "password"}
           .row
             .col-xs-4.col-sm-3.col-md-3
               %span.button-checkbox
