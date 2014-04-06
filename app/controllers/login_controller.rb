@@ -1,32 +1,21 @@
 class LoginController < ApplicationController
-    layout "login"
+  include Login
 
-    def index
-        # TODO handle login logic
-        @student = Student.new
-    end
+  layout "login"
 
-    def new
-        # TODO Handle registration logic
-        @user = Student.new
-    end
+  def index
+    # TODO handle login logic
+    @student = Student.new
+  end
 
-    def create
-        #@value = params[:student]
-        @value = user_params
-        @user = Student.new(@value)
+  def new
+    # TODO Handle registration logic
+    @user = Student.new
+  end
 
-        if @user.save!
-
-          redirect_to root_url, :notice => "Signed up!"
-        else
-          render "new"
-           end
-    end
-
-    private
-
-    def user_params
-        params.require(:student).permit(:first_name, :last_name, :student_id, :email, :password, :password_confirmation)
-    end
+  def create
+    #@value = params[:student]
+    @user = Student.new(user_params(:student))
+    save(@user, root_url)
+  end
 end
