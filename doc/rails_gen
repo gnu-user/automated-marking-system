@@ -51,8 +51,7 @@ belongs_to :static_analysis
 rails generate migration AddStaticAnalysisRelationships
 
 # Test
-#TODO update
-rails generate model Test name:string description:text result:boolean
+rails generate model Test name:string description:text result:boolean sample:boolean
 # Needs many IO_Elements
 has_many :io_elements
 
@@ -62,19 +61,24 @@ belongs_to :test
 
 rails generate migration AddTestRelationships
 
+rails generate migration AddTestSample
+
 # Student
 
 rails generate model Student first_name:string last_name:string student_id:string email:string password_hash:string password_salt:string
 has_many :submissions
 belongs_to :admin
 
-rails generate model Submission code:text mark:integer
+rails generate model Submission code:text assignment_id:integer
 belongs_to :student
-has_one :assignment
-has_one :feedback
+has_one :grade
 
 # Should this show how the student faired at the prof's testing stuff / static and code analysis
-rails generate model grade final:float testcase:float code:floatgbt
+rails generate model Grade final:float testcase:float code:float
+belongs_to :submission
+has_one :compiler_issue
+has_one :static_issue
+has_many :tests
 
 # Admin
 
@@ -82,9 +86,9 @@ rails generate model Admin first_name:string last_name:string prof_id:string ema
 has_many :assignments
 has_many :students
 
-rails generate model Assignment name:string posted:date due:date description:text max_time:integer attempts:integer code_weight:integer test_case_weight:integer 
+rails generate model Assignment admin_id:integer name:string posted:date due:date description:text max_time:integer attempts:integer code_weight:integer test_case_weight:integer
 belongs_to :admin
-has_many :test #both sample and actual
+has_many :tests #both sample and actual
 has_one :clone_incident
 
 //rails generate model GradingBreakdown max_time:integer attempts:integer memory_leaks:boolean performance:boolean stylistic:boolean bounds:boolean duplication:boolean code_weight:integer test_case_weight:integer

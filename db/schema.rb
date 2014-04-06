@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140406000622) do
+ActiveRecord::Schema.define(version: 20140406233702) do
 
   create_table "admins", force: true do |t|
     t.string   "first_name"
@@ -20,6 +20,20 @@ ActiveRecord::Schema.define(version: 20140406000622) do
     t.string   "email"
     t.string   "password_hash"
     t.string   "password_salt"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "assignments", force: true do |t|
+    t.integer  "admin_id"
+    t.string   "name"
+    t.date     "posted"
+    t.date     "due"
+    t.text     "description"
+    t.integer  "max_time"
+    t.integer  "attempts"
+    t.integer  "code_weight"
+    t.integer  "test_case_weight"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -44,6 +58,14 @@ ActiveRecord::Schema.define(version: 20140406000622) do
   create_table "diff_files", force: true do |t|
     t.string  "name"
     t.integer "clone_incident_id"
+  end
+
+  create_table "grades", force: true do |t|
+    t.float    "final"
+    t.float    "testcase"
+    t.float    "code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "io_elements", force: true do |t|
@@ -91,12 +113,20 @@ ActiveRecord::Schema.define(version: 20140406000622) do
     t.datetime "updated_at"
   end
 
+  create_table "submissions", force: true do |t|
+    t.text     "code"
+    t.integer  "assignment_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "tests", force: true do |t|
     t.string   "name"
     t.text     "description"
     t.boolean  "result"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "sample"
   end
 
 end

@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  admin_id: 1
+  name: MyString
+  posted: 2014-04-06
+  due: 2014-04-06
+  description: MyText
+  max_time: 1
+  attempts: 1
+  code_weight: 1
+  test_case_weight: 1
+
+two:
+  admin_id: 1
+  name: MyString
+  posted: 2014-04-06
+  due: 2014-04-06
+  description: MyText
+  max_time: 1
+  attempts: 1
+  code_weight: 1
+  test_case_weight: 1

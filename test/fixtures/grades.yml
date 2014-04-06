@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  final: 1.5
+  testcase: 1.5
+  code: 1.5
+
+two:
+  final: 1.5
+  testcase: 1.5
+  code: 1.5

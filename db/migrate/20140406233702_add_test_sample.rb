@@ -1,4 +1,4 @@
-class AddTestRelationships < ActiveRecord::Migration
+class AddTestSample < ActiveRecord::Migration
   def change
 
   	add_column :tests, :sample, :boolean
