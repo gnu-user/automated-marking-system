@@ -21,7 +21,7 @@
               %p.announcement-heading
                 = @review_submissions
               %p.announcement-text Submissions
-        %a{:href => "/admin/grades/4"}
+        %a{:href => "/admin/grades/#{@latest.id}"}
           .panel-footer.announcement-bottom
             .row
               .col-xs-6
@@ -38,7 +38,7 @@
               %p.announcement-heading 
                 = @view_assignment
               %p.announcement-text Not Submitted
-        %a{:href => "/admin/assignment/4"}
+        %a{:href => "/admin/assignment/#{@latest.id}"}
           .panel-footer.announcement-bottom
             .row
               .col-xs-6
@@ -55,7 +55,7 @@
               %p.announcement-heading 
                 = @resolve_issues
               %p.announcement-text Submission Errors
-        %a{:href => "/admin/grades/4/cheating"}
+        %a{:href => "/admin/grades/#{@latest.id}/cheating"}
           .panel-footer.announcement-bottom
             .row
               .col-xs-6

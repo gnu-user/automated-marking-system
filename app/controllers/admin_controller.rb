@@ -5,6 +5,7 @@ class AdminController < ApplicationController
 
   def index
     validateAdmin
+    getLastestAssignment
     # Get all the assignments
     @assignments = Assignment.all
 
@@ -28,6 +29,7 @@ class AdminController < ApplicationController
 
   def new
     validateAdmin
+    getLastestAssignment
     # TODO handle form submission and populating the db
     # handle add button
     # handle upload button
@@ -37,16 +39,20 @@ class AdminController < ApplicationController
 
   def grading
     validateAdmin
+    getLastestAssignment
     # TODO handle grades page using param[:id]
   end
 
   def cheat
     validateAdmin
+    getLastestAssignment
     # TODO handle cheating page using param[:id]
   end
 
   def show
     validateAdmin
+    getLastestAssignment
+
     @assignment = Assignment.find_by_id(params[:id])
 
     if @assignment == nil
@@ -57,6 +63,8 @@ class AdminController < ApplicationController
 
   def create
     validateAdmin
+    getLastestAssignment
+
     # TODO check if at least 1 evaluation testcase has been submitted
     @value = params.require(:assignment).permit(:name, :description, :posted, :due, :max_time, :attempts, :code_weight, :test_case_weight)
     @assignment = Assignment.new(@value)
@@ -79,6 +87,7 @@ class AdminController < ApplicationController
 
   def upload
     validateUser
+    getLastestAssignment
 
     @contents = params[:file].read
 
@@ -89,12 +98,16 @@ class AdminController < ApplicationController
 
   private
 
-def validateAdmin
+  def validateAdmin
     @user = Admin.find_by_id(session[:prof_id])
 
     if @user == nil
       # User not logged in
       redirect_to "#{root_url}admin/login", :notice => "Sign in first!"
     end
+  end
+
+  def getLastestAssignment
+    @latest = Assignment.last
   end
 end
