@@ -1,22 +1,13 @@
-class SessionsController < ApplicationController
-  #def new
-  #	create
-  #end
+class SessionsController < UserSessionsController
+  def initialize
+    super(Student, :student, :user_id)
+  end
 
   def create
-    user = Student.authenticate(params[:student][:email], params[:student][:password])
-    if user
-      session[:user_id] = user.id
-      redirect_to "#{root_url}student", :notice => "Logged in!"
-    else
-      #TODO show error message
-      flash.now.alert = "Invalid email or password"
-      redirect_to "#{root_url}login"
-    end
+    UserSessionsController.instance_method(:create).bind(self).call(student_url, login_url)
   end
 
   def destroy
-  	session[:user_id] = nil
-    redirect_to root_url, :notice => "Logged out!"
+    UserSessionsController.instance_method(:destroy).bind(self).call(login_url)
   end
 end

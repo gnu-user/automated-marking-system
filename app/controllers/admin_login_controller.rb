@@ -1,21 +1,21 @@
 class AdminLoginController < ApplicationController
   include Login
 
-	layout "login"
+  layout "login"
 
-	def index
-		# TODO handle login logic
-   		@admin = Admin.new
-	end
+  def index
+    @class = "Professor"
+    @admin = Admin.new
+  end
 
-	def new
-		# TODO Handle registration logic
-		@user = Admin.new
-	end
+  def new
+    # TODO Handle registration logic
+    @user = Admin.new
+  end
 
-	def create
+  def create
     #@value = params[:admin]
-		@user = Admin.new(user_params(:admin, :prof_id))
-    	save(@user, admin_login_url)
-	end
+    @user = Admin.new(user_params(:admin, :prof_id))
+    save(@user, admin_login_url)
+  end
 end
