@@ -12,10 +12,17 @@
                 %ul
                   - for message in @admin.errors.full_messages
                     %li= message
-            - else
-              - flash.each do |name, msg|
-                .error_messages
-                  %h2=msg
+            - elsif flash[:alert]
+              .error_messages
+                %h2 Form is invalid
+                %ul
+                  %li=flash[:alert]
+            - elsif flash[:register]
+              .error_messages
+                %h2 Error Registering
+                %ul
+                  - flash[:register].messages.each do |key, message|
+                    %li= "#{key} #{message[0]}"
             .form-group
               = s.email_field :email, class: "form-control input-lg",placeholder: "Email Address"
             .form-group
