@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140406233702) do
+ActiveRecord::Schema.define(version: 20140407000001) do
 
   create_table "admins", force: true do |t|
     t.string   "first_name"
@@ -36,18 +36,21 @@ ActiveRecord::Schema.define(version: 20140406233702) do
     t.integer  "test_case_weight"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "test_cases"
   end
 
   create_table "clone_incidents", force: true do |t|
     t.float    "similarity"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "assignment_id"
   end
 
   create_table "compiler_issues", force: true do |t|
     t.text     "filename"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "grade_id"
   end
 
   create_table "diff_entries", force: true do |t|
@@ -66,6 +69,8 @@ ActiveRecord::Schema.define(version: 20140406233702) do
     t.float    "code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "test_cases"
+    t.integer  "submission_id"
   end
 
   create_table "io_elements", force: true do |t|
@@ -93,6 +98,7 @@ ActiveRecord::Schema.define(version: 20140406233702) do
     t.string   "filename"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "grade_id"
   end
 
   create_table "static_issues", force: true do |t|
@@ -118,6 +124,7 @@ ActiveRecord::Schema.define(version: 20140406233702) do
     t.integer  "assignment_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "student_id"
   end
 
   create_table "tests", force: true do |t|

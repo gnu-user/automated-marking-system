@@ -1,4 +1,4 @@
 class Submission < ActiveRecord::Base
 	belongs_to :student
-	has_one :grade
+	has_many :grade # 1 per assignment
 end
