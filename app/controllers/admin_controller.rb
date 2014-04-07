@@ -45,12 +45,39 @@ class AdminController < ApplicationController
     @value = params.require(:assignment).permit(:name, :description, :posted, :due, :max_time, :attempts, :code_weight, :test_case_weight)
     @assignment = Assignment.new(@value)
     #save(@user, root_url)
-    #if user.save!
-    #  redirect_to post_url, notice: "Signed up!"
-    #else
-    #  redirect_to post_url
-    #end
+    if @assignment.save
+      #Create the new TestCase Sample and TestCase Eval
+      session[:assignmnet_id] = @assignment_id 
+      @test_sample = TestCase.new
+      #@test_sample.assignment_id = @assignment_id
+      @test_sample.sample = false
+      @test_eval = TestCase.new
+      @test_eval.sample = true
+      #redirect_to post_url, notice: "Signed up!"
+    else
+      redirect_to "#{root_url}admin/new"
+    end
   end
+
+=begin
+  def test_sample_add
+    validateAdmin
+    @test = params.require(:test_case).permit(:name, :description, :sample, :testcase, :assignment_id)
+    @test_sample = TestCase.new(@test)
+    @test_sample.assignment_id = session[:assignmnet_id]
+    @test_sample.sample = true
+  
+    if @test_sample.save
+
+    else
+      redirect_to "#{root_url}admin/new"
+    end
+  end
+
+  def test_eval_add
+
+  end
+=end
 
   private
 
