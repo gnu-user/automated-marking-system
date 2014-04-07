@@ -28,6 +28,7 @@ class StudentController < ApplicationController
   end
 
   def show
+    validateUser
   	# TODO get the code and populate the %pre element, id='code'
     @code = "cout << \"winning\" << endl;"
   end
