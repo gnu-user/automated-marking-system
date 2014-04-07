@@ -36,9 +36,14 @@
                 Assignments
             }
             %li{:id => "grading_tab"}
-              %a{:href => "/admin/grades/#{@latest.id}"}
-                %i.fa.fa-bar-chart-o
-                Grading
+              -if @latest.id
+                %a{:href => "/admin/grades/#{@latest.id}"}
+                  %i.fa.fa-bar-chart-o
+                  Grading
+              - else 
+                %a{:href => "#"}
+                  %i.fa.fa-bar-chart-o
+                  Grading
           %ul.nav.navbar-nav.navbar-right.navbar-user
             %li.dropdown.user-dropdown
               %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
