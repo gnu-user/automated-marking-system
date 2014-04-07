@@ -6,6 +6,7 @@ AutomatedMarkingSystem::Application.routes.draw do
   get 'login/new' => 'login#new'
   post 'login/create' => 'login#create'
   get 'admin/login' => 'admin_login#index'
+  post 'admin/create' => 'admin#create'
   post "sessions/new" => 'sessions#create'
   post "admin/sessions/new" => 'admin_sessions#create'
   get "admin/log_out" => 'admin_sessions#destroy'

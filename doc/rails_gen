@@ -99,10 +99,20 @@ has_many :students
 
 rails generate model Assignment admin_id:integer name:string posted:date due:date description:text max_time:integer attempts:integer code_weight:integer test_case_weight:integer test_cases:integer
 belongs_to :admin
-has_many :tests #both sample and actual
-has_one :clone_incident
+belongs_to :submission
+has_many :test_cases
+has_many :inputs, :through => :test_cases
+has_many :clone_incident
 
 rails generate migration AddTestRelations
+
+rails generate model TestCase name:string description:text sample:boolean assignment_id:integer
+belongs_to :assignment
+has_many :inputs
+
+rails generate model Input value:text input:boolean test_case_id:integer
+# Links to 1 Test
+belongs_to :test_case
 
 //rails generate model GradingBreakdown max_time:integer attempts:integer memory_leaks:boolean performance:boolean stylistic:boolean bounds:boolean duplication:boolean code_weight:integer test_case_weight:integer
 //belongs_to :assignment
