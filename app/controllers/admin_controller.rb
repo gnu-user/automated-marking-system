@@ -4,8 +4,8 @@ class AdminController < ApplicationController
 	# handle logout
 
   def index
-    validateAdmin
-    getLastestAssignment
+    validate_admin
+    latest_assignment
     # Get all the assignments
     @assignments = Assignment.all
 
@@ -19,17 +19,17 @@ class AdminController < ApplicationController
     end
     # TODO handle all the links shown
     # handle review submission link
-    # hanlde view assignment positing (go to latest assignment)
+    # handle view assignment positing (go to latest assignment)
     # handle link to assignment page (for review)
-    # handle link to grades for each finished asssignment
+    # handle link to grades for each finished assignment
     @review_submissions = 12
     @view_assignment = 9
     @resolve_issues = 2
   end
 
   def new
-    validateAdmin
-    getLastestAssignment
+    validate_admin
+    latest_assignment
     # TODO handle form submission and populating the db
     # handle add button
     # handle upload button
@@ -38,22 +38,22 @@ class AdminController < ApplicationController
   end
 
   def grading
-    validateAdmin
-    getLastestAssignment
+    validate_admin
+    latest_assignment
     # TODO handle grades page using param[:id]
 
     @submissions = Submission.find_all_by_assignment_id(params[:id])
   end
 
   def cheat
-    validateAdmin
-    getLastestAssignment
+    validate_admin
+    latest_assignment
     # TODO handle cheating page using param[:id]
   end
 
   def show
-    validateAdmin
-    getLastestAssignment
+    validate_admin
+    latest_assignment
 
     @assignment = Assignment.find_by_id(params[:id])
 
@@ -64,8 +64,8 @@ class AdminController < ApplicationController
   end
 
   def create
-    validateAdmin
-    getLastestAssignment
+    validate_admin
+    latest_assignment
 
     # TODO check if at least 1 evaluation testcase has been submitted
     @value = params.require(:assignment).permit(:name, :description, :posted, :due, :max_time, :attempts, :code_weight, :test_case_weight)
@@ -89,7 +89,7 @@ class AdminController < ApplicationController
 
   def upload
     validateUser
-    getLastestAssignment
+    latest_assignment
 
     @contents = params[:file].read
 
@@ -100,7 +100,7 @@ class AdminController < ApplicationController
 
   private
 
-  def validateAdmin
+  def validate_admin
     @user = Admin.find_by_id(session[:prof_id])
 
     if @user == nil
@@ -109,7 +109,7 @@ class AdminController < ApplicationController
     end
   end
 
-  def getLastestAssignment
+  def latest_assignment
     @latest = Assignment.last
   end
 end
