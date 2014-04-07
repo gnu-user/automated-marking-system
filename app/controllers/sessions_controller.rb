@@ -7,11 +7,11 @@ class SessionsController < ApplicationController
     user = Student.authenticate(params[:student][:email], params[:student][:password])
     if user
       session[:user_id] = user.id
-      redirect_to "#{root_url}student", :notice => "Logged in!"
+      redirect_to student_url, :notice => "Logged in!"
     else
       #TODO show error message
-      flash.now.alert = "Invalid email or password"
-      redirect_to "#{root_url}login"
+      flash[:alert] = "Invalid email or password"
+      redirect_to login_url
     end
   end
 
