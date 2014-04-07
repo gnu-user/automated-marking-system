@@ -18,4 +18,7 @@
 //= require moment
 //= require bootstrap-datetimepicker
 //= require custom
+//= require jquery.ui.widget
+//= require jquery.iframe-transport
+//= require jquery.fileupload
 //= require_tree .

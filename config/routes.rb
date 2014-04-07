@@ -18,7 +18,8 @@ AutomatedMarkingSystem::Application.routes.draw do
   #root 'student#index'
   get 'student' => 'student#index', :as => :student
   get 'student/:file' => 'student#show'
-  get 'student/assignment/:id' => 'student#assignment'
+  get 'student/assignment/:id' => 'student#assignment', as: 'student_assignment'
+  post 'student/assignment/:id' => 'student#submission'
   get 'student/grades/:id' => 'student#grading'
   get 'admin' => 'admin#index'
   get 'admin/new' => 'admin#new'
