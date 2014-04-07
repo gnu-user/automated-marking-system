@@ -13,24 +13,19 @@
           Add Test Cases
   / /.row
   .row
-    .col-lg-6
+    .col-lg-12
       / EVALUATION TEST CASES
-      %h2 Evaluation
+      %h2 Test cases
       .alert.alert-info.alert-dismissable
         %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
-        %strong These test cases will be used for grading purposes.
-      .row
-        .col-xs-12
-          %input.btn.btn-primary.btn-block.btn-lg{:id => "upload_eval", :tabindex => "7", :type => "submit", :value => "Upload"}
-      .col-lg-6
-        / SAMPLE TEST CASES
-        %h2 Sample
-        .alert.alert-info.alert-dismissable
-          %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
-          %strong These test cases are not used for grading they are for instructional purposes only.
-        .row
-          .col-xs-12
-            %input.btn.btn-primary.btn-block.btn-lg{:id => "upload_sample", :tabindex => "7", :type => "submit", :value => "Upload"}
-    .row
-      .col-xs-12
-        %input.btn.btn-primary.btn-block.btn-lg{:id => "create_assignment", :tabindex => "7", :type => "submit", :value => "Finish"}
+        Submit the sample and evaluation test cases in a single file. The file is YAML formated.
+        /TODO provide help
+      %center
+        #upload_assignment_container
+          %button#upload_button.btn.btn-primary.btn-lg Upload
+          %input#upload_input.btn.btn-primary.btn-lg{name:"file", type: "file", data: {type: "POST", action: "upload", controller: "admin"}}
+  .row
+    .col-lg-12
+      %br
+        %center
+          %input.btn.btn-primary.btn-block.btn-lg{:id => "create_assignment", :type => "submit", :value => "Finish"}

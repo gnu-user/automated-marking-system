@@ -6,7 +6,6 @@ AutomatedMarkingSystem::Application.routes.draw do
   get 'login/new' => 'login#new'
   post 'login/create' => 'login#create'
   get 'admin/login' => 'admin_login#index'
-  post 'admin/create' => 'admin#create'
   post "sessions/new" => 'sessions#create'
   post "admin/sessions/new" => 'admin_sessions#create'
   get "admin/log_out" => 'admin_sessions#destroy'
@@ -27,6 +26,8 @@ AutomatedMarkingSystem::Application.routes.draw do
   get 'admin/grades/:id' => 'admin#grading'
   get 'admin/grades/:id/cheating' => 'admin#cheat'
   get 'admin/assignment/:id' => 'admin#show'
+  post 'admin/create' => 'admin#create'
+  post 'admin/upload' => 'admin#upload'
 
   #get "/404", :to => "errors#not_found"
   #get "/422", :to => "errors#unacceptable"

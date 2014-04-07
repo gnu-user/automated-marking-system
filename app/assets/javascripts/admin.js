@@ -2,6 +2,8 @@
 // All this logic will automatically be available in application.js.
 $(document).ready(function () {
 
+	$("#upload_input").fileupload({dataType: "txt"});
+
 	//TODO set up adding new test cases
 	$('#upload_eval').click(function(event) {
 		alert("Upload eval clicked, Don't Click Me!");

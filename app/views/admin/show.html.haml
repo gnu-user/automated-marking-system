@@ -3,7 +3,7 @@
   .row
     .col-lg-12
       %h1
-        Assignment Name
+        Assignment
         /%small Create a New Submission
       %ol.breadcrumb
         %li
@@ -11,7 +11,7 @@
             %i.fa.fa-edit
             Assignments
         %li.active
-          Assignment 4
+          = @assignment.name
   / /.row
   %form{:role => "form"}
     .row
@@ -20,20 +20,20 @@
         %h2 Description
         .form-group
           %label Submission Name
-          %input.form-control{disabled: "true", :name => "name", :value => "Assignment 4", :required => "", :type => "text",}
-            %p.help-block The name of the assignment.
+          %input.form-control{disabled: "true", :name => "name", :required => "", :type => "text", value: @assignment.description}
+          %p.help-block The name of the assignment.
         .form-group
           %label Description
           %textarea.form-control{disabled: "true", :name => "description", :required => "", :rows => "8"}
-            For your assignment you must create a commandline calculator program which will accept any two numbers as input (both integers and floating point values) and perform one of the following requested operations add, subtract, multiply, divide and display the results.
+            = @assignment.description
           %p.help-block Assignment description, markdown format is supported.
         .form-group
           %label Post Date
-          %input.form-control{disabled: "true", :name => "postdate", :type => "text", :value => "11/21/2013 1:12 PM"}/
+          %input.form-control{disabled: "true", :name => "postdate", :type => "text", :value => @assignment.posted}/
           %p.help-block The date the assignment will become available.
         .form-group
           %label Due Date
-          %input.form-control{disabled: "true", :name => "duedate", :type => "text", :value => "11/28/2013 11:59 PM"}/
+          %input.form-control{disabled: "true", :name => "duedate", :type => "text", :value => @assignment.due}/
           %p.help-block The deadline for the assignment.
         .form-group
           %label Language
@@ -44,11 +44,11 @@
         %h2 Grading
         %label Maximum Execution Time
         .form-group.input-group
-          %input.form-control{disabled: "true", :name => "maxtime", :required => "", :type => "text", :value => "60"}
+          %input.form-control{disabled: "true", :name => "maxtime", :required => "", :type => "text", :value => @assignment.max_time}
             %span.input-group-addon Seconds
         %label Maximum Attempts
         .form-group.input-group
-          %input.form-control{disabled: "true", :name => "maxattempts", :required => "", :type => "text", :value => "1"}
+          %input.form-control{disabled: "true", :name => "maxattempts", :required => "", :type => "text", :value => @assignment.attempts}
             %span.input-group-addon Attempts
         %p.help-block The maximum number of attempts the student can have to re-submit.
         .form-group
@@ -62,12 +62,12 @@
         %p.help-block The code analysis metrics to apply when grading.
         %label Code Analysis Weight
         .form-group.input-group
-          %input.form-control{disabled: "true", :name => "metricweight", :required => "", :type => "text", :value => "10"}
+          %input.form-control{disabled: "true", :name => "metricweight", :required => "", :type => "text", :value => @assignment.code_weight}
             %span.input-group-addon %
         %p.help-block The weight code analysis metrics have on the overall grade.
         %label Test Case Evaluation Weight
         .form-group.input-group
-          %input.form-control{disabled: "true", :name => "testweight", :required => "", :type => "text", :value => "90"}
+          %input.form-control{disabled: "true", :name => "testweight", :required => "", :type => "text", :value => @assignment.test_case_weight}
             %span.input-group-addon %
         %p.help-block The weight test cases have on the overall grade.
 / /#page-wrapper

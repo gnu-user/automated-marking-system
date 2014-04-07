@@ -81,37 +81,19 @@
                   %th Submissions
                   %th Average Grade                  
               %tbody
-                %tr
-                  %td
-                    %a{:href => "/admin/assignment/1"} Assignment 1
-                  %td 10/11/2013 3:29 PM
-                  %td 10/20/2013 11:59 PM
-                  %td 33
-                  %td
-                    %a{:href => "/admin/grades/1"} 80%
-                %tr
-                  %td
-                    %a{:href => "/admin/assignment/2"} Assignment 2
-                  %td 10/22/2013 9:12 AM
-                  %td 10/29/2013 11:59 PM
-                  %td 22
-                  %td
-                    %a{:href => "/admin/grades/2"} 70%
-                %tr
-                  %td
-                    %a{:href => "/admin/assignment/3"} Assignment 3
-                  %td 11/05/2013 11:22 AM
-                  %td 11/15/2013 11:59 PM
-                  %td 21
-                  %td
-                    %a{:href => "/admin/grades/3"} 55%
-                %tr.success
-                  %td
-                    %a{:href => "/admin/assignment/4"} Assignment 4                    
-                  %td 11/21/2013 1:12 PM
-                  %td 11/28/2013 11:59 PM
-                  %td 12
-                  %td
+                - @assignments.each do |assignment|
+                  %tr
+                    %td
+                      %a{:href => "/admin/assignment/#{assignment.id}"}
+                        = assignment.name
+                    %td
+                      = assignment.posted
+                    %td
+                      = assignment.due
+                    %td
+                      = assignment.submission_count
+                    %td
+                      %a{:href => "/admin/grades/#{assignment.id}"} 80%              
           .text-right
             %a{:href => "/admin/new"}
               Add New Assignment
