@@ -4,12 +4,10 @@ class LoginController < ApplicationController
   layout "login"
 
   def index
-    # TODO handle login logic
     @student = Student.new
   end
 
   def new
-    # TODO Handle registration logic
     @user = Student.new
   end
 

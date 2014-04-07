@@ -7,6 +7,8 @@ AutomatedMarkingSystem::Application.routes.draw do
   post 'login/create' => 'login#create'
   get 'admin/login' => 'admin_login#index'
   post "sessions/new" => 'sessions#create'
+  post "admin/sessions/new" => 'admin_sessions#create'
+  get "admin/log_out" => 'admin_sessions#destroy'
   get "log_out" => "sessions#destroy", :as => "log_out"
   # Create a new admin
   get 'admin/login/new' => 'admin_login#new'

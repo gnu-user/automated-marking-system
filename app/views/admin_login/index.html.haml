@@ -2,14 +2,20 @@
 .container
   .row{:style => "margin-top:20px"}
     .col-xs-12.col-sm-8.col-md-6.col-sm-offset-2.col-md-offset-3
-      %form{:role => "form"}
-        %fieldset
-          %h2 Please Sign In
-          %hr.colorgraph
+      %fieldset
+        %h2 Please Sign In
+        %hr.colorgraph
+          = form_for @admin, url: {:action=>"create", :controller=>"admin_sessions"} do |s|
+            - if @admin.errors.any?
+              .error_messages
+                %h2 Form is invalid
+                %ul
+                  - for message in @admin.errors.full_messages
+                    %li= message
             .form-group
-              %input#email.form-control.input-lg{:name => "email", :placeholder => "Email Address", :type => "email"}
+              = s.email_field :email, class: "form-control input-lg",placeholder: "Email Address"
             .form-group
-              %input#password.form-control.input-lg{:name => "password", :placeholder => "Password", :type => "password"}
+              = s.password_field :password, class: "form-control input-lg",placeholder: "Password"
             %span.button-checkbox
               %button.btn{"data-color" => "info", :type => "button"} Remember Me
               %input#remember_me.hidden{:checked => "checked", :name => "remember_me", :type => "checkbox"}

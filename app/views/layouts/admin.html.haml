@@ -43,11 +43,11 @@
             %li.dropdown.user-dropdown
               %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
                 %i.fa.fa-user
-                Dr. Eyhab Al-Masri
+                = "#{@user.first_name} #{@user.last_name}"
                 %b.caret
               %ul.dropdown-menu
                 %li
-                  %a{:href => "#"}
+                  %a{:href => "admin/log_out"}
                     %i.fa.fa-power-off
                     Log Out
       = yield
