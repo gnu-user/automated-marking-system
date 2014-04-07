@@ -1,19 +1,14 @@
-class AdminSessionsController < ApplicationController
+class AdminSessionsController < UserSessionsController
+
+  def initialize
+    super(Admin, :admin, :prof_id)
+  end
 
   def create
-    user = Admin.authenticate(params[:admin][:email], params[:admin][:password])
-    if user
-      session[:prof_id] = user.id
-      redirect_to "#{root_url}admin", :notice => "Logged in!"
-    else
-      #TODO show error message
-      flash.now.alert = "Invalid email or password"
-      redirect_to "#{root_url}admin/login"
-    end
+    UserSessionsController.instance_method(:create).bind(self).call(admin_url, admin_login_url)
   end
 
   def destroy
-  	session[:prof_id] = nil
-    redirect_to "#{root_url}admin/login", :notice => "Logged out!"
+    UserSessionsController.instance_method(:destroy).bind(self).call(admin_login_url)
   end
 end
