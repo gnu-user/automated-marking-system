@@ -40,8 +40,16 @@ class AdminController < ApplicationController
   end
 
   def create
+    validateAdmin
     # TODO check if at least 1 evaluation testcase has been submitted
-    redirect_to "#{root_url}admin"
+    @value = params.require(:assignment).permit(:name, :description, :posted, :due, :max_time, :attempts, :code_weight, :test_case_weight)
+    @assignment = Assignment.new(@value)
+    #save(@user, root_url)
+    #if user.save!
+    #  redirect_to post_url, notice: "Signed up!"
+    #else
+    #  redirect_to post_url
+    #end
   end
 
   private
