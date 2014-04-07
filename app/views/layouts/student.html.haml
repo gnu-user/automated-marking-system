@@ -19,7 +19,7 @@
       %nav.navbar.navbar-inverse.navbar-fixed-top{:role => "navigation"}
         / Brand and toggle get grouped for better mobile display
         .navbar-header
-          %button.navbar-toggle{"data-target" => ".navbar-ex1-collapse", "data-toggle" => "collapse", :type => "button"}
+          %button.navbar-toggle{data:{target: ".navbar-ex1-collapse", toggle: "collapse"}, :type => "button"}
             %span.sr-only Toggle navigation
             %span.icon-bar
             %span.icon-bar
@@ -39,7 +39,7 @@
                 Grades
           %ul.nav.navbar-nav.navbar-right.navbar-user
             %li.dropdown.user-dropdown
-              %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+              %a.dropdown-toggle{data:{toggle: "dropdown"}, :href => "#"}
                 %i.fa.fa-user
                 = "#{@user.first_name} #{@user.last_name}"
                 %b.caret
