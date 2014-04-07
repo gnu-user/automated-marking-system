@@ -2,7 +2,7 @@ module Login
   private
 
   def save(user, post_url)
-    if user.save!
+    if user.save
       redirect_to post_url, notice: "Signed up!"
     else
       redirect_to post_url
