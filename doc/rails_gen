@@ -80,6 +80,7 @@ belongs_to :student
 has_one :grade
 
 rails generate migration AddSubmissionRelationship
+rails generate migration AddSubmissionSubmit
 
 # Should this show how the student faired at the prof's testing stuff / static and code analysis
 rails generate model Grade final:float testcase:float code:float test_cases:integer submission_id:integer
