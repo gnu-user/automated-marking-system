@@ -19,11 +19,11 @@
       .alert.alert-info.alert-dismissable
         %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"} &times;
         Submit the sample and evaluation test cases in a single file. The file is YAML formated.
-        /TODO provide help
+      /TODO provide help
       %center
         #upload_assignment_container
           %button#upload_button.btn.btn-primary.btn-lg Upload
-          %input#upload_input.btn.btn-primary.btn-lg{name:"file", type: "file", data: {type: "POST", action: "upload", controller: "admin"}}
+          %input#upload_input.btn.btn-primary.btn-lg{name:"file", type: "file", data: {type: "POST", url: "/admin/upload"}}
   .row
     .col-lg-12
       %br
