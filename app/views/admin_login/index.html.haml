@@ -12,6 +12,10 @@
                 %ul
                   - for message in @admin.errors.full_messages
                     %li= message
+            - else
+              - flash.each do |name, msg|
+                .error_messages
+                  %h2=msg
             .form-group
               = s.email_field :email, class: "form-control input-lg",placeholder: "Email Address"
             .form-group
