@@ -11,7 +11,7 @@ class TestCase < ActiveRecord::Base
 		state = 0
 		test_case = Array.new
 		#Parse the YAMl
-		testcase.split(/(\n\r)|\r|\n/).each do |line|
+		test_cases.split(/(\n\r)|\r|\n/).each do |line|
 			# 1. Test name
 			# 2. Test description
 			# 3. Test sample
@@ -19,7 +19,7 @@ class TestCase < ActiveRecord::Base
 
 			result = line.scan(/(.*): (.*)/)
 			if result.size > 0 && result[0].size == 2
-				if result[0][0] != nil
+				if result[0][0] != ""
 					if state == 0
 						temp_name = parseName(result)
 
@@ -55,7 +55,7 @@ class TestCase < ActiveRecord::Base
 							return false
 						end
 					else
-						test = parseIO(line)
+						test = parseIO(result)
 						if test
 							#test_cases.push(test)
 							test.test_case_id = test_case[-1].id
@@ -86,7 +86,7 @@ class TestCase < ActiveRecord::Base
 
 private 
 
-	def parseName(result)
+	def self.parseName(result)
 		#value = Input.new
 		value = nil
 		if result[0][0] == "name"
@@ -95,7 +95,7 @@ private
 		return value
 	end
 
-	def parseDescription(result)
+	def self.parseDescription(result)
 		#value = Input.new
 		value = nil
 		if result[0][0] == "description"
@@ -104,7 +104,7 @@ private
 		return value
 	end
 
-	def parseSample(result)
+	def self.parseSample(result)
 		#value = Input.new
 		value = nil
 		if result[0][0] == "sample"
@@ -113,7 +113,7 @@ private
 		return value
 	end
 
-	def parseIO(result)
+	def self.parseIO(result)
 		value = Input.new
 		if result[0][0] == "input"
 			value.input = true

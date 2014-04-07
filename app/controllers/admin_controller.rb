@@ -88,15 +88,19 @@ class AdminController < ApplicationController
   end
 
   def upload
-    validateUser
+    validate_admin
     latest_assignment
 
     @contents = params[:file].read
 
-    #TestCase.parseYaml(@contents, params[:assignment_id])
-
-    #redirect_to student_assignment_url
+    if TestCase.parseYaml(@contents, params[:assignment_id])
+      redirect_to "#{root_url}admin"
+    end
   end
+
+  #def show_upload
+
+  #end
 
   private
 
