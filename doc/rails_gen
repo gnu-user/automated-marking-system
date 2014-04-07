@@ -26,9 +26,11 @@ belongs_to :diff_entry
 
 rails generate migration AddCloneIncidentRelationships
 
+rails generate migration AddCloneIncidentRelationToAssignment
+
 # Compiler Issues
 
-rails generate model CompilerIssue filename:text
+rails generate model CompilerIssue filename:text grade_id:integer
 #Needs many Issue
 has_many :issues
 
@@ -38,9 +40,11 @@ belongs_to :compiler_issue
 
 rails generate migration AddCompilerIssueRelationships
 
+rails generate migration AddCompilerIssueRelateToGrade
+
 # Static Analysis
 
-rails generate model StaticAnalysis filename:string
+rails generate model StaticAnalysis filename:string grade_id:integer
 #Needs many StaticIssue
 has_many :static_issues
 
@@ -49,6 +53,8 @@ rails generate model StaticIssue line_number:integer type:string description:tex
 belongs_to :static_analysis
 
 rails generate migration AddStaticAnalysisRelationships
+
+rails generate migration AddStaticAnalysisRelateToGrade
 
 # Test
 rails generate model Test name:string description:text result:boolean sample:boolean
@@ -69,16 +75,20 @@ rails generate model Student first_name:string last_name:string student_id:strin
 has_many :submissions
 belongs_to :admin
 
-rails generate model Submission code:text assignment_id:integer
+rails generate model Submission student_id:integer code:text assignment_id:integer
 belongs_to :student
 has_one :grade
 
+rails generate migration AddSubmissionRelationship
+
 # Should this show how the student faired at the prof's testing stuff / static and code analysis
-rails generate model Grade final:float testcase:float code:float
+rails generate model Grade final:float testcase:float code:float test_cases:integer submission_id:integer
 belongs_to :submission
 has_one :compiler_issue
 has_one :static_issue
 has_many :tests
+
+rails generate migration AddGradeRelationship
 
 # Admin
 
@@ -86,10 +96,12 @@ rails generate model Admin first_name:string last_name:string prof_id:string ema
 has_many :assignments
 has_many :students
 
-rails generate model Assignment admin_id:integer name:string posted:date due:date description:text max_time:integer attempts:integer code_weight:integer test_case_weight:integer
+rails generate model Assignment admin_id:integer name:string posted:date due:date description:text max_time:integer attempts:integer code_weight:integer test_case_weight:integer test_cases:integer
 belongs_to :admin
 has_many :tests #both sample and actual
 has_one :clone_incident
+
+rails generate migration AddTestRelations
 
 //rails generate model GradingBreakdown max_time:integer attempts:integer memory_leaks:boolean performance:boolean stylistic:boolean bounds:boolean duplication:boolean code_weight:integer test_case_weight:integer
 //belongs_to :assignment

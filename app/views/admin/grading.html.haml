@@ -3,4 +3,77 @@
   .row
     .col-lg-12
       %h1
-        This page is for showing the grades of an assignment (the assignment's id will be part of the url). When linked to from the main page side panel, it will show the latest assignment.
+        Grading
+        %small Grades for Assignments
+      %ol.breadcrumb
+        %li.active
+          %i.fa.fa-pencil
+          Review Grades
+  / /.row
+  .row
+    .col-lg-12
+      .panel.panel-primary
+        .panel-heading
+          %h3.panel-title
+            %i.fa.fa-pencil
+            Assignment 1 Grades
+        .panel-body
+          .table-responsive
+            %table.table.table-bordered.table-hover.table-striped.tablesorter
+              %thead
+                %tr
+                  %th
+                    Last Name
+                    %i.fa.fa-sort
+                  %th
+                    First Name
+                    %i.fa.fa-sort
+                  %th
+                    Student Number
+                    %i.fa.fa-sort
+                  %th
+                    Metrics Grade
+                    %i.fa.fa-sort
+                  %th Metrics Weight
+                  %th Test Case Grade
+                  %th
+                    Test Case Weight
+                    %i.fa.fa-sort
+                  %th
+                    Final Grade
+                    %i.fa.fa-sort
+              %tbody
+                %tr
+                  %td Gillett
+                  %td Jonathan
+                  %td 100123123
+                  %td 100%
+                  %td 10%
+                  %td 100%
+                  %td 90%
+                  %td 100%
+                %tr
+                  %td Heron
+                  %td Joseph
+                  %td 100123123
+                  %td 100%
+                  %td 10%
+                  %td 100%
+                  %td 90%
+                  %td 100%
+                %tr.danger
+                  %td Smullen
+                  %td Daniel
+                  %td 100123123
+                  %td 0%
+                  %td 10%
+                  %td 0%
+                  %td 90%
+                  %td 0%
+          .text-right
+            %a{:href => "4/04-03-2014.csv"}
+              Download Grades
+              %i.fa.fa-arrow-circle-right
+      / /.row
+    / /#page-wrapper
+/ /#wrapper
