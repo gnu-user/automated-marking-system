@@ -21,13 +21,22 @@
               %p.announcement-heading
                 = @review_submissions
               %p.announcement-text Submissions
-        %a{:href => "/admin/grades/#{@latest.id}"}
-          .panel-footer.announcement-bottom
-            .row
-              .col-xs-6
-                Review Submissions
-              .col-xs-6.text-right
-                %i.fa.fa-arrow-circle-right
+        - if @latest.id
+          %a{:href => "/admin/grades/#{@latest.id}"}
+            .panel-footer.announcement-bottom
+              .row
+                .col-xs-6 
+                  Review Submissions
+                .col-xs-6.text-right
+                  %i.fa.fa-arrow-circle-right
+        - else 
+          %a{:href => "#"}
+            .panel-footer.announcement-bottom
+              .row
+                .col-xs-6
+                  Review Submissions
+                .col-xs-6.text-right
+                  %i.fa.fa-arrow-circle-right
     .col-lg-4
       .panel.panel-warning
         .panel-heading
@@ -38,13 +47,22 @@
               %p.announcement-heading 
                 = @view_assignment
               %p.announcement-text Not Submitted
-        %a{:href => "/admin/assignment/#{@latest.id}"}
-          .panel-footer.announcement-bottom
-            .row
-              .col-xs-6
-                View Assignment Posting
-              .col-xs-6.text-right
-                %i.fa.fa-arrow-circle-right
+        - if @latest.id
+          %a{:href => "/admin/assignment/#{@latest.id}"}
+            .panel-footer.announcement-bottom
+              .row
+                .col-xs-6
+                  View Assignment Posting
+                .col-xs-6.text-right
+                  %i.fa.fa-arrow-circle-right
+        - else 
+          %a{:href => "#"}
+            .panel-footer.announcement-bottom
+              .row
+                .col-xs-6
+                  View Assignment Posting
+                .col-xs-6.text-right
+                  %i.fa.fa-arrow-circle-right
     .col-lg-4
       .panel.panel-danger
         .panel-heading
@@ -55,13 +73,22 @@
               %p.announcement-heading 
                 = @resolve_issues
               %p.announcement-text Submission Errors
-        %a{:href => "/admin/grades/#{@latest.id}/cheating"}
-          .panel-footer.announcement-bottom
-            .row
-              .col-xs-6
-                Resolve Issues
-              .col-xs-6.text-right
-                %i.fa.fa-arrow-circle-right
+        - if @latest.id
+          %a{:href => "/admin/grades/#{@latest.id}/cheating"}
+            .panel-footer.announcement-bottom
+              .row
+                .col-xs-6
+                  Resolve Issues
+                .col-xs-6.text-right
+                  %i.fa.fa-arrow-circle-right
+        - else
+          %a{:href => "#"}
+            .panel-footer.announcement-bottom
+              .row
+                .col-xs-6
+                  Resolve Issues
+                .col-xs-6.text-right
+                  %i.fa.fa-arrow-circle-right
   / /.row
   .row
     .col-lg-12
