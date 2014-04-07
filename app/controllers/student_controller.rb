@@ -24,7 +24,10 @@ class StudentController < ApplicationController
   def assignment
     validateUser
 
-    @title = "Assignment #{params[:id].to_i + 1}"
+    @assignment = Assignment.find_by_id(params[:id])
+
+    @title = @assignment.name
+
     # TODO Show activity related to id stored in 'param[:id]'
     # TODO handle upload submission on click
     # TODO handle test on click

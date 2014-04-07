@@ -18,7 +18,7 @@ class UserSessionsController < ApplicationController
   end
 
   def destroy(post_logout_page)
-    session[type] = nil
+    session[@type] = nil
     redirect_to post_logout_page, notice: "Logged out!"
   end
 end

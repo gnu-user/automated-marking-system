@@ -2,6 +2,8 @@ name: Add
 
 description: add two numbers
 
+sample: true
+
 input: 1
 input: 2
 output: 3
@@ -10,6 +12,8 @@ name: Subtract
 
 description: subtract to numbers (signed)
 
+sample: false
+
 input: 2
 input: -1
 output: 1
@@ -17,6 +21,8 @@ output: 1
 name: Negative add
 
 description: add two negative numbers
+
+sample: false
 
 input: -1
 input: -2

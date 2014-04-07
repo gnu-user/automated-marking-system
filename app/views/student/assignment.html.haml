@@ -33,11 +33,7 @@
           %h3.panel-title Description
         .panel-body
           %p
-            For your assignment you must create a commandline calculator program which will accept any two
-            numbers as input (both integers and floating point values) and perform one of the following
-            requested operations
-            %em add, subtract, multiply, divide
-            and display the results.
+            = @assignment.description
     .col-lg-5
       .panel.panel-default
         .panel-heading
@@ -46,19 +42,23 @@
           .bs-example
             %ul.list-group
               %li.list-group-item
-                %span.badge 60
+                %span.badge
+                  = @assignment.max_time
                 Maximum execution time (seconds)
               %li.list-group-item
-                %span.badge 1
+                %span.badge
+                  = @assignment.attempts
                 Maximum attempts
               %li.list-group-item
                 %span.badge C++
                 Language
               %li.list-group-item
-                %span.badge 10%
+                %span.badge
+                  = "#{@assignment.code_weight}%"
                 Code analysis weight
               %li.list-group-item
-                %span.badge 90%
+                %span.badge
+                  = "#{@assignment.test_case_weight}%"
                 Test case weight
   / TODO add css for more spacing before/after button
   .row

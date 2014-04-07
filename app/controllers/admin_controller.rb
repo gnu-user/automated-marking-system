@@ -41,6 +41,8 @@ class AdminController < ApplicationController
     validateAdmin
     getLastestAssignment
     # TODO handle grades page using param[:id]
+
+    @submissions = Submission.find_all_by_assignment_id(params[:id])
   end
 
   def cheat
