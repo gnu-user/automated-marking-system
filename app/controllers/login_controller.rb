@@ -4,6 +4,7 @@ class LoginController < ApplicationController
   layout "login"
 
   def index
+    @class = Student
     @student = Student.new
   end
 

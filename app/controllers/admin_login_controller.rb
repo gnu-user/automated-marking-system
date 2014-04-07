@@ -4,7 +4,7 @@ class AdminLoginController < ApplicationController
   layout "login"
 
   def index
-    # TODO handle login logic
+    @class = "Professor"
     @admin = Admin.new
   end
 
