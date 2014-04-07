@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140407001552) do
+ActiveRecord::Schema.define(version: 20140407014552) do
 
   create_table "admins", force: true do |t|
     t.string   "first_name"
@@ -73,6 +73,14 @@ ActiveRecord::Schema.define(version: 20140407001552) do
     t.integer  "submission_id"
   end
 
+  create_table "inputs", force: true do |t|
+    t.text     "value"
+    t.boolean  "input"
+    t.integer  "test_case_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "io_elements", force: true do |t|
     t.text    "value"
     t.boolean "input"
@@ -126,6 +134,15 @@ ActiveRecord::Schema.define(version: 20140407001552) do
     t.datetime "updated_at"
     t.integer  "student_id"
     t.integer  "submit_count"
+  end
+
+  create_table "test_cases", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.boolean  "sample"
+    t.integer  "assignment_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "tests", force: true do |t|

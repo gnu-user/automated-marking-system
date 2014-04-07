@@ -21,6 +21,7 @@ class AdminController < ApplicationController
     # handle add button
     # handle upload button
     # handle button submit assignment
+    @assignment = Assignment.new
   end
 
   def grading
@@ -36,6 +37,11 @@ class AdminController < ApplicationController
   def show
     validateAdmin
     # TODO handle displaying the relavent information about the active assignment
+  end
+
+  def create
+    # TODO check if at least 1 evaluation testcase has been submitted
+    redirect_to "#{root_url}admin"
   end
 
   private

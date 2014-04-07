@@ -14,7 +14,13 @@
           %i.fa.fa-plus
           Add New Assignment
   / /.row
-  %form{:role => "form"}
+  = form_for @assignment, url: {action: "create"} do |a|
+    - if @assignment.errors.any?
+      .error_messages
+        %h2 Form is invalid
+        %ul
+          - for message in @assignment.errors.full_messages
+            %li= message
     .row
       .col-lg-6
         / DESCRIPTION
@@ -24,23 +30,23 @@
           Specify the assignment name, description, dates, and programming language below.
         .form-group
           %label Submission Name
-          %input.form-control{:name => "name", :placeholder => "Assignment 1...", :required => "", :type => "text"}
-            %p.help-block The name of the assignment.
+          = a.text_field :name, class: "form-control input-lg", placeholder: "Assignment ...", :required => ""
+          %p.help-block The name of the assignment.
         .form-group
           %label Description
-          %textarea.form-control{:name => "description", :required => "", :rows => "8"}
+          = a.text_area :description, class: "form-control", :required => "", :rows => "8"
           %p.help-block Assignment description.
         .form-group
           %label Post Date
           #postdatepicker.input-group.date{:required => ""}
-            %input.form-control{:name => "postdate", :type => "text"}/
+            = a.text_field :posted, class: "form-control"
             %span.input-group-addon
               %span.fa.fa-calendar
           %p.help-block The date the assignment will become available.
         .form-group
           %label Due Date
           #duedatepicker.input-group.date{:required => ""}
-            %input.form-control{:name => "duedate", :type => "text"}/
+            = a.text_field :due, class: "form-control"
             %span.input-group-addon
               %span.fa.fa-calendar
           %p.help-block The deadline for the assignment.
@@ -61,26 +67,26 @@
           .panel-body
             .form-group
               %label Test Case Name
-              %input.form-control{:name => "testname", :placeholder => "Test case...", :required => "", :type => "text"}
+              %input.form-control{:name => "testname", :placeholder => "Test case...", :type => "text"}
                 %p.help-block The name of the test case, must be unique.
             .form-group
               %label Description
-              %textarea.form-control{:name => "testdescription", :required => "", :rows => "3"}
+              %textarea.form-control{:name => "testdescription", :rows => "3"}
               %p.help-block Description of the test case.
             .form-group
               %label Test Case
-              %textarea.form-control{:name => "testcase", :required => "", :rows => "8"}
+              %textarea.form-control{:name => "testcase", :rows => "8"}
               %p.help-block
                 Test cases uses YAML notation, press help for more details
-                %button.btn.btn-primary{:type => "reset"}
+                %button.btn.btn-primary{:id => "help_yaml", :type => "help"}
                   Help
                   %span.fa.fa-code
             %p.help-block
               %strong Tip:
               You can save a time by uploading all of the the test cases at once.
         %center
-          %button.btn.btn-success{:type => "submit"} ADD
-          %button.btn.btn-primary{:type => "reset"} Upload
+          %button.btn.btn-success{:id => "add_eval", :type => "add"} ADD
+          %button.btn.btn-primary{:id => "upload_eval", :type => "upload"} Upload
       .col-lg-6
         / SAMPLE TEST CASES
         %h2 Sample
@@ -95,26 +101,26 @@
           .panel-body
             .form-group
               %label Test Case Name
-              %input.form-control{:name => "samplename", :placeholder => "Test case...", :required => "", :type => "text"}
+              %input.form-control{:name => "samplename", :placeholder => "Test case...", :type => "text"}
                 %p.help-block The name of the test case, must be unique.
             .form-group
               %label Description
-              %textarea.form-control{:name => "sampledescription", :required => "", :rows => "3"}
+              %textarea.form-control{:name => "sampledescription", :rows => "3"}
               %p.help-block Description of the test case.
             .form-group
               %label Test Case
-              %textarea.form-control{:name => "samplecase", :required => "", :rows => "8"}
+              %textarea.form-control{:name => "samplecase", :rows => "8"}
               %p.help-block
                 Test cases uses YAML notation, press help for more details
-                %button.btn.btn-primary{:type => "reset"}
+                %button.btn.btn-primary{:id => "help_yaml_2", :type => "help"}
                   Help
                   %span.fa.fa-code
             %p.help-block
               %strong Tip:
               You can save a time by uploading all of the the test cases at once.
         %center
-          %button.btn.btn-success{:type => "button"} ADD
-          %button.btn.btn-primary{:type => "button"} Upload
+          %button.btn.btn-success{:id => "add_sample", :type => "add"} ADD
+          %button.btn.btn-primary{:id => "upload_sample", :type => "upload"} Upload
       .col-lg-6
         / GRADING
         %h2 Grading
@@ -123,12 +129,12 @@
           Specify the assignment requirements, number of attempts, evaluation breakdown and weights.
         %label Maximum Execution Time
         .form-group.input-group
-          %input.form-control{:name => "maxtime", :required => "", :type => "text", :value => "60"}
-            %span.input-group-addon Seconds
+          = a.text_field :max_time, class: "form-control", value: "60", :required => ""
+          %span.input-group-addon Seconds
         %label Maximum Attempts
         .form-group.input-group
-          %input.form-control{:name => "maxattempts", :required => "", :type => "text", :value => "1"}
-            %span.input-group-addon Attempts
+          = a.text_field :attempts, class: "form-control", value: "1", :required => ""
+          %span.input-group-addon Attempts
         %p.help-block The maximum number of attempts the student can have to re-submit.
         .form-group
           %label Code Analysis Metrics
@@ -141,13 +147,13 @@
         %p.help-block The code analysis metrics to apply when grading.
         %label Code Analysis Weight
         .form-group.input-group
-          %input.form-control{:name => "metricweight", :required => "", :type => "text", :value => "10"}
-            %span.input-group-addon %
+          = a.text_field :code_weight, class: "form-control", value: "10", :required => ""
+          %span.input-group-addon %
         %p.help-block The weight code analysis metrics have on the overall grade.
         %label Test Case Evaluation Weight
         .form-group.input-group
-          %input.form-control{:name => "testweight", :required => "", :type => "text", :value => "90"}
-            %span.input-group-addon %
+          = a.text_field :test_case_weight, class: "form-control", value: "90", :required => ""
+          %span.input-group-addon %
         %p.help-block The weight test cases have on the overall grade.
         %br
           %center
