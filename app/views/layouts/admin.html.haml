@@ -36,7 +36,7 @@
                 Assignments
             }
             %li{:id => "grading_tab"}
-              -if @latest.id
+              -if @latest
                 %a{:href => "/admin/grades/#{@latest.id}"}
                   %i.fa.fa-bar-chart-o
                   Grading
