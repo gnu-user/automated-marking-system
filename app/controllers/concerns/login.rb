@@ -9,9 +9,7 @@ module Login
     end
   end
 
-  def user_params(user)
-    id = :"#{user}_id"
-
-    params.require(user).permit(:first_name, :last_name, id, :email, :password, :password_confirmation)
+  def user_params(type, id)
+    params.require(type).permit(:first_name, :last_name, id, :email, :password, :password_confirmation)
   end
 end
