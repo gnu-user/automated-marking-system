@@ -19,9 +19,9 @@
               %i.fa.fa-check.fa-5x  
             .col-xs-6.text-right
               %p.announcement-heading
-                = @assignmnet_graded
+                = @assignment[:graded]
               %p.announcement-text Assignments Graded
-        
+
     .col-lg-4
       .panel.panel-warning
         .panel-heading
@@ -30,7 +30,7 @@
               %i.fa.fa-exclamation-triangle.fa-5x
             .col-xs-6.text-right
               %p.announcement-heading 
-                = @assignment_left
+                = @assignment[:left]
               %p.announcement-text Assignment Not Submitted!
 
     .col-lg-4
@@ -41,7 +41,7 @@
               %i.fa.fa-tasks.fa-5x
             .col-xs-6.text-right
               %p.announcement-heading 
-                = @assignment_error
+                = @assignment[:error]
               %p.announcement-text Submission Errors
 
   / /.row
@@ -78,7 +78,7 @@
                     %a{:href => "/student/grades/2"} 74%
                 %tr.danger
                   %td
-                    %a{:href => "404-html"} Assignment 3
+                    %a{:href => "404.html"} Assignment 3
                   %td 11/15/2013 11:59 PM
                   %td
                     %span.label.label-danger
