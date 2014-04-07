@@ -16,6 +16,12 @@ $(document).ready(function () {
 		return false;
 	});
 
+	$('#create_assignment').click(function(event) {
+		alert("Create assignment clicked, Don't Click Me!");
+		// TODO update the assignment::released and delete session[:assignment_id]
+		return false;
+	});
+
 	$('#help_yaml').click(function(event) {
 		helpYaml();
 

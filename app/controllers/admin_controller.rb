@@ -44,10 +44,11 @@ class AdminController < ApplicationController
     # TODO check if at least 1 evaluation testcase has been submitted
     @value = params.require(:assignment).permit(:name, :description, :posted, :due, :max_time, :attempts, :code_weight, :test_case_weight)
     @assignment = Assignment.new(@value)
+    @assignment.admin_id = session[:prof_id]
     #save(@user, root_url)
     if @assignment.save
       #Create the new TestCase Sample and TestCase Eval
-      session[:assignmnet_id] = @assignment_id 
+      session[:assignment_id] = @assignment.id 
       @test_sample = TestCase.new
       #@test_sample.assignment_id = @assignment_id
       @test_sample.sample = false
@@ -64,7 +65,7 @@ class AdminController < ApplicationController
     validateAdmin
     @test = params.require(:test_case).permit(:name, :description, :sample, :testcase, :assignment_id)
     @test_sample = TestCase.new(@test)
-    @test_sample.assignment_id = session[:assignmnet_id]
+    @test_sample.assignment_id = session[:assignment_id]
     @test_sample.sample = true
   
     if @test_sample.save
