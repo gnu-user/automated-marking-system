@@ -72,16 +72,10 @@ class AdminController < ApplicationController
     @assignment = Assignment.new(@value)
     @assignment.admin_id = session[:prof_id]
     @assignment.released = false
-    #save(@user, root_url)
+
     if @assignment.save
       #Create the new TestCase Sample and TestCase Eval
       session[:assignment_id] = @assignment.id 
-      #@test_sample = TestCase.new
-      #@test_sample.assignment_id = @assignment_id
-      #@test_sample.sample = false
-      #@test_eval = TestCase.new
-      #@test_eval.sample = true
-      #redirect_to post_url, notice: "Signed up!"
     else
       redirect_to "#{root_url}admin/new"
     end
@@ -93,14 +87,30 @@ class AdminController < ApplicationController
 
     @contents = params[:file].read
 
-    if TestCase.parseYaml(@contents, params[:assignment_id])
-      redirect_to "#{root_url}admin"
+    if !TestCase.parseYaml(@contents, session[:assignment_id])
+      # TODO show an error
     end
   end
 
-  #def show_upload
+  def submit
+    validate_admin
+    latest_assignment
 
-  #end
+    if TestCase.where("assignment_id = #{session[:assignment_id].to_i} AND sample = 't'").count > 0
+      #redirect_to root_url
+    else
+      # TODO report error
+      redirect_to "#{root_url}" 
+    end
+
+    # Set the assignment as released so when the posted date passes it will show up for the students
+    assignment = Assignment.find_by_id(session[:assignment_id])
+    assignment.released = true
+
+    #TODO catch an error if there is one
+    assignment.save
+
+  end
 
   private
 

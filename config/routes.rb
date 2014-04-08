@@ -28,6 +28,7 @@ AutomatedMarkingSystem::Application.routes.draw do
   get 'admin/assignment/:id' => 'admin#show'
   post 'admin/create' => 'admin#create'
   post 'admin/upload' => 'admin#upload'
+  post 'admin/submit' => 'admin#submit'
 
   #get "/404", :to => "errors#not_found"
   #get "/422", :to => "errors#unacceptable"
