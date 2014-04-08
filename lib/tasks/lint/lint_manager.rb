@@ -43,14 +43,14 @@ class LintManager < Manager
         filename, line, type, description = parsed[0]
 
         value = filenameList[filename]
-        if value != nil 
+        if value != nil
           #Use the index
           issuesList[value].issue_list.push(StaticIssue.new(line, type, description))
         else
           filenameList[filename] = issuesList.size
           issuesList.push(StaticAnalysis.new(filename, StaticIssue.new(line, type, description)))
-        end        
-        
+        end
+
       end
     end
 
@@ -58,6 +58,7 @@ class LintManager < Manager
   end
 end
 
+=begin
 manager = LintManager.new('~/source_code/capstone/src/')
 
 manager.applyLint
@@ -69,3 +70,4 @@ if issuesList.size > 0
 else
   puts 'No issues found'
 end
+=end

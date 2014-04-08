@@ -1,3 +1,6 @@
+require "#{Rails.root}/lib/tasks/lint/lint_manager"
+require 'tempfile'
+
 class StudentController < ApplicationController
   layout "student"
   layout "code", only: [:show]
@@ -20,6 +23,28 @@ class StudentController < ApplicationController
         # TODO Generate the number of assignments submission errors
         error: 1
     }
+  end
+
+  def test
+    student_id = session[:user_id]
+    assignment_id = params[:id]
+
+    program = Submission.where("student_id = #{student_id} AND assignment_id = #{assignment_id}")[0].code
+
+    tmp = Tempfile.new "#{student_id}_#{assignment_id}"
+
+    @results = nil
+
+    begin
+      tmp.write(program)
+
+      @results = LintManager.new(tmp.path).process
+    ensure
+      tmp.close
+      tmp.unlink
+    end
+
+    # TODO: store results in database, redirect back to assignment page
   end
 
   def assignment
@@ -48,10 +73,6 @@ class StudentController < ApplicationController
     })
 
     redirect_to student_assignment_url
-  end
-
-  def test
-    
   end
 
   def show

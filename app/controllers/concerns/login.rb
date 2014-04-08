@@ -3,7 +3,7 @@ module Login
 
 
   def save(user, post_url, params)
-    if params[:t_and_c] && params[:t_and_c] === 1
+    if params[:t_and_c] === "1"
       if user.save
         redirect_to post_url, notice: "Signed up!"
       else

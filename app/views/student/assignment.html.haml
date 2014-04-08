@@ -217,10 +217,6 @@
     .col-log-12
       %br
         %center
-          = button_to 'Test', {:controller => :student, :action => :test}, :class => 'btn btn-primary btn-block btn-lg'
+          = button_to 'Test', {:controller => :student, :action => :test, id: @assignment.id}, :class => 'btn btn-primary btn-block btn-lg'
           / %button#test_assignment.btn.btn-primary.btn-lg{name:"file", type: "file", data: {type: "POST"}} Test
           %button#submit_assigment.btn.btn-success.btn-lg{:name => "submit", :type => "submit"} Submit
-/ /#page-wrapper
-%p
-  - if @submission[0]
-    = @submission[0].code
