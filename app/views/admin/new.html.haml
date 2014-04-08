@@ -39,14 +39,14 @@
         .form-group
           %label Post Date
           #postdatepicker.input-group.date{:required => ""}
-            = a.text_field :posted, class: "form-control"
+            = a.datetime_field :posted, class: "form-control"
             %span.input-group-addon
               %span.fa.fa-calendar
           %p.help-block The date the assignment will become available.
         .form-group
           %label Due Date
           #duedatepicker.input-group.date{:required => ""}
-            = a.text_field :due, class: "form-control"
+            = a.datetime_field :due, class: "form-control"
             %span.input-group-addon
               %span.fa.fa-calendar
           %p.help-block The deadline for the assignment.

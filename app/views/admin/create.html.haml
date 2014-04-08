@@ -28,4 +28,6 @@
     .col-lg-12
       %br
         %center
-          %input.btn.btn-primary.btn-block.btn-lg{:id => "create_assignment", :type => "submit", :value => "Finish"}
+          = button_to 'Finish', {:controller => :admin, :action => :submit}, :class => 'btn btn-primary btn-block btn-lg'
+          /= button_to 'Finish', "/admin/submit", method: :get, :class => "btn.btn-primary.btn-block.btn-lg"
+          / %input.btn.btn-primary.btn-block.btn-lg{:href => "/admin/submit", :value => "Finish"} 
