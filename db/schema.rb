@@ -82,9 +82,10 @@ ActiveRecord::Schema.define(version: 20140408004952) do
   end
 
   create_table "io_elements", force: true do |t|
-    t.text    "value"
-    t.boolean "input"
-    t.integer "test_id"
+    t.text     "value"
+    t.boolean  "input"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "issues", force: true do |t|
