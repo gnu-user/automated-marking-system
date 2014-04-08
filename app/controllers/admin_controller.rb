@@ -69,6 +69,7 @@ class AdminController < ApplicationController
 
     # TODO check if at least 1 evaluation testcase has been submitted
     @value = params.require(:assignment).permit(:name, :description, :posted, :due, :max_time, :attempts, :code_weight, :test_case_weight)
+    @value[:posted] = 
     @assignment = Assignment.new(@value)
     @assignment.admin_id = session[:prof_id]
     @assignment.released = false
@@ -97,7 +98,6 @@ class AdminController < ApplicationController
     latest_assignment
 
     if TestCase.where("assignment_id = #{session[:assignment_id].to_i} AND sample = 't'").count > 0
-      #redirect_to root_url
     else
       # TODO report error
       redirect_to "#{root_url}" 
