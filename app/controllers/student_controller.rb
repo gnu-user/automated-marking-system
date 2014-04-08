@@ -26,6 +26,7 @@ class StudentController < ApplicationController
     validateUser
 
     @assignment = Assignment.find_by_id(params[:id])
+    @submission = Submission.where("student_id = #{session[:user_id].to_i} AND assignment_id = #{params[:id].to_i}")
 
     @title = @assignment.name
 
@@ -47,6 +48,10 @@ class StudentController < ApplicationController
     })
 
     redirect_to student_assignment_url
+  end
+
+  def test
+    
   end
 
   def show

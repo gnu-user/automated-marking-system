@@ -62,7 +62,7 @@
                   %th Date Submitted
                   %th Grade
               %tbody
-                = @assignments.each do |assignment|
+                - @assignments.each do |assignment|
                   %tr
                     %td
                       %a{:href => "/student/assignment/#{assignment.id}"}
