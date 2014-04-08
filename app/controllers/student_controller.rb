@@ -10,6 +10,7 @@ class StudentController < ApplicationController
     # TODO handle links for finished assignments
     # TODO handle links for active assignments
     # TODO handle grade links for finished assignments
+    @assignments = Assignment.all
 
     @assignment = {
         # TODO Generate the number of assignments graded

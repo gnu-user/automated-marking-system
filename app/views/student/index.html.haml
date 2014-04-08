@@ -62,6 +62,16 @@
                   %th Date Submitted
                   %th Grade
               %tbody
+                = @assignments.each do |assignment|
+                  %tr
+                    %td
+                      %a{:href => "/student/assignment/#{assignment.id}"}
+                        = assignment.name
+                    %td
+                      = assignment.posted
+                    %td
+                      = assignment.due
+                    %td
                 %tr.success
                   %td
                     %a{:href => "/student/assignment_1.cpp"} Assignment 1
