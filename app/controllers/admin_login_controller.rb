@@ -16,6 +16,6 @@ class AdminLoginController < ApplicationController
   def create
     #@value = params[:admin]
     @user = Admin.new(user_params(:admin, :prof_id))
-    save(@user, admin_login_url)
+    save(@user, admin_login_url, params)
   end
 end

@@ -13,8 +13,7 @@ class LoginController < ApplicationController
   end
 
   def create
-    #@value = params[:student]
     @user = Student.new(user_params(:student, :student_id))
-    save(@user, root_url)
+    save(@user, login_url, params)
   end
 end
