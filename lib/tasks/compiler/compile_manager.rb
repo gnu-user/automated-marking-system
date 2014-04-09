@@ -1,12 +1,11 @@
 # encoding: utf-8
 
 require_relative '../manager'
-require_relative 'compiler_issues'
-require_relative 'issues'
+#require_relative 'compiler_issues'
+#require_relative 'issues'
 
 class CompilerManager < Manager
   attr_accessor :executable_name
-
 
   # [0] => path to the file, [1] => filename, [2] => extension, [3] => part of extension (not useful)
   FILE_NAME_PARSER = /^(.*\/)?(.+)\.(c([cp]p)?)$/
@@ -42,7 +41,7 @@ class CompilerManager < Manager
 
     filename = @path_to_file.scan(FILE_NAME_PARSER)
 
-    @executable_name = filename[0][1]
+    @executable_name = "#{@path_to_file}.o"
 
     @output = Array.new
     %x(#{COMMAND} #{OPTIONS} \"#{@executable_name}\" #{@path_to_file} #{OUTPUT} #{FILE})
@@ -56,7 +55,7 @@ class CompilerManager < Manager
     @output
   end
 
-  def parseOutput
+  def parseOutput(grade_id)
 
     # Valid compiling no errors
     if @output == ''
@@ -68,19 +67,19 @@ class CompilerManager < Manager
 
     issuesList = Array.new
 
-    compiler_issue = CompilerIssues.new
-    issue = Issues.new
+    compiler_issue = nil #CompilerIssues.new
+    issue = nil #Issues.new
 
     @output.each do |line|
 
       if start == 4
         newOne = false
         #4. Try Step 1 again
-        compiler_issue.issueList.push(issue)
+        #compiler_issue.issueList.push(issue)
 
         if line.match(LINE_PARSER) == nil
 
-          issuesList.push(compiler_issue)
+          #issuesList.push(compiler_issue)
           #5. Try Step 0 again
           start = 0
         else
@@ -96,50 +95,58 @@ class CompilerManager < Manager
           if parsed.size > 0
             newOne = true
             filename, where, method_name = parsed[0]
-            compiler_issue = CompilerIssues.new
-            issue = Issues.new
-            compiler_issue.filename = filename
-            issue.method_name = method_name
-            puts [filename, where, method_name]
+            if compiler_issue == nil
+              compiler_issue = CompilerIssue.new
+              compiler_issue.filename = filename
+              compiler_issue.save
+            end
+            issue = Issue.new
+            issue.method = method_name
+            issue.compiler_issue_id = compiler_issue.id
+            #puts [filename, where, method_name]
           end
         when 1
           parsed = line.scan(LINE_PARSER)
           if parsed.size > 0
             #1. Use LINE_PARSER on the next line
             filename, line_number, col_number, issue_type, message = parsed[0]
-            issue = Issues.new(issue.method_name)
+            method_name = issue.method
+            issue = Issue.new()
+            issue.method = method_name
             issue.line_number = line_number
             issue.col_number = col_number
             issue.issue_type = issue_type
             issue.message = message
-            puts [filename, line_number, col_number, issue_type, message]
+            issue.compiler_issue_id = compiler_issue.id
+            #puts [filename, line_number, col_number, issue_type, message]
           end
         when 2
           parsed = line.scan(CODE_LINE_PARSER)
           if parsed.size > 0
             #2. Use CODE_LINE_PARSER on the next line
-            code = parsed[0]
+            code = parsed[0][0]
             issue.relavent_code = code
-            puts code
+            issue.save
+            #puts code
           end
         when 3
           #3. Use POINTER_LINE on the next line (or just skip the line)
           parsed = line.match(POINTER_LINE)
       end
 
-      a = gets
+      #a = gets
       start += 1
     end
 
     #puts compiler_issue
 
     # Handle last one
-    compiler_issue.issueList.push(issue)
+    #compiler_issue.issueList.push(issue)
     
     #if newOne     
-      issuesList.push(compiler_issue)
+      #issuesList.push(compiler_issue)
     #end
 
-    issuesList
+    #issuesList
   end
 end

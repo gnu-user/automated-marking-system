@@ -52,7 +52,7 @@ class StudentController < ApplicationController
     @output = nil
 
 
-    file = File.new("#{student_id}_#{assignment_id}",'w')
+    file = File.new("#{student_id}_#{assignment_id}.cpp",'w')
     file.puts(@program)
     file.close
 
@@ -63,9 +63,9 @@ class StudentController < ApplicationController
       lintManager.parseOutput(@grade.id)
       #@path = "#{Rails.root}/lib/tasks/compiler/compile_manager"
       #@results = File.exists?("#{@path}.rb")
-      #compileManager = CompileManager.new(file.path)
-      #@results = compileManager.process
-
+      compileManager = CompilerManager.new(file.path)
+      @results = compileManager.process
+      @value = compileManager.parseOutput(@grade.id)
       #@results.each do |result|
       #  StaticAnaylsis.create!({
       #     filename: file.path,
