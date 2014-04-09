@@ -1,4 +1,4 @@
-class StaticAnalysis
+class StaticAnalysisStructure
     attr_accessor :filename, :issue_list
 
     def initialize(filename, issue)
@@ -12,7 +12,7 @@ class StaticAnalysis
     end
 end
 
-class StaticIssue
+class StaticIssueStructure
     attr_accessor :line, :type, :description
 
     def initialize(line, type, description)

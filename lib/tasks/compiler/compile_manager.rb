@@ -1,7 +1,7 @@
 #!/bin/env ruby
 # encoding: utf-8
 
-require_relative '../manager'
+require_relative 'tasks/manager'
 require_relative 'compiler_issues'
 require_relative 'issues'
 
@@ -58,7 +58,6 @@ class CompilerManager < Manager
   end
 
   def parseOutput
-    super
 
     # Valid compiling no errors
     if @output == ''
@@ -98,7 +97,7 @@ class CompilerManager < Manager
           if parsed.size > 0
             newOne = true
             filename, where, method_name = parsed[0]
-            compiler_issue.filename = CompilerIssues.new
+            compiler_issue = CompilerIssues.new
             issue = Issues.new
             compiler_issue.filename = filename
             issue.method_name = method_name

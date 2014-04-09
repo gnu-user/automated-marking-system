@@ -16,8 +16,4 @@ class Manager
         Array.new
       end
     end
-
-    def parseOutput
-
-    end
 end

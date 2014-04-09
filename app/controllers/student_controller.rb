@@ -1,4 +1,5 @@
 require "#{Rails.root}/lib/tasks/lint/lint_manager"
+#require "#{Rails.root}/lib/tasks/compiler/compile_manager"
 require 'tempfile'
 
 class StudentController < ApplicationController
@@ -26,22 +27,59 @@ class StudentController < ApplicationController
   end
 
   def test
+    validateUser
     student_id = session[:user_id]
     assignment_id = params[:id]
 
-    program = Submission.where("student_id = #{student_id} AND assignment_id = #{assignment_id}")[0].code
+    sub = Submission.where("student_id = #{student_id} AND assignment_id = #{assignment_id}")[0]
 
-    tmp = Tempfile.new "#{student_id}_#{assignment_id}"
+    @program = sub.code
+
+    @grade = Grade.where("submission_id = #{sub.id}")
+
+    # Create a new grade if needed
+    if @grade.empty?
+      @grade = Grade.new
+      @grade.submission_id = sub.id 
+      @grade.save
+    else
+      @grade = @grade[0]
+    end
+
+    #tmp = Tempfile.new "#{student_id}_#{assignment_id}"
 
     @results = nil
+    @output = nil
+
+
+    file = File.new("#{student_id}_#{assignment_id}",'w')
+    file.puts(@program)
+    file.close
 
     begin
-      tmp.write(program)
 
-      @results = LintManager.new(tmp.path).process
+      lintManager = LintManager.new(file.path)
+      lintManager.process
+      @output = lintManager.parseOutput(@grade.id)
+      #@path = "#{Rails.root}/lib/tasks/compiler/compile_manager"
+      #@results = File.exists?("#{@path}.rb")
+      #compileManager = CompileManager.new(file.path)
+      #@results = compileManager.process
+
+      #@results.each do |result|
+      #  StaticAnaylsis.create!({
+      #     filename: file.path,
+      #      grade_id: @grade.id
+      #    })
+      #  StaticIssue.create!({
+
+      #    })
+      #end
+
     ensure
-      tmp.close
-      tmp.unlink
+      #tmp.close
+      File.delete(file.path)
+      #tmp.unlink
     end
 
     # TODO: store results in database, redirect back to assignment page
@@ -66,11 +104,15 @@ class StudentController < ApplicationController
 
     contents = params[:file].read
 
-    Submission.create!({
+    submission = Submission.where("assignment_id = #{params[:id].to_i} and student_id = #{session[:user_id].to_i}")
+
+    if submission.empty?
+      Submission.create!({
         code: contents,
         assignment_id: params[:id],
         student_id: session[:user_id]
-    })
+      })
+    end
 
     redirect_to student_assignment_url
   end
