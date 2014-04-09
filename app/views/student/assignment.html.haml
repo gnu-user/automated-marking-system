@@ -89,24 +89,31 @@
                   %th Code
                   %th Description
               %tbody
-                %tr.warning
-                  %td Warning
-                  %td calculator.cpp
-                  %td 23, 5
-                  %td int number3 = 0;
-                  %td Unused variable 'number3' [-Wunused-variable]
-                %tr.warning
-                  %td Warning
-                  %td calculator.cpp
-                  %td 24, 5
-                  %td int number4 = 0;
-                  %td Unused variable 'number4' [-Wunused-variable]
-                %tr.danger
-                  %td Error
-                  %td calculator.cpp
-                  %td 42, 12
-                  %td number1 * str_number2
-                  %td Invalid conversion from 'string' to 'int' [-fpermissive]
+                - @compiler_issues.each do |compiler_issue|
+                  - if compiler_issue["issue_type"] != "error"
+                    %tr.warning
+                      %td 
+                        = compiler_issue["issue_type"].capitalize
+                      %td 
+                        = compiler_issue["filename"]
+                      %td
+                        = "#{compiler_issue["line_number"]}, #{compiler_issue["col_number"]}"
+                      %td 
+                        = compiler_issue["relavent_code"]
+                      %td 
+                        = compiler_issue["message"]
+                  - else
+                    %tr.danger
+                      %td 
+                        = compiler_issue["issue_type"].capitalize
+                      %td 
+                        = compiler_issue["filename"]
+                      %td
+                        = "#{compiler_issue["line_number"]}, #{compiler_issue["col_number"]}"
+                      %td 
+                        = compiler_issue["relavent_code"]
+                      %td 
+                        = compiler_issue["message"]
   / QUALITY METRICS
   .row
     .col-lg-12
@@ -125,26 +132,27 @@
                   %th Line
                   %th Description
               %tbody
-                %tr.warning
-                  %td Warning
-                  %td calculator.cpp
-                  %td 23
-                  %td Unused variable 'number3'
-                %tr.warning
-                  %td Warning
-                  %td calculator.cpp
-                  %td 24
-                  %td Unused variable 'number4'
-                %tr.warning
-                  %td Warning
-                  %td calculator.cpp
-                  %td 32
-                  %td Inconsistent use of tab and space indentation.
-                %tr.danger
-                  %td Error
-                  %td calculator.cpp
-                  %td 42
-                  %td Invalid conversion from 'string' to 'int'
+                - @static_issues.each do |static_issue|
+                  - if static_issue["type"] != "error"
+                    %tr.warning
+                      %td 
+                        = static_issue["type"].capitalize
+                      %td 
+                        = static_issue["filename"]
+                      %td
+                        = static_issue["line_number"]
+                      %td 
+                        = static_issue["description"]
+                  - else
+                    %tr.danger
+                      %td 
+                        = static_issue["type"].capitalize
+                      %td 
+                        = static_issue["filename"]
+                      %td
+                        = static_issue["line_number"]
+                      %td 
+                        = static_issue["description"]
   / SAMPLE EVALUATION
   .row
     .col-lg-12
@@ -163,54 +171,43 @@
                   %th Test Case
                   %th Status
               %tbody
-                %tr
-                  %td Add
-                  %td Adds two integers
-                  %td
-                    %ul.list-unstyled
-                      %li input: 5
-                      %li input: 5
-                      %li output: 10
-                  %td
-                    %span.label.label-success
-                      %span.fa.fa-check
-                      PASS
-                %tr
-                  %td Subtract
-                  %td Subtracts two integers
-                  %td
-                    %ul.list-unstyled
-                      %li input: 5
-                      %li input: 5
-                      %li output: 0
-                  %td
-                    %span.label.label-success
-                      %span.fa.fa-check
-                      PASS
-                %tr
-                  %td Multiply
-                  %td Multiply two integers
-                  %td
-                    %ul.list-unstyled
-                      %li input: 5
-                      %li input: 5
-                      %li output: 25
-                  %td
-                    %span.label.label-success
-                      %span.fa.fa-check
-                      PASS
-                %tr.danger
-                  %td Divide
-                  %td Divide two integers
-                  %td
-                    %ul.list-unstyled
-                      %li input: 0
-                      %li input: 5
-                      %li output: 0
-                  %td
-                    %span.label.label-danger
-                      %span.fa.fa-warning
-                      FAIL
+                - @test_cases.each do |test_case|
+                  - if test_case["result"] == 't'
+                    %tr
+                      %td 
+                        = test_case["name"]
+                      %td 
+                        = test_case["description"]
+                      %td 
+                        %ul.list-unstyled
+                          - test_case["values"].each do |value|
+                            %li
+                              - if value["input"] == 't'
+                                = "input: #{value["value"]}"
+                              - else
+                                = "output: #{value["value"]}"
+                      %td
+                        %span.label.label-success
+                          %span.fa.fa-check
+                          PASS
+                  - else
+                    %tr.danger
+                      %td 
+                        = test_case["name"]
+                      %td 
+                        = test_case["description"]
+                      %td 
+                        %ul.list-unstyled
+                          - test_case["values"].each do |value|
+                            %li
+                              - if value["input"] == 't'
+                                = "input: #{value["value"]}"
+                              - else
+                                = "output: #{value["value"]}"
+                      %td 
+                        %span.label.label-danger
+                          %span.fa.fa-warning
+                          FAIL
   / TEST OR SUBMIT
   / TODO more button spacing between and above/below
   .row

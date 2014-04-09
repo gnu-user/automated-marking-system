@@ -94,6 +94,11 @@ class StudentController < ApplicationController
         #@value = "HERE"
         unitTester = UnitTester.new("#{fileName}.cpp.o", testcases, @grade.id, max_time)
         unitTester.process
+      else
+        testcases.each do |testcase|
+          Test.where("grade_id = #{@grade.id} and test_case_id = #{testcase.id}").delete_all
+        end
+        
       end
 
     ensure
@@ -111,7 +116,20 @@ class StudentController < ApplicationController
     validateUser
 
     @assignment = Assignment.find_by_id(params[:id])
-    @submission = Submission.where("student_id = #{session[:user_id].to_i} AND assignment_id = #{params[:id].to_i}")
+    submission = Submission.where("student_id = #{session[:user_id].to_i} AND assignment_id = #{params[:id].to_i}")[0]
+
+    @static_issues = ActiveRecord::Base.connection.execute("select static_analyses.filename as filename, static_issues.line_number as line_number, static_issues.description as description, static_issues.type as type from grades, static_analyses, static_issues where grades.submission_id = #{submission.id} and grades.id = static_analyses.grade_id and static_analyses.id = static_issues.static_analysis_id")
+
+    @compiler_issues = ActiveRecord::Base.connection.execute("select compiler_issues.filename as filename, issues.method as method, issues.line_number as line_number, issues.col_number as col_number, issues.issue_type as issue_type, issues.message as message, issues.relavent_code as relavent_code from grades, compiler_issues, issues where grades.submission_id = #{submission.id} and grades.id = compiler_issues.grade_id and compiler_issues.id = issues.compiler_issue_id")
+
+    @test_cases = ActiveRecord::Base.connection.execute("select tests.result as result, test_cases.name as name, test_cases.description as description, test_cases.id as test_case_id from grades, tests, test_cases where grades.submission_id = #{submission.id} and grades.id = tests.grade_id and tests.test_case_id = test_cases.id and test_cases.sample = \'t\'")
+
+    if @test_cases
+      @derp = "der"
+      @test_cases.each do |tcase|
+        tcase["values"] = ActiveRecord::Base.connection.execute("select inputs.value as value, inputs.input as input from test_cases, inputs where test_cases.sample = \'t\' and inputs.test_case_id = #{tcase["test_case_id"]}")
+      end
+    end
 
     @title = @assignment.name
 
