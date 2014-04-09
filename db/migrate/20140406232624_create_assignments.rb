@@ -3,8 +3,8 @@ class CreateAssignments < ActiveRecord::Migration
     create_table :assignments do |t|
       t.integer :admin_id
       t.string :name
-      t.date :posted
-      t.date :due
+      t.datetime :posted
+      t.datetime :due
       t.text :description
       t.integer :max_time
       t.integer :attempts

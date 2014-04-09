@@ -69,8 +69,17 @@ class AdminController < ApplicationController
 
     # TODO check if at least 1 evaluation testcase has been submitted
     @value = params.require(:assignment).permit(:name, :description, :posted, :due, :max_time, :attempts, :code_weight, :test_case_weight)
-    @value[:posted] = 
-    @assignment = Assignment.new(@value)
+    #@value[:posted] = 
+    @assignment = Assignment.new#(@value)
+    @assignment.name = @value[:name]
+    @assignment.description = @value[:description]
+
+    @assignment.posted = fixDate(@value[:posted])
+    @assignment.due = fixDate(@value[:due])
+    @assignment.max_time = @value[:max_time]
+    @assignment.attempts = @value[:attempts]
+    @assignment.code_weight = @value[:code_weight]
+    @assignment.test_case_weight = @value[:test_case_weight]
     @assignment.admin_id = session[:prof_id]
     @assignment.released = false
 
@@ -90,6 +99,7 @@ class AdminController < ApplicationController
 
     if !TestCase.parseYaml(@contents, session[:assignment_id])
       # TODO show an error
+      redirect_to "#{root_url}"
     end
   end
 
@@ -125,5 +135,18 @@ class AdminController < ApplicationController
 
   def latest_assignment
     @latest = Assignment.last
+  end
+
+  # Fix the date to be in the expected order 
+  # Bootstrap outputs mm/dd/yyyy hh:mm
+  # Rails is expecting dd/mm/yyyy hh:mm
+  # Swap the day and month and everything works
+  def fixDate(date)
+    temp = date.scan(/([0-9]+)\/([0-9]+)\/(.*)/)
+    if temp.size == 1 && temp[0].size == 3
+      return "#{temp[0][1]}/#{temp[0][0]}/#{temp[0][2]}"
+    end
+
+    return nil
   end
 end

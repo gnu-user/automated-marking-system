@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20140409125941) do
   create_table "assignments", force: true do |t|
     t.integer  "admin_id"
     t.string   "name"
+    t.datetime "posted"
+    t.datetime "due"
     t.text     "description"
     t.integer  "max_time"
     t.integer  "attempts"
@@ -35,8 +37,6 @@ ActiveRecord::Schema.define(version: 20140409125941) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "released"
-    t.datetime "posted"
-    t.datetime "due"
   end
 
   create_table "clone_incidents", force: true do |t|
