@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140408004952) do
+ActiveRecord::Schema.define(version: 20140409125941) do
 
   create_table "admins", force: true do |t|
     t.string   "first_name"
@@ -81,13 +81,6 @@ ActiveRecord::Schema.define(version: 20140408004952) do
     t.datetime "updated_at"
   end
 
-  create_table "io_elements", force: true do |t|
-    t.text     "value"
-    t.boolean  "input"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "issues", force: true do |t|
     t.string  "method"
     t.integer "line_number"
@@ -147,12 +140,11 @@ ActiveRecord::Schema.define(version: 20140408004952) do
   end
 
   create_table "tests", force: true do |t|
-    t.string   "name"
-    t.text     "description"
+    t.integer  "test_case_id"
     t.boolean  "result"
+    t.integer  "grade_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "sample"
   end
 
 end

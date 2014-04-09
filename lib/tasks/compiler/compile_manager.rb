@@ -67,7 +67,7 @@ class CompilerManager < Manager
     
 
     # Valid compiling no errors
-    if @output == ''
+    if @output.empty?
       return true
     end
 

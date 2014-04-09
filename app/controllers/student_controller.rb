@@ -32,7 +32,7 @@ class StudentController < ApplicationController
     student_id = session[:user_id]
     assignment_id = params[:id]
 
-    assignemnt = Assignment.find_by_id(assignment_id).max_time
+    max_time = Assignment.find_by_id(assignment_id).max_time
 
     testcases = TestCase.where("assignment_id = #{assignment_id.to_i}")
 
@@ -70,11 +70,13 @@ class StudentController < ApplicationController
       #@results = File.exists?("#{@path}.rb")
       compileManager = CompilerManager.new(file.path)
       compileManager.process
-
+      @value = compileManager.parseOutput(@grade.id)
       # if the program didnt compile then the test cases will all fail, don't attempt
-      if compileManager.parseOutput(@grade.id)
-        #unitTester = UnitTester.new("#{fileName}.o", testcases, @grade_id, max_time)
-        #@results = unitTester.process
+      #TODO fix this to only not happen on error
+      if @value
+        #@value = "HERE"
+        unitTester = UnitTester.new("#{fileName}.cpp.o", testcases, @grade.id, max_time)
+        @results = unitTester.process
       end
       #@results.each do |result|
       #  StaticAnaylsis.create!({

@@ -19,6 +19,7 @@ class UnitTester < Manager
         result = ""
         test = true
         valid = true
+        count = 0
         
 
         # Prevent deadlock if no output is provided
@@ -27,14 +28,14 @@ class UnitTester < Manager
         end        
 
         # Wait until the thread sleeps or a 60 second timeout
-        while pid.alive? && @count < @max_exec
+        while pid.alive? && count < 60#@max_exec
             sleep(1)
             if pid.status == "sleep"
                 pid.kill
                 # Bad output
                 valid = false
             end
-            @count +=1
+            count +=1
         end
 
         # Ensure the thread is dead
@@ -60,26 +61,32 @@ class UnitTester < Manager
 
     def process
         super
-        @count = 0
+
+        #how = Array.new
+
+        Dir.chdir("lib")
+        #@count = 0
         testCases.each do |testCase|
-            
-            io = IO.popen(@path_to_file, FILE_FLAG)
-            test = true
+            #return Dir.pwd
+            io = IO.popen("../#{@path_to_file}", FILE_FLAG)
+            result = true
 
             #puts testCase.ioList
             Input.where("test_case_id = #{testCase.id}").each do |ioElement|
-
+                #how << "Inside"
                 begin
+                    #how << ioElement.value
                     if ioElement.input
                         io.puts ioElement.value
                     else
                         # Check if result == ioElement.value
-                        test = getOutput(ioElement.value, io)
+                        result = getOutput(ioElement.value, io)
                     end
                 rescue Exception => e
                     # Catch any exception
-                    puts e
-                    test = false
+                    #puts e
+                    #how << e
+                    result = false
                 end
             end
 
@@ -87,47 +94,21 @@ class UnitTester < Manager
 
             exitCode = $?
             if !exitCode.success?
-                test = false
+                #how << "Exit code bad"
+                result = false
             end
 
-            #TODO add writing the results
-            #testCase.result = test
+            #TODO delete/update previous testcase run
+            #testCase.result = result
+            studentTest = Test.new
+            studentTest.grade_id = @grade_id
+            studentTest.test_case_id = testCase.id
+            studentTest.result = result
+            studentTest.save
         end
+        # Delete the .o file.
+        Dir.chdir("..")
+        #File.delete(@path_to_file)
+        #return how 
     end
 end
-
-=begin
-test = Test.new
-
-test.name = "Add default"
-test.description = "Add two numbers"
-test.result = false
-test.ioList = Array.new
-
-test.ioList.push(IOElement.new(1, true))
-test.ioList.push(IOElement.new(2, true))
-test.ioList.push(IOElement.new(3, false))
-
-testers = Array.new
-
-testers.push(test)
-
-test = Test.new
-
-test.name = "Add large"
-test.description = "Add two large number"
-test.result = false
-test.ioList = Array.new
-
-test.ioList.push(IOElement.new(10, true))
-test.ioList.push(IOElement.new(200, true))
-test.ioList.push(IOElement.new(210, false))
-
-testers.push(test)
-
-utester = UnitTester.new("../example_programs/Example", testers)
-
-utester.process
-
-puts test
-=end
