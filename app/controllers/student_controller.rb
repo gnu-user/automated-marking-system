@@ -1,5 +1,5 @@
 require "#{Rails.root}/lib/tasks/lint/lint_manager"
-#require "#{Rails.root}/lib/tasks/compiler/compile_manager"
+require "#{Rails.root}/lib/tasks/compiler/compile_manager"
 require 'tempfile'
 
 class StudentController < ApplicationController
@@ -7,7 +7,7 @@ class StudentController < ApplicationController
   layout "code", only: [:show]
 
   # TODO FOR ALL (except show)
-  # handle Grades link for latest finished assignments
+  # handle Grades link for latest finished assignments  
 
   def index
     validateUser
@@ -60,7 +60,7 @@ class StudentController < ApplicationController
 
       lintManager = LintManager.new(file.path)
       lintManager.process
-      @output = lintManager.parseOutput(@grade.id)
+      lintManager.parseOutput(@grade.id)
       #@path = "#{Rails.root}/lib/tasks/compiler/compile_manager"
       #@results = File.exists?("#{@path}.rb")
       #compileManager = CompileManager.new(file.path)

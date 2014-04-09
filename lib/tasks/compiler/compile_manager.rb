@@ -1,7 +1,6 @@
-#!/bin/env ruby
 # encoding: utf-8
 
-require_relative 'tasks/manager'
+require_relative '../manager'
 require_relative 'compiler_issues'
 require_relative 'issues'
 
@@ -142,20 +141,5 @@ class CompilerManager < Manager
     #end
 
     issuesList
-  end
-end
-
-compiler = CompilerManager.new('../example_programs/bad_compile_example.cpp')
-
-compiler.applyCompiler
-
-list = compiler.parseOutput
-
-list.each do |i|
-  puts i.filename
-  puts i.issueList.size
-
-  i.issueList.each do |details|
-    puts details
   end
 end
