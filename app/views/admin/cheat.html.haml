@@ -3,4 +3,78 @@
   .row
     .col-lg-12
       %h1
-        This page is for showing the incidents of cheating found
+        Cheating
+        %small Assignment Similarity
+      %ol.breadcrumb
+        %li.active
+          %i.fa.fa-exclamation-circle
+          Review Cheating
+  / /.row
+  .row
+    .col-lg-12
+      .panel.panel-primary
+        .panel-heading
+          %h3.panel-title
+            %i.fa.fa-exclamation-circle
+            Assignment 1 Cheating Report
+        .panel-body
+          .table-responsive
+            %table.table.table-bordered.table-hover.table-striped.tablesorter
+              %thead
+                %tr
+                  %th
+                    Last Name
+                    %i.fa.fa-sort
+                  %th
+                    First Name
+                    %i.fa.fa-sort
+                  %th
+                    Student Number
+                    %i.fa.fa-sort
+                  %th
+                    Last Name
+                    %i.fa.fa-sort
+                  %th
+                    First Name
+                    %i.fa.fa-sort
+                  %th
+                    Student Number
+                    %i.fa.fa-sort
+                  %th
+                    Code Similarity
+                    %i.fa.fa-sort
+                  %th View Difference
+              %tbody
+                %tr
+                  %td Gillett
+                  %td Jonathan
+                  %td 100123123
+                  %td Heron
+                  %td Joseph
+                  %td 100123123
+                  %td 0%
+                  %td
+                    %a{:href => "#"} View Difference
+                %tr
+                  %td Gillett
+                  %td Jonathan
+                  %td 100123123
+                  %td Fazal
+                  %td Khalil
+                  %td 100123123
+                  %td 20%
+                  %td
+                    %a{:href => "#"} View Difference
+                %tr.danger
+                  %td Gillett
+                  %td Jonathan
+                  %td 100123123
+                  %td Smullen
+                  %td Daniel
+                  %td 100123123
+                  %td 90%
+                  %td
+                    %a{:href => "#"} View Difference
+      / /.row
+    / /#page-wrapper
+/ /#wrapper
