@@ -63,12 +63,26 @@ class StudentController < ApplicationController
 
     begin
 
-      #TODO calculate the grade
+      # The initial grade for static issues is 100, a half mark taken off (5) for
+      # each style issue and a full mark (10) for errors
+      static_mark = 100
 
       # Run static analysis
       lintManager = LintManager.new(file.path)
       lintManager.process
       @static_issues = lintManager.parseOutput(@grade.id)
+
+      @static_issues.each do |issue|
+        if issue == "error"
+          static_mark -= 10
+        else
+          static_mark -= 5
+        end
+      end
+
+      # Store the grade for the static analysis mark
+      @grade.code = static_mark > 0 ? static_mark : 0
+      @grade.save
 
       # Run the compiler
       compileManager = CompilerManager.new(file.path)
