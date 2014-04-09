@@ -53,8 +53,8 @@ class StudentController < ApplicationController
 
     #tmp = Tempfile.new "#{student_id}_#{assignment_id}"
 
-    @results = nil
-    @output = nil
+    #@results = nil
+    #@output = nil
 
     fileName = "#{student_id}_#{assignment_id}"
     file = File.new("#{fileName}.cpp",'w')
@@ -63,34 +63,43 @@ class StudentController < ApplicationController
 
     begin
 
+      #TODO calculate the grade
       lintManager = LintManager.new(file.path)
       lintManager.process
       lintManager.parseOutput(@grade.id)
       #@path = "#{Rails.root}/lib/tasks/compiler/compile_manager"
       #@results = File.exists?("#{@path}.rb")
       compileManager = CompilerManager.new(file.path)
-      compileManager.process
-      @value = compileManager.parseOutput(@grade.id)
+      value = compileManager.process
+      compileManager.parseOutput(@grade.id)
       # if the program didnt compile then the test cases will all fail, don't attempt
+      
+      @grade.testcase = 0
       #TODO fix this to only not happen on error
-      if @value
+      if value
         #@value = "HERE"
         unitTester = UnitTester.new("#{fileName}.cpp.o", testcases, @grade.id, max_time)
-        @results = unitTester.process
-      end
-      #@results.each do |result|
-      #  StaticAnaylsis.create!({
-      #     filename: file.path,
-      #      grade_id: @grade.id
-      #    })
-      #  StaticIssue.create!({
+        unitTester.process
 
-      #    })
-      #end
+        # Calculate the grade for the test_case mark
+        sampleTests = ActiveRecord::Base.connection.execute "SELECT tests.result FROM tests, test_cases WHERE tests.grade_id = #{@grade.id} and tests.test_case_id = test_cases.id and test_cases.sample = 'f'"
+        #sampleTests = Test.joins("INNER JOIN test_cases ON test_cases.id = test.test_case_id").where("test.grade_id = #{@grade.id} and test_cases.sample = 't'")
+        if !sampleTests.empty?
+          sampleTests.each do |rval|
+            if rval
+              @grade.testcase += 1
+            end
+          end
+          
+          @grade.testcase /= sampleTests .size
+        end
+      end
+
+      @grade.save
 
     ensure
       #tmp.close
-      File.delete(file.path)
+      File.delete("#{Rails.root}/#{file.path}")
       #tmp.unlink
     end
 

@@ -52,7 +52,7 @@ class CompilerManager < Manager
 
     # Delete the temp file created
     File.delete(FILE)
-    @output
+    return File.exists?(@executable_name)
   end
 
   def parseOutput(grade_id)

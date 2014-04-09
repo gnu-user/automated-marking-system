@@ -62,9 +62,7 @@ class UnitTester < Manager
     def process
         super
 
-        #how = Array.new
-
-        Dir.chdir("lib")
+        Dir.chdir("#{Rails.root}/lib")
         #@count = 0
         testCases.each do |testCase|
             #return Dir.pwd
@@ -99,16 +97,20 @@ class UnitTester < Manager
             end
 
             #TODO delete/update previous testcase run
-            #testCase.result = result
-            studentTest = Test.new
-            studentTest.grade_id = @grade_id
-            studentTest.test_case_id = testCase.id
-            studentTest.result = result
-            studentTest.save
+            studentTest = Test.where("grade_id = #{@grade_id} and test_case_id = #{testCase.id}")
+
+            if studentTest.empty?
+                studentTest = Test.new
+                studentTest.grade_id = @grade_id
+                studentTest.test_case_id = testCase.id
+                studentTest.result = result
+                studentTest.save
+            else
+                studentTest = studentTest[0]
+            end
         end
         # Delete the .o file.
-        Dir.chdir("..")
-        #File.delete(@path_to_file)
-        #return how 
+        Dir.chdir(Rails.root)
+        File.delete(@path_to_file)
     end
 end
