@@ -44,6 +44,15 @@
                 %a{:href => "#"}
                   %i.fa.fa-bar-chart-o
                   Grading
+            %li{:id => "cheating_tab"}
+              -if !@latest.nil?
+                %a{:href => "/admin/grades/#{@latest.id}/cheating"}
+                  %i.fa.fa-exclamation-circle
+                  Cheating
+              - else 
+                %a{:href => "#"}
+                  %i.fa.fa-exclamation-circle
+                  Cheating
           %ul.nav.navbar-nav.navbar-right.navbar-user
             %li.dropdown.user-dropdown
               %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
