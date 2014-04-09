@@ -1,6 +1,6 @@
 require_relative '../manager'
-require_relative 'test'
-require_relative 'io_element'
+#require_relative 'test'
+#require_relative 'io_element'
 
 class UnitTester < Manager
     attr_accessor :testCases
@@ -8,16 +8,18 @@ class UnitTester < Manager
     FILE_FLAG = "r+"
 
     # testCases is a list of Test elements.
-    def initialize(path="", testCases=Array.new)
+    def initialize(path="", testCases, grade_id, max_execution_time)
         super(path)
         @testCases = testCases
+        @grade_id = grade_id
+        @max_exec = max_execution_time
     end
 
     def getOutput(expected, io)
         result = ""
         test = true
         valid = true
-        count = 0
+        
 
         # Prevent deadlock if no output is provided
         pid = Thread.new do
@@ -25,14 +27,14 @@ class UnitTester < Manager
         end        
 
         # Wait until the thread sleeps or a 60 second timeout
-        while pid.alive? && count < 60
+        while pid.alive? && @count < @max_exec
             sleep(1)
             if pid.status == "sleep"
                 pid.kill
                 # Bad output
                 valid = false
             end
-            count +=1
+            @count +=1
         end
 
         # Ensure the thread is dead
@@ -58,14 +60,14 @@ class UnitTester < Manager
 
     def process
         super
+        @count = 0
         testCases.each do |testCase|
             
             io = IO.popen(@path_to_file, FILE_FLAG)
             test = true
 
             #puts testCase.ioList
-
-            testCase.ioList.each do |ioElement|
+            Input.where("test_case_id = #{testCase.id}").each do |ioElement|
 
                 begin
                     if ioElement.input
@@ -88,7 +90,8 @@ class UnitTester < Manager
                 test = false
             end
 
-            testCase.result = test
+            #TODO add writing the results
+            #testCase.result = test
         end
     end
 end

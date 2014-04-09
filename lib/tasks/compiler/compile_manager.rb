@@ -57,6 +57,15 @@ class CompilerManager < Manager
 
   def parseOutput(grade_id)
 
+    # Delete all pre-existing test date
+    ci = CompilerIssue.where("grade_id = #{grade_id}")
+    
+    ci.each do |i|
+      Issue.where("compiler_issue_id = #{i.id}").delete_all
+    end
+    ci.delete_all
+    
+
     # Valid compiling no errors
     if @output == ''
       return true
@@ -98,6 +107,7 @@ class CompilerManager < Manager
             if compiler_issue == nil
               compiler_issue = CompilerIssue.new
               compiler_issue.filename = filename
+              compiler_issue.grade_id = grade_id
               compiler_issue.save
             end
             issue = Issue.new
@@ -138,15 +148,6 @@ class CompilerManager < Manager
       start += 1
     end
 
-    #puts compiler_issue
-
-    # Handle last one
-    #compiler_issue.issueList.push(issue)
-    
-    #if newOne     
-      #issuesList.push(compiler_issue)
-    #end
-
-    #issuesList
+    return false
   end
 end

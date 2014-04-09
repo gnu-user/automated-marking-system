@@ -31,6 +31,14 @@ class LintManager < Manager
 
   def parseOutput(grade_id)
 
+    # Delete all pre-existing test date
+    sa = StaticAnalysis.where("grade_id = #{grade_id}")
+    
+    sa.each do |i|
+      StaticIssue.where("static_analysis_id = #{i.id}").delete_all
+    end
+    sa.delete_all
+
     #issuesList = Array.new
     index = 0
     filenameList = Hash.new

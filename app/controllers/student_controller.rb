@@ -1,5 +1,6 @@
 require "#{Rails.root}/lib/tasks/lint/lint_manager"
 require "#{Rails.root}/lib/tasks/compiler/compile_manager"
+require "#{Rails.root}/lib/tasks/tester/unit_tester"
 require 'tempfile'
 
 class StudentController < ApplicationController
@@ -31,7 +32,11 @@ class StudentController < ApplicationController
     student_id = session[:user_id]
     assignment_id = params[:id]
 
-    sub = Submission.where("student_id = #{student_id} AND assignment_id = #{assignment_id}")[0]
+    assignemnt = Assignment.find_by_id(assignment_id).max_time
+
+    testcases = TestCase.where("assignment_id = #{assignment_id.to_i}")
+
+    sub = Submission.where("student_id = #{student_id} AND assignment_id = #{assignment_id.to_i}")[0]
 
     @program = sub.code
 
@@ -51,8 +56,8 @@ class StudentController < ApplicationController
     @results = nil
     @output = nil
 
-
-    file = File.new("#{student_id}_#{assignment_id}.cpp",'w')
+    fileName = "#{student_id}_#{assignment_id}"
+    file = File.new("#{fileName}.cpp",'w')
     file.puts(@program)
     file.close
 
@@ -64,8 +69,13 @@ class StudentController < ApplicationController
       #@path = "#{Rails.root}/lib/tasks/compiler/compile_manager"
       #@results = File.exists?("#{@path}.rb")
       compileManager = CompilerManager.new(file.path)
-      @results = compileManager.process
-      @value = compileManager.parseOutput(@grade.id)
+      compileManager.process
+
+      # if the program didnt compile then the test cases will all fail, don't attempt
+      if compileManager.parseOutput(@grade.id)
+        #unitTester = UnitTester.new("#{fileName}.o", testcases, @grade_id, max_time)
+        #@results = unitTester.process
+      end
       #@results.each do |result|
       #  StaticAnaylsis.create!({
       #     filename: file.path,
@@ -112,6 +122,9 @@ class StudentController < ApplicationController
         assignment_id: params[:id],
         student_id: session[:user_id]
       })
+    else
+      submission[0].code = contents
+      submission[0].save
     end
 
     redirect_to student_assignment_url
