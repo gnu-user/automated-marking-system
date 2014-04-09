@@ -1,3 +1,30 @@
+##############################################################################
+#
+# Automated Marking System (AMS)
+# 
+# A scalable automated marking system that provides automated marking, quality
+# feedback, and cheating detection all in one easy to use solution.
+#
+#
+# Copyright (C) 2014, Joseph Heron, Jonathan Gillett, Daniel Smullen, 
+# and Khalil Fazal
+# All rights reserved.
+#
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
 require "#{Rails.root}/lib/tasks/lint/lint_manager"
 require "#{Rails.root}/lib/tasks/compiler/compile_manager"
 require "#{Rails.root}/lib/tasks/tester/unit_tester"
@@ -173,7 +200,12 @@ class StudentController < ApplicationController
           end
         end
         
-        @grade.testcase = (@grade.testcase / sampleTests.size) * 100 
+        @grade.testcase = (@grade.testcase / sampleTests.size) * 100
+
+      	# Get the static analysis and test case weights for the final grade calculation
+      	code_weight = assignment.code_weight / 100.0
+      	test_case_weight = assignment.test_case_weight / 100.0      
+      	@grade.final = @grade.code * code_weight + @grade.testcase * test_case_weight
       end
 
       sub.submit_count += 1
