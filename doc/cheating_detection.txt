@@ -1,6 +1,14 @@
 CHEATING DETECTION
 ========================================
 
+SEE:
+- http://stackoverflow.com/questions/191614/how-to-detect-code-duplication-during-development
+- http://pmd.sourceforge.net/pmd-5.1.0/cpd-usage.html
+- https://www.cqse.eu/download/conqat/conqat-book-2013.10.pdf
+- http://amr-noaman.blogspot.ca/2013/04/detect-exact-and-similar-code.html
+- http://www.harukizaemon.com/simian/
+
+
 1. Install the following source code cloning/cheating detection tool, it was
 created by a professor partially to detect cheating on assignments, it
 can be installed on Ubuntu using the following.
