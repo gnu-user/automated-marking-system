@@ -31,6 +31,8 @@ class LintManager < Manager
 
   def parseOutput(grade_id)
 
+    result = Array.new
+
     # Delete all pre-existing test date
     sa = StaticAnalysis.where("grade_id = #{grade_id}")
     
@@ -66,8 +68,12 @@ class LintManager < Manager
         si.description = description
         si.static_analysis_id = sa.id
         si.save
+
+        result.push(type)
       end
     end
+    
+    return result
   end
 end
 

@@ -68,7 +68,7 @@ class CompilerManager < Manager
 
     # Valid compiling no errors
     if @output.empty?
-      return true
+      return nil
     end
 
     start = 0
@@ -128,6 +128,8 @@ class CompilerManager < Manager
             issue.issue_type = issue_type
             issue.message = message
             issue.compiler_issue_id = compiler_issue.id
+
+            issuesList.push(issue_type)
             #puts [filename, line_number, col_number, issue_type, message]
           end
         when 2
@@ -148,6 +150,6 @@ class CompilerManager < Manager
       start += 1
     end
 
-    return false
+    return issuesList
   end
 end

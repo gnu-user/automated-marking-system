@@ -38,7 +38,7 @@ class StudentController < ApplicationController
 
     sub = Submission.where("student_id = #{student_id} AND assignment_id = #{assignment_id.to_i}")[0]
 
-    @program = sub.code
+    #@program = sub.code
 
     @grade = Grade.where("submission_id = #{sub.id}")
 
@@ -58,44 +58,29 @@ class StudentController < ApplicationController
 
     fileName = "#{student_id}_#{assignment_id}"
     file = File.new("#{fileName}.cpp",'w')
-    file.puts(@program)
+    file.puts(sub.code)
     file.close
 
     begin
 
       #TODO calculate the grade
+
+      # Run static analysis
       lintManager = LintManager.new(file.path)
       lintManager.process
-      lintManager.parseOutput(@grade.id)
-      #@path = "#{Rails.root}/lib/tasks/compiler/compile_manager"
-      #@results = File.exists?("#{@path}.rb")
+      @static_issues = lintManager.parseOutput(@grade.id)
+
+      # Run the compiler
       compileManager = CompilerManager.new(file.path)
       value = compileManager.process
-      compileManager.parseOutput(@grade.id)
+      @compiler_issues = compileManager.parseOutput(@grade.id)
+
       # if the program didnt compile then the test cases will all fail, don't attempt
-      
-      @grade.testcase = 0
-      #TODO fix this to only not happen on error
       if value
         #@value = "HERE"
         unitTester = UnitTester.new("#{fileName}.cpp.o", testcases, @grade.id, max_time)
         unitTester.process
-
-        # Calculate the grade for the test_case mark
-        sampleTests = ActiveRecord::Base.connection.execute "SELECT tests.result FROM tests, test_cases WHERE tests.grade_id = #{@grade.id} and tests.test_case_id = test_cases.id and test_cases.sample = 'f'"
-        #sampleTests = Test.joins("INNER JOIN test_cases ON test_cases.id = test.test_case_id").where("test.grade_id = #{@grade.id} and test_cases.sample = 't'")
-        if !sampleTests.empty?
-          sampleTests.each do |rval|
-            if rval
-              @grade.testcase += 1
-            end
-          end
-          
-          @grade.testcase /= sampleTests .size
-        end
       end
-
-      @grade.save
 
     ensure
       #tmp.close
@@ -118,6 +103,32 @@ class StudentController < ApplicationController
     # TODO handle upload submission on click
     # TODO handle test on click
     # TODO handle submit on click
+  end
+
+  def submit
+    validateUser
+    student_id = session[:user_id]
+    assignment_id = params[:id]
+
+    sub = Submission.where("student_id = #{student_id} AND assignment_id = #{assignment_id.to_i}")[0]
+
+    @grade = Grade.where("submission_id = #{sub.id}")
+
+    # Calculate the grade for the test_case mark
+    sampleTests = ActiveRecord::Base.connection.execute "SELECT tests.result FROM tests, test_cases WHERE tests.grade_id = #{@grade.id} and tests.test_case_id = test_cases.id and test_cases.sample = 'f'"
+    
+    @grade.testcase = 0
+    if !sampleTests.empty?
+      sampleTests.each do |rval|
+        if rval
+          @grade.testcase += 1
+        end
+      end
+      
+      @grade.testcase /= sampleTests .size
+    end
+
+    @grade.save
   end
 
   def submission
