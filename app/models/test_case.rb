@@ -49,7 +49,7 @@ class TestCase < ActiveRecord::Base
 
 						if temp_sample
 							test_case[-1].sample = temp_sample
-
+							test_case[-1].save
 							state+=1
 						else
 							return false
@@ -67,6 +67,7 @@ class TestCase < ActiveRecord::Base
 								test_case.push(TestCase.new)
 								test_case[-1].assignment_id = assignment_id
 								test_case[-1].name = temp_name
+								test_case[-1].save
 								# valid name found
 								state = 1
 							else
@@ -78,9 +79,9 @@ class TestCase < ActiveRecord::Base
 			end				
 		end
 
-		test_case.each do |testcase|
-			testcase.save
-		end
+		#test_case.each do |testcase|
+			
+		#end
 		return true
 	end
 
