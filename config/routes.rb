@@ -22,6 +22,7 @@ AutomatedMarkingSystem::Application.routes.draw do
   post 'student/assignment/:id' => 'student#submission'
   get 'student/grades/:id' => 'student#grading'
   post 'student/test/:id' => 'student#test'
+  post 'student/submit/:id' => 'student#submit'
   get 'admin' => 'admin#index'
   get 'admin/new' => 'admin#new'
   get 'admin/grades/:id' => 'admin#grading'

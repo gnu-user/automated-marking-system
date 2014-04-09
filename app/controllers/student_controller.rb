@@ -88,6 +88,8 @@ class StudentController < ApplicationController
       #tmp.unlink
     end
 
+    redirect_to "#{root_url}student/assignment/#{assignment_id}"
+
     # TODO: store results in database, redirect back to assignment page
   end
 
@@ -110,25 +112,45 @@ class StudentController < ApplicationController
     student_id = session[:user_id]
     assignment_id = params[:id]
 
+    assignment = Assignment.find_by_id(assignment_id)
+
     sub = Submission.where("student_id = #{student_id} AND assignment_id = #{assignment_id.to_i}")[0]
 
     @grade = Grade.where("submission_id = #{sub.id}")
 
-    # Calculate the grade for the test_case mark
-    sampleTests = ActiveRecord::Base.connection.execute "SELECT tests.result FROM tests, test_cases WHERE tests.grade_id = #{@grade.id} and tests.test_case_id = test_cases.id and test_cases.sample = 'f'"
-    
-    @grade.testcase = 0
-    if !sampleTests.empty?
-      sampleTests.each do |rval|
-        if rval
-          @grade.testcase += 1
-        end
-      end
-      
-      @grade.testcase /= sampleTests .size
+    if @grade.empty?
+      # Tell them that they must submit an assignment
+    else
+      @grade = @grade[0]
     end
 
-    @grade.save
+    if sub.submit_count == nil
+      sub.submit_count = 0
+    end
+
+    if sub.submit_count <= assignment.attempts
+
+      # Calculate the grade for the test_case mark
+      sampleTests = ActiveRecord::Base.connection.execute("SELECT tests.result FROM tests, test_cases WHERE tests.grade_id = #{@grade.id} and tests.test_case_id = test_cases.id and test_cases.sample = \'f\'")
+      
+      @grade.testcase = 0
+      if !sampleTests.empty?
+        sampleTests.each do |rval|
+          if rval
+            @grade.testcase += 1
+          end
+        end
+        
+        @grade.testcase = (@grade.testcase / sampleTests.size) * 100 
+      end
+
+      sub.submit_count += 1
+
+      @grade.save
+      sub.save
+    end
+
+    redirect_to "#{root_url}student/"
   end
 
   def submission
