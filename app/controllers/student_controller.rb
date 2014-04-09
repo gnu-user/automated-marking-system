@@ -155,7 +155,12 @@ class StudentController < ApplicationController
           end
         end
         
-        @grade.testcase = (@grade.testcase / sampleTests.size) * 100 
+        @grade.testcase = (@grade.testcase / sampleTests.size) * 100
+
+      	# Get the static analysis and test case weights for the final grade calculation
+      	code_weight = assignment.code_weight / 100.0
+      	test_case_weight = assignment.test_case_weight / 100.0      
+      	@grade.final = @grade.code * code_weight + @grade.testcase * test_case_weight
       end
 
       sub.submit_count += 1
