@@ -97,144 +97,147 @@
             %input#upload_assignment_input.btn.btn-primary.btn-lg{name:"file", type: "file", data: {type: "POST"}}
         %br
           %br
-  / COMPILER OUTPUT
-  .row
-    .col-lg-12
-      .panel.panel-primary
-        .panel-heading
-          %h3.panel-title
-            %i.fa.fa-gear
-            Compiler Output
-        .panel-body
-          .table-responsive
-            %table.table.table-bordered.table-hover.table-striped.tablesorter
-              %thead
-                %tr
-                  %th Type
-                  %th File
-                  %th Line, Column
-                  %th Code
-                  %th Description
-              %tbody
-                - @compiler_issues.each do |compiler_issue|
-                  - if compiler_issue["issue_type"] != "error"
-                    %tr.warning
-                      %td 
-                        = compiler_issue["issue_type"].capitalize
-                      %td 
-                        = compiler_issue["filename"]
-                      %td
-                        = "#{compiler_issue["line_number"]}, #{compiler_issue["col_number"]}"
-                      %td 
-                        = compiler_issue["relavent_code"]
-                      %td 
-                        = compiler_issue["message"]
-                  - else
-                    %tr.danger
-                      %td 
-                        = compiler_issue["issue_type"].capitalize
-                      %td 
-                        = compiler_issue["filename"]
-                      %td
-                        = "#{compiler_issue["line_number"]}, #{compiler_issue["col_number"]}"
-                      %td 
-                        = compiler_issue["relavent_code"]
-                      %td 
-                        = compiler_issue["message"]
-  / QUALITY METRICS
-  .row
-    .col-lg-12
-      .panel.panel-primary
-        .panel-heading
-          %h3.panel-title
-            %i.fa.fa-check-circle
-            Quality Assessment
-        .panel-body
-          .table-responsive
-            %table.table.table-bordered.table-hover.table-striped.tablesorter
-              %thead
-                %tr
-                  %th Type
-                  %th File
-                  %th Line
-                  %th Description
-              %tbody
-                - @static_issues.each do |static_issue|
-                  - if static_issue["type"] != "error"
-                    %tr.warning
-                      %td 
-                        = static_issue["type"].capitalize
-                      %td 
-                        = static_issue["filename"]
-                      %td
-                        = static_issue["line_number"]
-                      %td 
-                        = static_issue["description"]
-                  - else
-                    %tr.danger
-                      %td 
-                        = static_issue["type"].capitalize
-                      %td 
-                        = static_issue["filename"]
-                      %td
-                        = static_issue["line_number"]
-                      %td 
-                        = static_issue["description"]
-  / SAMPLE EVALUATION
-  .row
-    .col-lg-12
-      .panel.panel-primary
-        .panel-heading
-          %h3.panel-title
-            %i.fa.fa-flag
-            Sample Evalution
-        .panel-body
-          .table-responsive
-            %table.table.table-bordered.table-hover.table-striped.tablesorter
-              %thead
-                %tr
-                  %th Test Name
-                  %th Description
-                  %th Test Case
-                  %th Status
-              %tbody
-                - @test_cases.each do |test_case|
-                  - if test_case["result"] == 't'
-                    %tr
-                      %td 
-                        = test_case["name"]
-                      %td 
-                        = test_case["description"]
-                      %td 
-                        %ul.list-unstyled
-                          - test_case["values"].each do |value|
-                            %li
-                              - if value["input"] == 't'
-                                = "input: #{value["value"]}"
-                              - else
-                                = "output: #{value["value"]}"
-                      %td
-                        %span.label.label-success
-                          %span.fa.fa-check
-                          PASS
-                  - else
-                    %tr.danger
-                      %td 
-                        = test_case["name"]
-                      %td 
-                        = test_case["description"]
-                      %td 
-                        %ul.list-unstyled
-                          - test_case["values"].each do |value|
-                            %li
-                              - if value["input"] == 't'
-                                = "input: #{value["value"]}"
-                              - else
-                                = "output: #{value["value"]}"
-                      %td 
-                        %span.label.label-danger
-                          %span.fa.fa-warning
-                          FAIL
+  - if !@compiler_issues.empty?          
+    / COMPILER OUTPUT
+    .row
+      .col-lg-12
+        .panel.panel-primary
+          .panel-heading
+            %h3.panel-title
+              %i.fa.fa-gear
+              Compiler Output
+          .panel-body
+            .table-responsive
+              %table.table.table-bordered.table-hover.table-striped.tablesorter
+                %thead
+                  %tr
+                    %th Type
+                    %th File
+                    %th Line, Column
+                    %th Code
+                    %th Description
+                %tbody
+                  - @compiler_issues.each do |compiler_issue|
+                    - if compiler_issue["issue_type"] != "error"
+                      %tr.warning
+                        %td 
+                          = compiler_issue["issue_type"].capitalize
+                        %td 
+                          = compiler_issue["filename"]
+                        %td
+                          = "#{compiler_issue["line_number"]}, #{compiler_issue["col_number"]}"
+                        %td 
+                          = compiler_issue["relavent_code"]
+                        %td 
+                          = compiler_issue["message"]
+                    - else
+                      %tr.danger
+                        %td 
+                          = compiler_issue["issue_type"].capitalize
+                        %td 
+                          = compiler_issue["filename"]
+                        %td
+                          = "#{compiler_issue["line_number"]}, #{compiler_issue["col_number"]}"
+                        %td 
+                          = compiler_issue["relavent_code"]
+                        %td 
+                          = compiler_issue["message"]
+  - if !@static_issues.empty?
+    / QUALITY METRICS
+    .row
+      .col-lg-12
+        .panel.panel-primary
+          .panel-heading
+            %h3.panel-title
+              %i.fa.fa-check-circle
+              Quality Assessment
+          .panel-body
+            .table-responsive
+              %table.table.table-bordered.table-hover.table-striped.tablesorter
+                %thead
+                  %tr
+                    %th Type
+                    %th File
+                    %th Line
+                    %th Description
+                %tbody
+                  - @static_issues.each do |static_issue|
+                    - if static_issue["type"] != "error"
+                      %tr.warning
+                        %td 
+                          = static_issue["type"].capitalize
+                        %td 
+                          = static_issue["filename"]
+                        %td
+                          = static_issue["line_number"]
+                        %td 
+                          = static_issue["description"]
+                    - else
+                      %tr.danger
+                        %td 
+                          = static_issue["type"].capitalize
+                        %td 
+                          = static_issue["filename"]
+                        %td
+                          = static_issue["line_number"]
+                        %td 
+                          = static_issue["description"]
+  - if !@test_cases.empty?
+    / SAMPLE EVALUATION
+    .row
+      .col-lg-12
+        .panel.panel-primary
+          .panel-heading
+            %h3.panel-title
+              %i.fa.fa-flag
+              Sample Evalution
+          .panel-body
+            .table-responsive
+              %table.table.table-bordered.table-hover.table-striped.tablesorter
+                %thead
+                  %tr
+                    %th Test Name
+                    %th Description
+                    %th Test Case
+                    %th Status
+                %tbody
+                  - @test_cases.each do |test_case|
+                    - if test_case["result"] == 't'
+                      %tr
+                        %td 
+                          = test_case["name"]
+                        %td 
+                          = test_case["description"]
+                        %td 
+                          %ul.list-unstyled
+                            - test_case["values"].each do |value|
+                              %li
+                                - if value["input"] == 't'
+                                  = "input: #{value["value"]}"
+                                - else
+                                  = "output: #{value["value"]}"
+                        %td
+                          %span.label.label-success
+                            %span.fa.fa-check
+                            PASS
+                    - else
+                      %tr.danger
+                        %td 
+                          = test_case["name"]
+                        %td 
+                          = test_case["description"]
+                        %td 
+                          %ul.list-unstyled
+                            - test_case["values"].each do |value|
+                              %li
+                                - if value["input"] == 't'
+                                  = "input: #{value["value"]}"
+                                - else
+                                  = "output: #{value["value"]}"
+                        %td 
+                          %span.label.label-danger
+                            %span.fa.fa-warning
+                            FAIL
   / TEST OR SUBMIT
   / TODO more button spacing between and above/below
   .row
