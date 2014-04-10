@@ -90,7 +90,7 @@
                   %th Grade
               %tbody
                 - @assignments.each do |assignment|
-                  %tr
+                  %tr{:class => "#{}"}
                     %td
                       %a{:href => "/student/assignment/#{assignment.id}"}
                         = assignment.name
@@ -99,6 +99,10 @@
                     %td
                       = assignment.due
                     %td
+                      - @grades.each do |grade|
+                        - if grade["assignment_id"] == assignment.id
+                          %a{:href => "/student/grades/#{assignment.id}"}
+                            = "#{grade["final"]}%"                          
                 %tr.success
                   %td
                     %a{:href => "/student/assignment_1.cpp"} Assignment 1

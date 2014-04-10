@@ -44,6 +44,8 @@ class StudentController < ApplicationController
     # TODO handle grade links for finished assignments
     @assignments = Assignment.all
 
+    @grades = ActiveRecord::Base.connection.execute("SELECT assignments.id as assignment_id, grades.final FROM students, assignments, submissions, grades WHERE students.id = 1 AND assignments.id = submissions.assignment_id and submissions.id = grades.submission_id")
+
     @assignment = {
         # TODO Generate the number of assignments graded
         graded: 2,
@@ -66,8 +68,6 @@ class StudentController < ApplicationController
     sub = Submission.where("student_id = #{student_id} AND assignment_id = #{assignment_id.to_i}")[0]
 
     #@program = sub.code
-
-    @grade = Grade.where("submission_id = #{sub.id}")
 
     # Create a new grade if needed
     if @grade.empty?
