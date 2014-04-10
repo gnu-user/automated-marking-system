@@ -85,13 +85,14 @@
               %thead
                 %tr
                   %th Assignment
+                  %th Date Posted
                   %th Date Due
                   %th Date Submitted
                   %th Grade
               %tbody
                 - @assignments.each do |assignment|
                   - if assignment["post"] == 1
-                    %tr{:class => "#{assignment["final"] ? 'success' : (assignment["duedate"] == 1 ? 'warning' : 'danger')}"}
+                    %tr{:class => "#{assignment["class"]}"}
                       %td
                         - if assignment["final"]
                           %a{:href => "student/file/#{assignment["id"]}"}
@@ -102,6 +103,8 @@
                             = assignment["name"]
                         - else
                           = assignment["name"]
+                      %td
+                        = assignment["posted"]
                       %td
                         = assignment["due"]
                       %td

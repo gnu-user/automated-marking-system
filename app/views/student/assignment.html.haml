@@ -97,7 +97,7 @@
             %input#upload_assignment_input.btn.btn-primary.btn-lg{name:"file", type: "file", data: {type: "POST"}}
         %br
           %br
-  - if !@compiler_issues.empty?          
+  - if @compiler_issues != nil && !@compiler_issues.empty?
     / COMPILER OUTPUT
     .row
       .col-lg-12
@@ -142,7 +142,7 @@
                           = compiler_issue["relavent_code"]
                         %td 
                           = compiler_issue["message"]
-  - if !@static_issues.empty?
+  - if @static_issues != nil && !@static_issues.empty?
     / QUALITY METRICS
     .row
       .col-lg-12
@@ -182,7 +182,7 @@
                           = static_issue["line_number"]
                         %td 
                           = static_issue["description"]
-  - if !@test_cases.empty?
+  - if @test_cases != nil && !@test_cases.empty?
     / SAMPLE EVALUATION
     .row
       .col-lg-12

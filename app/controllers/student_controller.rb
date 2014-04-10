@@ -39,6 +39,7 @@ class StudentController < ApplicationController
 
   def index
     validateUser
+    getHeaderInfo(false)
     # TODO handle links for finished assignments
     # TODO handle links for active assignments
     # TODO handle grade links for finished assignments
@@ -56,10 +57,13 @@ class StudentController < ApplicationController
 
       if assignment["final"]
         graded+=1
+        assignment["class"] = "success"
       elsif assignment["post"] == 1 && assignment["duedate"] == 1
         left+=1
-      elsif assignment["duedate"] == 0
+        assignment["class"] = "warning"
+      elsif assignment["post"] == 1 && assignment["duedate"] == 0
         error+= 1
+        assignment["class"] = "danger"
       end
     end
 
@@ -75,6 +79,8 @@ class StudentController < ApplicationController
 
   def test
     validateUser
+    getHeaderInfo(false)
+
     student_id = session[:user_id]
     assignment_id = params[:id]
 
@@ -159,37 +165,19 @@ class StudentController < ApplicationController
 
   def assignment
     validateUser
+    getHeaderInfo(false)
 
     @assignment = Assignment.find_by_id(params[:id])
-    submission = Submission.where("student_id = #{session[:user_id].to_i} AND assignment_id = #{params[:id].to_i}")[0]
-
-    @static_issues = []
-    @compiler_issues = []
-    @test_cases = []
-
-    if submission != nil
-
-      # Get the related static issues
-      @static_issues = ActiveRecord::Base.connection.execute("select static_analyses.filename as filename, static_issues.line_number as line_number, static_issues.description as description, static_issues.type as type from grades, static_analyses, static_issues where grades.submission_id = #{submission.id} and grades.id = static_analyses.grade_id and static_analyses.id = static_issues.static_analysis_id")
-
-      # Get the related compiler issues
-      @compiler_issues = ActiveRecord::Base.connection.execute("select compiler_issues.filename as filename, issues.method as method, issues.line_number as line_number, issues.col_number as col_number, issues.issue_type as issue_type, issues.message as message, issues.relavent_code as relavent_code from grades, compiler_issues, issues where grades.submission_id = #{submission.id} and grades.id = compiler_issues.grade_id and compiler_issues.id = issues.compiler_issue_id")
-
-      # Get the related tests cases
-      @test_cases = ActiveRecord::Base.connection.execute("select tests.result as result, test_cases.name as name, test_cases.description as description, test_cases.id as test_case_id from grades, tests, test_cases where grades.submission_id = #{submission.id} and grades.id = tests.grade_id and tests.test_case_id = test_cases.id and test_cases.sample = \'t\'")
-
-      if @test_cases
-        @test_cases.each do |tcase|
-          tcase["values"] = ActiveRecord::Base.connection.execute("select inputs.value as value, inputs.input as input from test_cases, inputs where test_cases.sample = \'t\' and test_cases.id = inputs.test_case_id and test_cases.id = #{tcase["test_case_id"]}")
-        end
-      end
-    end
+  
+    getAssignmentFeedback(@assignment.id, student_id)
 
     @title = @assignment.name
   end
 
   def submit
     validateUser
+    getHeaderInfo(false)
+
     student_id = session[:user_id]
     assignment_id = params[:id]
 
@@ -242,6 +230,7 @@ class StudentController < ApplicationController
 
   def submission
     validateUser
+    getHeaderInfo(false)
 
     contents = params[:file].read
 
@@ -263,6 +252,8 @@ class StudentController < ApplicationController
 
   def show
     validateUser
+    #getHeaderInfo(false)
+
     assignment_id = params[:id].to_i
 
     submission = Submission.where("assignment_id = #{assignment_id} and student_id = #{session[:user_id].to_i}")
@@ -276,11 +267,29 @@ class StudentController < ApplicationController
 
   def grading
     validateUser
-    # TODO handle showing latest grade
-    # Show grade for the activiy related to id stored in 'param[:id]'
+    getHeaderInfo(true)
+
+    student_id = session[:user_id].to_i
+    assignment_id = params[:id].to_i
+
+    @assignment = Assignment.find_by_id(assignment_id)
+
+    getAssignmentFeedback(assignment_id, student_id)
+    #submission = Submission.where("assignment_id = #{params[:id].to_i} and student_id = #{session[:user_id].to_i}")
   end
 
   private
+
+  def getHeaderInfo(onGrades)
+    @lastest = ActiveRecord::Base.connection.execute("select assignments.id as assignment_id from assignments, submissions, grades where assignments.id = submissions.assignment_id and grades.submission_id = submissions.id order by assignments.created_at LIMIT 1")
+
+    if @lastest != nil && !@lastest.empty?
+      @lastest = @lastest[0]
+    end
+
+    #@lastest = Assignment.order("created_at").last.id
+    @onGrades = onGrades
+  end
 
   def validateUser
     @user = Student.find_by_id(session[:user_id])
@@ -288,6 +297,39 @@ class StudentController < ApplicationController
     if @user == nil
       # User not logged in
       redirect_to root_url, :notice => "Sign in first!"
+    end
+  end
+
+  def getAssignmentFeedback(assignment_id, student_id)
+
+    submission = Submission.where("student_id = #{student_id.to_i} AND assignment_id = #{assignment_id.to_i}")
+
+    if submission.empty?
+      return nil
+    else
+      submission = submission[0]
+    end
+
+    @static_issues = []
+    @compiler_issues = []
+    @test_cases = []
+
+    if submission != nil
+
+      # Get the related static issues
+      @static_issues = ActiveRecord::Base.connection.execute("select static_analyses.filename as filename, static_issues.line_number as line_number, static_issues.description as description, static_issues.type as type from grades, static_analyses, static_issues where grades.submission_id = #{submission.id} and grades.id = static_analyses.grade_id and static_analyses.id = static_issues.static_analysis_id")
+
+      # Get the related compiler issues
+      @compiler_issues = ActiveRecord::Base.connection.execute("select compiler_issues.filename as filename, issues.method as method, issues.line_number as line_number, issues.col_number as col_number, issues.issue_type as issue_type, issues.message as message, issues.relavent_code as relavent_code from grades, compiler_issues, issues where grades.submission_id = #{submission.id} and grades.id = compiler_issues.grade_id and compiler_issues.id = issues.compiler_issue_id")
+
+      # Get the related tests cases
+      @test_cases = ActiveRecord::Base.connection.execute("select tests.result as result, test_cases.name as name, test_cases.description as description, test_cases.id as test_case_id from grades, tests, test_cases where grades.submission_id = #{submission.id} and grades.id = tests.grade_id and tests.test_case_id = test_cases.id and test_cases.sample = \'t\'")
+
+      if @test_cases
+        @test_cases.each do |tcase|
+          tcase["values"] = ActiveRecord::Base.connection.execute("select inputs.value as value, inputs.input as input from test_cases, inputs where test_cases.sample = \'t\' and test_cases.id = inputs.test_case_id and test_cases.id = #{tcase["test_case_id"]}")
+        end
+      end
     end
   end
 
