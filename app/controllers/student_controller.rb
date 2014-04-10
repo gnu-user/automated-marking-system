@@ -250,8 +250,15 @@ class StudentController < ApplicationController
 
   def show
     validateUser
+    assignment_id = params[:id].to_i
+
+    submission = Submission.where("assignment_id = #{assignment_id} and student_id = #{session[:user_id].to_i}")
     # TODO get the code and populate the %pre element, id='code'
-    @code = "cout << \"winning\" << endl;"
+    if !submission.empty?
+      @code = submission[0].code
+    else
+      # redirect to error
+    end
   end
 
   def grading

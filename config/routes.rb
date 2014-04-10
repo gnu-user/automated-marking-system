@@ -44,7 +44,7 @@ AutomatedMarkingSystem::Application.routes.draw do
   root to: redirect('/login')
   #root 'student#index'
   get 'student' => 'student#index', :as => :student
-  get 'student/:file' => 'student#show'
+  get 'student/file/:id' => 'student#show'
   get 'student/assignment/:id' => 'student#assignment', as: 'student_assignment'
   post 'student/assignment/:id' => 'student#submission'
   get 'student/grades/:id' => 'student#grading'

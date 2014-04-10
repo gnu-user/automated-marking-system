@@ -93,7 +93,14 @@
                   - if assignment["post"]
                     %tr{:class => "#{assignment["final"] ? 'success' : (assignment["duedate"] ? 'warning' : 'error')}"}
                       %td
-                        %a{:href => "/student/assignment/#{assignment["id"]}"}
+                        - if assignment["final"]
+                          %a{:href => "student/file/#{assignment["id"]}"}
+                            = assignment["name"]
+                        - elsif assignment["post"]
+                          / Show the assignment code
+                          %a{:href => "/student/assignment/#{assignment["id"]}"}
+                            = assignment["name"]
+                        - else
                           = assignment["name"]
                       %td
                         = assignment["due"]
