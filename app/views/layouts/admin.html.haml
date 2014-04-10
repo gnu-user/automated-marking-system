@@ -57,12 +57,11 @@
         .collapse.navbar-collapse.navbar-ex1-collapse
           %ul.nav.navbar-nav.side-nav
             / Fix this to properly switch
-            %li.active{:id => "assignment_tab"}
+            %li{:class => "#{@inGrades == 0 ? 'active' : ''}", :id => "assignment_tab"}
               %a{:href => "/admin"}
                 %i.fa.fa-edit
                 Assignments
-            }
-            %li{:id => "grading_tab"}
+            %li{:class => "#{@inGrades == 1 ? 'active' : ''}", :id => "grading_tab"}
               -if !@latest.nil?
                 %a{:href => "/admin/grades/#{@latest.id}"}
                   %i.fa.fa-bar-chart-o
@@ -71,7 +70,7 @@
                 %a{:href => "#"}
                   %i.fa.fa-bar-chart-o
                   Grading
-            %li{:id => "cheating_tab"}
+            %li{:class => "#{@inGrades == 2 ? 'active' : ''}",:id => "cheating_tab"}
               -if !@latest.nil?
                 %a{:href => "/admin/grades/#{@latest.id}/cheating"}
                   %i.fa.fa-exclamation-circle

@@ -284,11 +284,10 @@ class StudentController < ApplicationController
     @lastest = ActiveRecord::Base.connection.execute("select assignments.id as assignment_id from assignments, submissions, grades where assignments.id = submissions.assignment_id and grades.submission_id = submissions.id order by assignments.created_at LIMIT 1")
 
     if @lastest != nil && !@lastest.empty?
-      @lastest = @lastest[0]
+      @lastest = @lastest[0]["assignment_id"]
     end
 
-    #@lastest = Assignment.order("created_at").last.id
-    @onGrades = onGrades
+    @inGrades = onGrades   
   end
 
   def validateUser

@@ -33,6 +33,8 @@ class AdminController < ApplicationController
   def index
     validate_admin
     latest_assignment
+    getHeaderInfo(0)
+
     # Get all the assignments
     @assignments = Assignment.all
 
@@ -57,6 +59,7 @@ class AdminController < ApplicationController
   def new
     validate_admin
     latest_assignment
+    getHeaderInfo(0)
     # TODO handle form submission and populating the db
     # handle add button
     # handle upload button
@@ -67,6 +70,7 @@ class AdminController < ApplicationController
   def grading
     validate_admin
     latest_assignment
+    getHeaderInfo(1)
     # TODO handle grades page using param[:id]
 
     @submissions = Submission.find_all_by_assignment_id(params[:id])
@@ -75,12 +79,14 @@ class AdminController < ApplicationController
   def cheat
     validate_admin
     latest_assignment
+    getHeaderInfo(2)
     # TODO handle cheating page using param[:id]
   end
 
   def show
     validate_admin
     latest_assignment
+    getHeaderInfo(0)
 
     @assignment = Assignment.find_by_id(params[:id])
 
@@ -93,6 +99,7 @@ class AdminController < ApplicationController
   def create
     validate_admin
     latest_assignment
+    getHeaderInfo(0)
 
     # TODO check if at least 1 evaluation testcase has been submitted
     @value = params.require(:assignment).permit(:name, :description, :posted, :due, :max_time, :attempts, :code_weight, :test_case_weight)
@@ -121,6 +128,7 @@ class AdminController < ApplicationController
   def upload
     validate_admin
     latest_assignment
+    getHeaderInfo(0)
 
     @contents = params[:file].read
 
@@ -133,6 +141,7 @@ class AdminController < ApplicationController
   def submit
     validate_admin
     latest_assignment
+    getHeaderInfo(0)
 
     if TestCase.where("assignment_id = #{session[:assignment_id].to_i} AND sample = 't'").count > 0
     else
@@ -150,6 +159,16 @@ class AdminController < ApplicationController
   end
 
   private
+
+  def getHeaderInfo(onGrades)
+    #@lastest = ActiveRecord::Base.connection.execute("select assignments.id as assignment_id from assignments, submissions, grades where assignments.id = submissions.assignment_id and grades.submission_id = submissions.id order by assignments.created_at LIMIT 1")
+
+    #if @lastest != nil && !@lastest.empty?
+    #  @lastest = @lastest[0]["assignment_id"]
+    #end
+
+    @inGrades = onGrades   
+  end
 
   def validate_admin
     @user = Admin.find_by_id(session[:prof_id])

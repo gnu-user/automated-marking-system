@@ -56,12 +56,12 @@
         .collapse.navbar-collapse.navbar-ex1-collapse
           %ul.nav.navbar-nav.side-nav
             / Set active based on page
-            %li.active
+            %li{:class => "#{@inGrades ? '' : 'active'}"}
               %a{:href => "/student"}
                 %i.fa.fa-edit
                 Assignments
-            %li
-              %a{:href => "/student/grades/#{@lastest["assignment_id"]}"}
+            %li{:class => "#{@inGrades ? 'active' : ''}"}
+              %a{:href => "/student/grades/#{@lastest}"}
                 %i.fa.fa-bar-chart-o
                 Grades
           %ul.nav.navbar-nav.navbar-right.navbar-user
