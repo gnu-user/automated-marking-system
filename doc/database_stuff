@@ -1,0 +1,21 @@
+select static_analyses.filename as filename, static_issues.line_number as line_number, static_issues.description as description from grades, static_analyses, static_issues where grades.submission_id = submission_id and grades.id = static_analyses.grade_id and static_analyses.id = static_issues.static_analysis_id
+
+select compiler_issues.filename as filename, issues.method as method, issues.line_number as line_number, issues.col_number as col_number, issues.issue_type as issue_type, issues.message as message, issues.relavent_code as relavent_code from grades, compiler_issues, issues where grades.submission_id = submission_id and grades.id = compiler_issues.grade_id and compiler_issues.id = issues.compiler_issue_id
+
+select tests.result as result, test_cases.name as name, test_cases.description as description, inputs.value as value, inputs.input as input from grades, tests, test_cases, inputs where grades.submission_id = submission_id and grades.id = tests.grade_id and tests.test_case_id = test_cases.id and test_cases.sample = 't' and test_cases.id = inputs.test_case_id
+
+select tests.result as result, test_cases.name as name, test_cases.description as description, test_cases.id as test_case_id from grades, tests, test_cases where grades.submission_id = 7 and grades.id = tests.grade_id and tests.test_case_id = test_cases.id and test_cases.sample = 't'
+
+
+select test_cases.id as test_case_id, inputs.value as value, inputs.input as input from test_cases, inputs where test_cases.sample = 't' and inputs.test_case_id = test_cases_id
+
+SELECT grades.final as final FROM students, submissions, grades WHERE submissions.assignment_id = 5 and submissions.id = grades.submission_id
+
+SELECT assignments.id as assignment_id, grades.final FROM students, assignments, submissions, grades WHERE students.id = 1 AND assignments.id = submissions.assignment_id and submissions.id = grades.submission_id
+
+SELECT assignments.name as name, assignments.posted as posted, assignments.due as due, assignments.id as assignment_id, grades.final FROM students, assignments, submissions, grades WHERE students.id = 1 and AND assignments.id = submissions.assignment_id and submissions.id = grades.submission_id
+
+
+SELECT assignments.name as name, assignments.posted as posted, assignments.due as due, assignments.id as assignment_id, grades.final FROM assignments LEFT OUTER JOIN submissions ON assignments.id = submissions.assignment_id LEFT OUTER JOIN students ON students.id = submissions.student_id LEFT OUTER JOIN grades ON submissions.id = grades.submission_id WHERE students.id = 1
+
+SELECT assignments.name as name, assignments.posted as posted, assignments.due as due, assignments.id as assignment_id, grades.final as final FROM assignments LEFT OUTER JOIN submissions ON assignments.id = submissions.assignment_id LEFT OUTER JOIN students ON students.id = submissions.student_id LEFT OUTER JOIN grades ON submissions.id = grades.submission_id WHERE students.id is null or students.id = 1

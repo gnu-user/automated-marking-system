@@ -42,15 +42,28 @@ class StudentController < ApplicationController
     # TODO handle links for finished assignments
     # TODO handle links for active assignments
     # TODO handle grade links for finished assignments
-    @assignments = Assignment.all
+    #@assignments = Assignment.all
 
-    @grades = ActiveRecord::Base.connection.execute("SELECT assignments.id as assignment_id, grades.final FROM students, assignments, submissions, grades WHERE students.id = 1 AND assignments.id = submissions.assignment_id and submissions.id = grades.submission_id")
+    @assignments = ActiveRecord::Base.connection.execute("SELECT assignments.name as name, assignments.posted as posted, assignments.due as due, assignments.id as assignment_id, grades.final as final FROM assignments LEFT OUTER JOIN submissions ON assignments.id = submissions.assignment_id LEFT OUTER JOIN students ON students.id = submissions.student_id LEFT OUTER JOIN grades ON submissions.id = grades.submission_id WHERE students.id is null or students.id = #{session[:user_id].to_i}")
+
+    left = 0
+    graded = 0
+
+    # TODO add pass submission date
+    @assignments.each do |assignment|
+
+      if assignment["final"]
+        graded+=1
+      else
+        left+=1
+      end
+    end
 
     @assignment = {
         # TODO Generate the number of assignments graded
-        graded: 2,
+        graded: graded,
         # TODO Generate the number of assignments not submitted
-        left: 1,
+        left: left,
         # TODO Generate the number of assignments submission errors
         error: 1
     }

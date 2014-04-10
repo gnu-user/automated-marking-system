@@ -90,33 +90,23 @@
                   %th Grade
               %tbody
                 - @assignments.each do |assignment|
-                  %tr{:class => "#{}"}
+                  %tr{:class => "#{assignment["final"] ? 'success' : 'warning'}"}
                     %td
-                      %a{:href => "/student/assignment/#{assignment.id}"}
-                        = assignment.name
+                      %a{:href => "/student/assignment/#{assignment["id"]}"}
+                        = assignment["name"]
                     %td
-                      = assignment.posted
+                      = assignment["posted"]
                     %td
-                      = assignment.due
+                      - if assignment["final"]
+                        = assignment["due"]
+                      - else 
+                        %span.label.label-warning
+                          %span.fa.fa-warning
+                          NOT SUBMITTED
                     %td
-                      - @grades.each do |grade|
-                        - if grade["assignment_id"] == assignment.id
-                          %a{:href => "/student/grades/#{assignment.id}"}
-                            = "#{grade["final"]}%"                          
-                %tr.success
-                  %td
-                    %a{:href => "/student/assignment_1.cpp"} Assignment 1
-                  %td 10/20/2013 11:59 PM
-                  %td 10/15/2013 3:29 PM
-                  %td
-                    %a{:href => "/student/grades/1"} 84%
-                %tr.success
-                  %td
-                    %a{:href => "/student/assignment_2.cpp"} Assignment 2
-                  %td 10/29/2013 11:59 PM
-                  %td 10/29/2013 11:57 PM
-                  %td
-                    %a{:href => "/student/grades/2"} 74%
+                      - if assignment["final"]
+                        %a{:href => "/student/grades/#{assignment["id"]}"}
+                          = "#{assignment["final"]}%"
                 %tr.danger
                   %td
                     %a{:href => "404.html"} Assignment 3
@@ -127,15 +117,6 @@
                       NOT SUBMITTED
                   %td
                     %a{:href => "/student/grades/3"} 0%
-                %tr.warning
-                  %td
-                    %a{:href => "/student/assignment/4"} Assignment 4
-                  %td 11/28/2013 11:59 PM
-                  %td
-                    %span.label.label-warning
-                      %span.fa.fa-warning
-                      NOT SUBMITTED
-                  %td
           
   / /.row
 / /#page-wrapper
