@@ -46,6 +46,7 @@ class StudentController < ApplicationController
 
     @assignments = ActiveRecord::Base.connection.execute("SELECT datetime('now') >= assignments.posted as post, datetime('now') < assignments.due as duedate, assignments.id as id, assignments.name as name, assignments.posted as posted, assignments.due as due, assignments.id as assignment_id, grades.final as final FROM assignments LEFT OUTER JOIN submissions ON assignments.id = submissions.assignment_id LEFT OUTER JOIN students ON students.id = submissions.student_id LEFT OUTER JOIN grades ON submissions.id = grades.submission_id WHERE students.id is null or students.id = #{session[:user_id].to_i}")
 
+    # TODO fix left so that it only accounts for assignments posted
     left = 0
     graded = 0
 
@@ -80,6 +81,7 @@ class StudentController < ApplicationController
 
     sub = Submission.where("student_id = #{student_id} AND assignment_id = #{assignment_id.to_i}")[0]
 
+    @grade = Grade.where("submission_id = #{sub.id}")
     #@program = sub.code
 
     # Create a new grade if needed
@@ -158,18 +160,25 @@ class StudentController < ApplicationController
     @assignment = Assignment.find_by_id(params[:id])
     submission = Submission.where("student_id = #{session[:user_id].to_i} AND assignment_id = #{params[:id].to_i}")[0]
 
-    # Get the related static issues
-    @static_issues = ActiveRecord::Base.connection.execute("select static_analyses.filename as filename, static_issues.line_number as line_number, static_issues.description as description, static_issues.type as type from grades, static_analyses, static_issues where grades.submission_id = #{submission.id} and grades.id = static_analyses.grade_id and static_analyses.id = static_issues.static_analysis_id")
+    @static_issues = []
+    @compiler_issues = []
+    @test_cases = []
 
-    # Get the related compiler issues
-    @compiler_issues = ActiveRecord::Base.connection.execute("select compiler_issues.filename as filename, issues.method as method, issues.line_number as line_number, issues.col_number as col_number, issues.issue_type as issue_type, issues.message as message, issues.relavent_code as relavent_code from grades, compiler_issues, issues where grades.submission_id = #{submission.id} and grades.id = compiler_issues.grade_id and compiler_issues.id = issues.compiler_issue_id")
+    if submission != nil
 
-    # Get the related tests cases
-    @test_cases = ActiveRecord::Base.connection.execute("select tests.result as result, test_cases.name as name, test_cases.description as description, test_cases.id as test_case_id from grades, tests, test_cases where grades.submission_id = #{submission.id} and grades.id = tests.grade_id and tests.test_case_id = test_cases.id and test_cases.sample = \'t\'")
+      # Get the related static issues
+      @static_issues = ActiveRecord::Base.connection.execute("select static_analyses.filename as filename, static_issues.line_number as line_number, static_issues.description as description, static_issues.type as type from grades, static_analyses, static_issues where grades.submission_id = #{submission.id} and grades.id = static_analyses.grade_id and static_analyses.id = static_issues.static_analysis_id")
 
-    if @test_cases
-      @test_cases.each do |tcase|
-        tcase["values"] = ActiveRecord::Base.connection.execute("select inputs.value as value, inputs.input as input from test_cases, inputs where test_cases.sample = \'t\' and test_cases.id = inputs.test_case_id and test_cases.id = #{tcase["test_case_id"]}")
+      # Get the related compiler issues
+      @compiler_issues = ActiveRecord::Base.connection.execute("select compiler_issues.filename as filename, issues.method as method, issues.line_number as line_number, issues.col_number as col_number, issues.issue_type as issue_type, issues.message as message, issues.relavent_code as relavent_code from grades, compiler_issues, issues where grades.submission_id = #{submission.id} and grades.id = compiler_issues.grade_id and compiler_issues.id = issues.compiler_issue_id")
+
+      # Get the related tests cases
+      @test_cases = ActiveRecord::Base.connection.execute("select tests.result as result, test_cases.name as name, test_cases.description as description, test_cases.id as test_case_id from grades, tests, test_cases where grades.submission_id = #{submission.id} and grades.id = tests.grade_id and tests.test_case_id = test_cases.id and test_cases.sample = \'t\'")
+
+      if @test_cases
+        @test_cases.each do |tcase|
+          tcase["values"] = ActiveRecord::Base.connection.execute("select inputs.value as value, inputs.input as input from test_cases, inputs where test_cases.sample = \'t\' and test_cases.id = inputs.test_case_id and test_cases.id = #{tcase["test_case_id"]}")
+        end
       end
     end
 
@@ -187,8 +196,9 @@ class StudentController < ApplicationController
 
     @grade = Grade.where("submission_id = #{sub.id}")
 
-    if @grade.empty?
+    if @grade != nil && @grade.empty?
       # Tell them that they must submit an assignment
+      redirect_to "#{root_url}student/assignment/#{assignment_id.to_i}"
     else
       @grade = @grade[0]
     end
@@ -197,26 +207,26 @@ class StudentController < ApplicationController
       sub.submit_count = 0
     end
 
-    if sub.submit_count <= assignment.attempts
+    if sub.submit_count < assignment.attempts
 
       # Calculate the grade for the test_case mark
-      sampleTests = ActiveRecord::Base.connection.execute("SELECT tests.result FROM tests, test_cases WHERE tests.grade_id = #{@grade.id} and tests.test_case_id = test_cases.id and test_cases.sample = \'f\'")
+      tests = ActiveRecord::Base.connection.execute("SELECT tests.result FROM tests, test_cases WHERE tests.grade_id = #{@grade.id} and tests.test_case_id = test_cases.id and test_cases.sample = \'f\'")
       
       @grade.testcase = 0
-      if !sampleTests.empty?
-        sampleTests.each do |rval|
+      if !tests.empty?
+        tests.each do |rval|
           if rval
             @grade.testcase += 1
           end
         end
         
         @grade.testcase = (@grade.testcase / sampleTests.size) * 100
-
-      	# Get the static analysis and test case weights for the final grade calculation
-      	code_weight = assignment.code_weight / 100.0
-      	test_case_weight = assignment.test_case_weight / 100.0      
-      	@grade.final = @grade.code * code_weight + @grade.testcase * test_case_weight
       end
+
+      # Get the static analysis and test case weights for the final grade calculation
+      code_weight = assignment.code_weight / 100.0
+      test_case_weight = assignment.test_case_weight / 100.0      
+      @grade.final = @grade.code * code_weight + @grade.testcase * test_case_weight
 
       sub.submit_count += 1
 

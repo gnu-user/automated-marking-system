@@ -90,13 +90,13 @@
                   %th Grade
               %tbody
                 - @assignments.each do |assignment|
-                  - if assignment["post"]
-                    %tr{:class => "#{assignment["final"] ? 'success' : (assignment["duedate"] ? 'warning' : 'error')}"}
+                  - if assignment["post"] == 1
+                    %tr{:class => "#{assignment["final"] ? 'success' : (assignment["duedate"] == 1 ? 'warning' : 'danger')}"}
                       %td
                         - if assignment["final"]
                           %a{:href => "student/file/#{assignment["id"]}"}
                             = assignment["name"]
-                        - elsif assignment["post"]
+                        - elsif assignment["duedate"] == 1 
                           / Show the assignment code
                           %a{:href => "/student/assignment/#{assignment["id"]}"}
                             = assignment["name"]
@@ -108,7 +108,7 @@
                         - if assignment["final"]
                           / TODO make this date submitted
                           = assignment["due"]
-                        - elsif assignment["duedate"]
+                        - elsif assignment["duedate"] == 1
                           %span.label.label-warning
                             %span.fa.fa-warning
                             NOT SUBMITTED
