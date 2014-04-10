@@ -26,6 +26,6 @@ select inputs.value as value, inputs.input as input from test_cases, inputs wher
 select tests.result as result, test_cases.name as name, test_cases.description as description, test_cases.id as test_case_id from grades, tests, test_cases where grades.submission_id = 7 and grades.id = tests.grade_id and tests.test_case_id = test_cases.id and test_cases.sample = 't'
 
 
-SELECT assignments.id as id, assignments.name as name, assignments.posted as posted, assignments.due as due, assignments.id as assignment_id, grades.final as final FROM assignments LEFT OUTER JOIN submissions ON assignments.id = submissions.assignment_id LEFT OUTER JOIN students ON students.id = submissions.student_id LEFT OUTER JOIN grades ON submissions.id = grades.submission_id WHERE students.id is null or students.id = 1 and assignment
+SELECT assignments.id as id, assignments.name as name, assignments.posted as posted, assignments.due as due, assignments.id as assignment_id, grades.final as final FROM assignments LEFT OUTER JOIN submissions ON assignments.id = submissions.assignment_id LEFT OUTER JOIN students ON students.id = submissions.student_id LEFT OUTER JOIN grades ON submissions.id = grades.submission_id WHERE students.id is null or students.id = 1
 
 select posted, due, datetime('now') >= posted as post, datetime('now') < due as duedate from assignments;

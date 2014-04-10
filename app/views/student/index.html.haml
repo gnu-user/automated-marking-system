@@ -117,6 +117,7 @@
                             %span.fa.fa-warning
                             NOT SUBMITTED
                       %td
+                        / = "post = #{assignment["post"]} due = #{assignment["duedate"]}"
                         - if assignment["final"]
                           %a{:href => "/student/grades/#{assignment["id"]}"}
                             = "#{assignment["final"]}%"

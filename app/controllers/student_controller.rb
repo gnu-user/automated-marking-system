@@ -49,14 +49,17 @@ class StudentController < ApplicationController
     # TODO fix left so that it only accounts for assignments posted
     left = 0
     graded = 0
+    error = 0
 
     # TODO add pass submission date
     @assignments.each do |assignment|
 
       if assignment["final"]
         graded+=1
-      else
+      elsif assignment["post"] == 1 && assignment["duedate"] == 1
         left+=1
+      elsif assignment["duedate"] == 0
+        error+= 1
       end
     end
 
@@ -66,7 +69,7 @@ class StudentController < ApplicationController
         # TODO Generate the number of assignments not submitted
         left: left,
         # TODO Generate the number of assignments submission errors
-        error: 1
+        error: error
     }
   end
 
