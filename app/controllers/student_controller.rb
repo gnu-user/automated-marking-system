@@ -44,7 +44,7 @@ class StudentController < ApplicationController
     # TODO handle grade links for finished assignments
     #@assignments = Assignment.all
 
-    @assignments = ActiveRecord::Base.connection.execute("SELECT assignments.id as id, assignments.name as name, assignments.posted as posted, assignments.due as due, assignments.id as assignment_id, grades.final as final FROM assignments LEFT OUTER JOIN submissions ON assignments.id = submissions.assignment_id LEFT OUTER JOIN students ON students.id = submissions.student_id LEFT OUTER JOIN grades ON submissions.id = grades.submission_id WHERE students.id is null or students.id = #{session[:user_id].to_i}")
+    @assignments = ActiveRecord::Base.connection.execute("SELECT datetime('now') >= assignments.posted as post, datetime('now') < assignments.due as duedate, assignments.id as id, assignments.name as name, assignments.posted as posted, assignments.due as due, assignments.id as assignment_id, grades.final as final FROM assignments LEFT OUTER JOIN submissions ON assignments.id = submissions.assignment_id LEFT OUTER JOIN students ON students.id = submissions.student_id LEFT OUTER JOIN grades ON submissions.id = grades.submission_id WHERE students.id is null or students.id = #{session[:user_id].to_i}")
 
     left = 0
     graded = 0
@@ -158,10 +158,13 @@ class StudentController < ApplicationController
     @assignment = Assignment.find_by_id(params[:id])
     submission = Submission.where("student_id = #{session[:user_id].to_i} AND assignment_id = #{params[:id].to_i}")[0]
 
+    # Get the related static issues
     @static_issues = ActiveRecord::Base.connection.execute("select static_analyses.filename as filename, static_issues.line_number as line_number, static_issues.description as description, static_issues.type as type from grades, static_analyses, static_issues where grades.submission_id = #{submission.id} and grades.id = static_analyses.grade_id and static_analyses.id = static_issues.static_analysis_id")
 
+    # Get the related compiler issues
     @compiler_issues = ActiveRecord::Base.connection.execute("select compiler_issues.filename as filename, issues.method as method, issues.line_number as line_number, issues.col_number as col_number, issues.issue_type as issue_type, issues.message as message, issues.relavent_code as relavent_code from grades, compiler_issues, issues where grades.submission_id = #{submission.id} and grades.id = compiler_issues.grade_id and compiler_issues.id = issues.compiler_issue_id")
 
+    # Get the related tests cases
     @test_cases = ActiveRecord::Base.connection.execute("select tests.result as result, test_cases.name as name, test_cases.description as description, test_cases.id as test_case_id from grades, tests, test_cases where grades.submission_id = #{submission.id} and grades.id = tests.grade_id and tests.test_case_id = test_cases.id and test_cases.sample = \'t\'")
 
     if @test_cases
@@ -171,11 +174,6 @@ class StudentController < ApplicationController
     end
 
     @title = @assignment.name
-
-    # TODO Show activity related to id stored in 'param[:id]'
-    # TODO handle upload submission on click
-    # TODO handle test on click
-    # TODO handle submit on click
   end
 
   def submit
