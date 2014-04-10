@@ -47,7 +47,6 @@ class StudentController < ApplicationController
 
     @assignments = ActiveRecord::Base.connection.execute("SELECT datetime('now') >= assignments.posted as post, datetime('now') < assignments.due as duedate, assignments.id as id, assignments.name as name, assignments.posted as posted, assignments.due as due, assignments.id as assignment_id, grades.final as final FROM assignments LEFT OUTER JOIN submissions ON assignments.id = submissions.assignment_id LEFT OUTER JOIN students ON students.id = submissions.student_id LEFT OUTER JOIN grades ON submissions.id = grades.submission_id WHERE students.id is null or students.id = #{session[:user_id].to_i}")
 
-    # TODO fix left so that it only accounts for assignments posted
     left = 0
     graded = 0
     error = 0

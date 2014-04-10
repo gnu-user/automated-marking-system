@@ -70,33 +70,25 @@
                     Final Grade
                     %i.fa.fa-sort
               %tbody
-                %tr
-                  %td Gillett
-                  %td Jonathan
-                  %td 100123123
-                  %td 100%
-                  %td 10%
-                  %td 100%
-                  %td 90%
-                  %td 100%
-                %tr
-                  %td Heron
-                  %td Joseph
-                  %td 100123123
-                  %td 100%
-                  %td 10%
-                  %td 100%
-                  %td 90%
-                  %td 100%
-                %tr.danger
-                  %td Smullen
-                  %td Daniel
-                  %td 100123123
-                  %td 0%
-                  %td 10%
-                  %td 0%
-                  %td 90%
-                  %td 0%
+                - @grades.each do |grades|
+                  %tr
+                    %td
+                      = grades["firstname"]
+                    %td
+                      = grades["lastname"]
+                    %td
+                      = grades["student_id"]
+                    %td
+                      = "#{grades["code_weight"]}%"
+                    %td
+                      = "#{grades["code_grade"]}%"
+                    %td
+                      = "#{grades["test_case_weight"]}%"
+                    %td
+                      = "#{grades["test_case_grade"]}%"
+                    %td
+                      = "#{grades["final_grade"]}%"
+          / TODO create csv
           .text-right
             %a{:href => "4/04-03-2014.csv"}
               Download Grades
