@@ -25,5 +25,11 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 ///////////////////////////////////////////////////////////////////////////////
-%h1
-  Assignmnet has been submitted and will be posted at the posted date.
+#page-wrapper
+  .row
+    .col-lg-12
+      .jumbotron
+        %h1 Assignment Posted
+        %p The assignment has been submitted and will be available on the posted date.
+        %p
+          %a.btn.btn-primary.btn-lg{:href => "/admin", :role => "button"} Return to Dashboard
