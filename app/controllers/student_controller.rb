@@ -42,13 +42,28 @@ class StudentController < ApplicationController
     # TODO handle links for finished assignments
     # TODO handle links for active assignments
     # TODO handle grade links for finished assignments
-    @assignments = Assignment.all
+    #@assignments = Assignment.all
+
+    @assignments = ActiveRecord::Base.connection.execute("SELECT assignments.id as id, assignments.name as name, assignments.posted as posted, assignments.due as due, assignments.id as assignment_id, grades.final as final FROM assignments LEFT OUTER JOIN submissions ON assignments.id = submissions.assignment_id LEFT OUTER JOIN students ON students.id = submissions.student_id LEFT OUTER JOIN grades ON submissions.id = grades.submission_id WHERE students.id is null or students.id = #{session[:user_id].to_i}")
+
+    left = 0
+    graded = 0
+
+    # TODO add pass submission date
+    @assignments.each do |assignment|
+
+      if assignment["final"]
+        graded+=1
+      else
+        left+=1
+      end
+    end
 
     @assignment = {
         # TODO Generate the number of assignments graded
-        graded: 2,
+        graded: graded,
         # TODO Generate the number of assignments not submitted
-        left: 1,
+        left: left,
         # TODO Generate the number of assignments submission errors
         error: 1
     }
@@ -66,8 +81,6 @@ class StudentController < ApplicationController
     sub = Submission.where("student_id = #{student_id} AND assignment_id = #{assignment_id.to_i}")[0]
 
     #@program = sub.code
-
-    @grade = Grade.where("submission_id = #{sub.id}")
 
     # Create a new grade if needed
     if @grade.empty?
@@ -152,9 +165,8 @@ class StudentController < ApplicationController
     @test_cases = ActiveRecord::Base.connection.execute("select tests.result as result, test_cases.name as name, test_cases.description as description, test_cases.id as test_case_id from grades, tests, test_cases where grades.submission_id = #{submission.id} and grades.id = tests.grade_id and tests.test_case_id = test_cases.id and test_cases.sample = \'t\'")
 
     if @test_cases
-      @derp = "der"
       @test_cases.each do |tcase|
-        tcase["values"] = ActiveRecord::Base.connection.execute("select inputs.value as value, inputs.input as input from test_cases, inputs where test_cases.sample = \'t\' and inputs.test_case_id = #{tcase["test_case_id"]}")
+        tcase["values"] = ActiveRecord::Base.connection.execute("select inputs.value as value, inputs.input as input from test_cases, inputs where test_cases.sample = \'t\' and test_cases.id = inputs.test_case_id and test_cases.id = #{tcase["test_case_id"]}")
       end
     end
 

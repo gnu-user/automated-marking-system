@@ -138,7 +138,7 @@
                 - @assignments.each do |assignment|
                   %tr
                     %td
-                      %a{:href => "/admin/assignment/#{assignment.id}"}
+                      %a{:href => "/admin/assignment/#{assignment["id"]}"}
                         = assignment.name
                     %td
                       = assignment.posted
@@ -147,7 +147,8 @@
                     %td
                       = assignment.submission_count
                     %td
-                      %a{:href => "/admin/grades/#{assignment.id}"} 80%              
+                      %a{:href => "/admin/grades/#{assignment["id"]}"}
+                        = assignment["id"] == 5 ? "80%" : "90%"
           .text-right
             %a{:href => "/admin/new"}
               Add New Assignment
