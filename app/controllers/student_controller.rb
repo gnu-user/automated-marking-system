@@ -166,6 +166,7 @@ class StudentController < ApplicationController
     validateUser
     getHeaderInfo(false)
 
+    student_id = session[:user_id]
     @assignment = Assignment.find_by_id(params[:id])
   
     getAssignmentFeedback(@assignment.id, student_id)
@@ -210,7 +211,7 @@ class StudentController < ApplicationController
           end
         end
         
-        @grade.testcase = (@grade.testcase / sampleTests.size) * 100
+        @grade.testcase = (@grade.testcase / tests.size) * 100
       end
 
       # Get the static analysis and test case weights for the final grade calculation

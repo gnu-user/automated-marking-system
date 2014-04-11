@@ -139,16 +139,19 @@
                   %tr
                     %td
                       %a{:href => "/admin/assignment/#{assignment["id"]}"}
-                        = assignment.name
+                        = assignment["name"]
                     %td
-                      = assignment.posted
+                      = assignment["posted"]
                     %td
-                      = assignment.due
+                      = assignment["due"]
                     %td
-                      = assignment.submission_count
+                      = assignment["submissions"]
                     %td
-                      %a{:href => "/admin/grades/#{assignment["id"]}"}
-                        = assignment["id"] == 5 ? "80%" : "90%"
+                      - if assignment["submissions"] != 0
+                        %a{:href => "/admin/grades/#{assignment["id"]}"}
+                          = "#{assignment["final_grade"]}%"
+                      - else
+                        = 0
           .text-right
             %a{:href => "/admin/new"}
               Add New Assignment
