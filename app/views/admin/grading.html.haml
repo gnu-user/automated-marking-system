@@ -80,15 +80,15 @@
                       %td
                         = grades["student_id"]
                       %td
+                        = "#{grades["code_grade"].to_i}%"
+                      %td
                         = "#{grades["code_weight"]}%"
                       %td
-                        = "#{grades["code_grade"]}%"
+                        = "#{grades["test_case_grade"].to_i}%"
                       %td
                         = "#{grades["test_case_weight"]}%"
                       %td
-                        = "#{grades["test_case_grade"]}%"
-                      %td
-                        = "#{grades["final_grade"]}%"
+                        = "#{grades["final_grade"].to_i}%"
             .text-right 
               %a{:href => "4/04-03-2014.csv"}
                 Download Grades

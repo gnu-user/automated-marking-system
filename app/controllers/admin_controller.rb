@@ -135,8 +135,7 @@ class AdminController < ApplicationController
 		latest_assignment
 		getHeaderInfo(0)
 
-		if TestCase.where("assignment_id = #{session[:assignment_id].to_i} AND sample = 't'").count > 0
-		else
+		if TestCase.where("assignment_id = #{session[:assignment_id].to_i} AND sample = 't'").count <= 0
 			# TODO report error
 			redirect_to "#{root_url}" 
 		end

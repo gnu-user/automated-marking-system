@@ -80,8 +80,6 @@
                 %span.badge
                   = "#{@assignment.test_case_weight}%"
                 Test case weight
-  %h
-    =# @test_cases
   - if @compiler_issues != nil && !@compiler_issues.empty?     
     / COMPILER OUTPUT
     .row
@@ -223,3 +221,55 @@
                           %span.label.label-danger
                             %span.fa.fa-warning
                             FAIL
+  - if @grades != nil && !@grades.empty?
+    .row
+      .col-lg-12
+        .panel.panel-primary
+          .panel-heading
+            %h3.panel-title
+              %i.fa.fa-pencil
+              Assignment 1 Grades
+          .panel-body
+            .table-responsive
+              %table.table.table-bordered.table-hover.table-striped.tablesorter
+                %thead
+                  %tr
+                    %th
+                      Last Name
+                      %i.fa.fa-sort
+                    %th
+                      First Name
+                      %i.fa.fa-sort
+                    %th
+                      Student Number
+                      %i.fa.fa-sort
+                    %th
+                      Metrics Grade
+                      %i.fa.fa-sort
+                    %th Metrics Weight
+                    %th Test Case Grade
+                    %th
+                      Test Case Weight
+                      %i.fa.fa-sort
+                    %th
+                      Final Grade
+                      %i.fa.fa-sort
+                %tbody
+                  - @grades.each do |grades|
+                    %tr
+                      %td
+                        = grades["firstname"]
+                      %td
+                        = grades["lastname"]
+                      %td
+                        = grades["student_id"]
+                      %td
+                        = "#{grades["code_grade"].to_i}%"
+                      %td
+                        = "#{grades["code_weight"]}%"
+                      %td
+                        = "#{grades["test_case_grade"].to_i}%"
+                      %td
+                        = "#{grades["test_case_weight"]}%"
+                      %td
+                        = "#{grades["final_grade"].to_i}%"

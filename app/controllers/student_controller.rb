@@ -274,6 +274,13 @@ class StudentController < ApplicationController
 
     if @assignment
       getAssignmentFeedback(assignment_id, student_id)
+
+      @grades = ActiveRecord::Base.connection.execute("select students.first_name as firstname, students.last_name as lastname, students.student_id as student_id, assignments.code_weight as code_weight, grades.code as code_grade, assignments.test_case_weight as test_case_weight, grades.testcase as test_case_grade, grades.final as final_grade from students, assignments, submissions, grades where students.id = submissions.student_id and assignments.id = submissions.assignment_id and submissions.id = grades.submission_id and assignments.id = #{params[:id].to_i} and students.id = #{student_id}")
+
+      if @grades && @grades.empty?
+        @grades = @grades[0]
+      end
+
     else
       redirect_to "#{root_url}student/"
     end
