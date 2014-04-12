@@ -25,6 +25,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
+require "#{Rails.root}/lib/tasks/clone/clone_detector"
+
 class AdminController < ApplicationController
 	# TODO FOR ALL
 	# handle Grades link for latest assignments (better define)
@@ -61,9 +64,6 @@ class AdminController < ApplicationController
 		validate_admin
 		latest_assignment
 		getHeaderInfo(1)
-		# TODO handle grades page using param[:id]
-
-		#@submissions = Submission.find_all_by_assignment_id(params[:id])
 
 		@grades = ActiveRecord::Base.connection.execute("select students.first_name as firstname, students.last_name as lastname, students.student_id as student_id, assignments.code_weight as code_weight, grades.code as code_grade, assignments.test_case_weight as test_case_weight, grades.testcase as test_case_grade, grades.final as final_grade from students, assignments, submissions, grades where students.id = submissions.student_id and assignments.id = submissions.assignment_id and submissions.id = grades.submission_id and assignments.id = #{params[:id].to_i}")
 	end
@@ -73,6 +73,10 @@ class AdminController < ApplicationController
 		latest_assignment
 		getHeaderInfo(2)
 		# TODO handle cheating page using param[:id]
+
+		#TODO make a query to get all the cheating results stored in db
+		#TODO handle when no entries
+		#TODO create 'generate cheating report' button to create the cheating report
 	end
 
 	def show

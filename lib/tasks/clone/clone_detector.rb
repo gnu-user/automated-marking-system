@@ -27,46 +27,6 @@
 ##############################################################################
 require_relative '../manager'
 
-class CloneIncident
-    attr_accessor :first_file, :second_file, :similarity
-
-    def initialize(first, second, similarity)
-        @first_file = DiffFile.new(first)
-        @second_file = DiffFile.new(second)
-        @similarity = similarity
-    end
-
-    def to_s
-        "first_file = #{@first_file}, second_file = #{@second_file}, similarity = #{@similarity}"
-    end
-end
-
-class DiffFile
-    attr_accessor :name, :content
-
-    def initialize(name)
-        @name = name
-        @content = Array.new
-    end
-
-    def to_s
-        "name = #{@name}, content = #{@content}"
-    end
-end
-
-class DiffEntry
-    attr_accessor :position, :lines
-
-    def initialize(position)
-        @position = position
-        @lines = Array.new
-    end
-
-    def to_s
-        "position = #{@position}, lines = #{@lines}"
-    end
-end
-
 class CloneDetector < Manager
 
     CLONE_PARSER = /(.*?.cpp) consists for ([0-9]{1,3} %) of (.*.cpp) material/
@@ -93,20 +53,17 @@ class CloneDetector < Manager
 
         @output = Array.new
         result = %x(#{COMMAND} #{OPTIONS} #{@path_to_file})
-        #{OUTPUT} #{FILE}
 
         result.each_line do |line|
                @output.push(line)
         end        
 
-        # Delete the temp file created
-        #File.delete(FILE)
         @output
     end
 
-    def parseOutput
+    def parseOutput(assignment_id)
 
-        incidents = Array.new
+        #incidents = Array.new
         @output.each do |line|
             #[0] == first file, [1] == percent similarity, [2] == second file
             parsed = line.scan(CLONE_PARSER)
@@ -114,7 +71,20 @@ class CloneDetector < Manager
             #first_file_name = line[0][0]
             #second_file_name = 
             #puts parsed
-            incidents.push(CloneIncident.new(parsed[0][0], parsed[0][2], parsed[0][1]))
+            cloneIncident = CloneIncident.new
+            cloneIncident.assignment_id = assignment_id
+            cloneIncident.similarity = parsed[0][1]
+            cloneIncident.save
+
+            firstDiffFile = DiffFile.new
+            firstDiffFile.name = parsed[0][0]
+            firstDiffFile.clone_incident_id = cloneIncident.id
+            firstDiffFile.save
+
+            secondDiffFile = DiffFile.new
+            secondDiffFile.name = parsed[0][2]
+            secondDiffFile.clone_incident_id = cloneIncident.id
+            secondDiffFile.save
             
             #incidents[-1].diff = Array.new
             size = 0
@@ -122,8 +92,12 @@ class CloneDetector < Manager
             #puts incidents[-1]#.first_file.name
             #puts incidents[-1]#.second_file.name
             #a = gets
-            diff_out = %x(#{COMMAND} #{OPTIONS_DIFF} #{incidents[-1].first_file.name} #{incidents[-1].second_file.name})
+            diff_out = %x(#{COMMAND} #{OPTIONS_DIFF} #{firstDiffFile.name} #{secondDiffFile.name})
             #puts diff_out
+
+            firstDiffEntry = nil
+            secondDiffEntry = nil
+
             diff_out.each_line do |line|
                 diff_parser = line.scan(CLONE_DIFF_PARSER)
 
@@ -132,9 +106,22 @@ class CloneDetector < Manager
 
                 if diff_parser != []
                     size = line.split("|")[0].size
-                    incidents[-1].first_file.content.push(DiffEntry.new(diff_parser[0][1]))
-                    incidents[-1].second_file.content.push(DiffEntry.new(diff_parser[0][3]))
+                    firstDiffEntry = DiffEntry.new
+                    firstDiffEntry.position = diff_parser[0][1]
+                    firstDiffEntry.diff_file_id = firstDiffFile.id
+                    firstDiffEntry.save
+
+                    secondDiffEntry = DiffEntry.new
+                    secondDiffEntry.position = diff_parser[0][3]
+                    secondDiffEntry.diff_file_id = secondDiffFile.id
+                    secondDiffEntry.save
+                   
                 else
+                    firstFile = File.new
+                    firstFile.diff_entry_id = firstDiffEntry.id
+                    secondFile = File.new
+                    secondFile.diff_entry_id = secondDiffEntry.id
+
                     f1_line = line[0..size-1]
                     f2_line = line[size+1..-1]
 
@@ -142,26 +129,13 @@ class CloneDetector < Manager
                     #puts f2_line
                     #a = gets
 
-                    incidents[-1].first_file.content[-1].lines.push(f1_line)
-                    incidents[-1].second_file.content[-1].lines.push(f2_line)
+                    firstFile.text_line = f1_line
+                    secondFile.text_line = f2_line
+                    firstFile.save
+                    secondFile.save
                 end
-            end
-
-            #File.delete(FILE)
-        
+            end        
         end
-        return incidents
+        #return incidents
     end
 end
-
-=begin
-
-=end
-
-cloneDetector = CloneDetector.new("../example_programs/cheating/")
-
-cloneDetector.applyCloneDetection
-
-incident = cloneDetector.parseOutput
-
-puts incident
