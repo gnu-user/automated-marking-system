@@ -37,63 +37,59 @@
           %i.fa.fa-exclamation-circle
           Review Cheating
   / /.row
-  - if @cheating.size < 0
-    .row
-      .col-lg-12
-        .panel.panel-primary
-          .panel-heading
-            %h3.panel-title
-              %i.fa.fa-exclamation-circle
-              Assignment 1 Cheating Report
-          .panel-body
-            .table-responsive
-              %table.table.table-bordered.table-hover.table-striped.tablesorter
-                %thead
-                  %tr
-                    %th
-                      Last Name
-                      %i.fa.fa-sort
-                    %th
-                      First Name
-                      %i.fa.fa-sort
-                    %th
-                      Student Number
-                      %i.fa.fa-sort
-                    %th
-                      Last Name
-                      %i.fa.fa-sort
-                    %th
-                      First Name
-                      %i.fa.fa-sort
-                    %th
-                      Student Number
-                      %i.fa.fa-sort
-                    %th
-                      Code Similarity
-                      %i.fa.fa-sort
-                    %th View Difference
-                %tbody
-                  - index = -2
-                  - while index + 2 < @cheating.size
-                    - index += 2
-                    %tr{:class => "#{@cheating[index]['similarity'] > 50 ? 'danger' : ''}"}
-                      %td 
-                        = @cheating[index]["first_student"].last_name
-                      %td
-                        = @cheating[index]["first_student"].first_name
-                      %td
-                        = @cheating[index]["first_student"].student_id
-                      %td 
-                        = @cheating[index]["second_student"].last_name
-                      %td
-                        = @cheating[index]["second_student"].first_name
-                      %td
-                        = @cheating[index]["second_student"].student_id
-                      %td
-                        = @cheating[index]["similarity"]
-                      %td
-                        %a{:href => "#"} View Difference
-    = button_to 'Check for Cheating', {:controller => :admin, :action => :runCheatDetection}, :class => 'btn btn-primary btn-block btn-lg'
-        / /.row
-      / /#page-wrapper
-  / /#wrapper
+  .row
+    .col-lg-12
+      .panel.panel-primary
+        .panel-heading
+          %h3.panel-title
+            %i.fa.fa-exclamation-circle
+            Assignment 1 Cheating Report
+        .panel-body
+          .table-responsive
+            %table.table.table-bordered.table-hover.table-striped.tablesorter
+              %thead
+                %tr
+                  %th
+                    Last Name
+                    %i.fa.fa-sort
+                  %th
+                    First Name
+                    %i.fa.fa-sort
+                  %th
+                    Student Number
+                    %i.fa.fa-sort
+                  %th
+                    Last Name
+                    %i.fa.fa-sort
+                  %th
+                    First Name
+                    %i.fa.fa-sort
+                  %th
+                    Student Number
+                    %i.fa.fa-sort
+                  %th
+                    Code Similarity
+                    %i.fa.fa-sort
+                  %th View Difference
+              %tbody
+                - index = -2
+                - while index + 2 < @cheating.size
+                  - index += 2
+                  %tr{:class => "#{@cheating[index]['similarity'] > 50 ? 'danger' : ''}"}
+                    %td 
+                      = @cheating[index]["first_student"].last_name
+                    %td
+                      = @cheating[index]["first_student"].first_name
+                    %td
+                      = @cheating[index]["first_student"].student_id
+                    %td 
+                      = @cheating[index]["second_student"].last_name
+                    %td
+                      = @cheating[index]["second_student"].first_name
+                    %td
+                      = @cheating[index]["second_student"].student_id
+                    %td
+                      = @cheating[index]["similarity"]
+                    %td
+                      %a{:href => "#"} View Difference
+  = button_to 'Check for Cheating', {:controller => :admin, :action => :runCheatDetection}, :class => 'btn btn-primary btn-block btn-lg'
