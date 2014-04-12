@@ -36,63 +36,60 @@
         %li.active
           %i.fa.fa-pencil
           Review Grades
-  / /.row
-  .row
-    .col-lg-12
-      .panel.panel-primary
-        .panel-heading
-          %h3.panel-title
-            %i.fa.fa-pencil
-            Assignment 1 Grades
-        .panel-body
-          .table-responsive
-            %table.table.table-bordered.table-hover.table-striped.tablesorter
-              %thead
-                %tr
-                  %th
-                    Last Name
-                    %i.fa.fa-sort
-                  %th
-                    First Name
-                    %i.fa.fa-sort
-                  %th
-                    Student Number
-                    %i.fa.fa-sort
-                  %th
-                    Metrics Grade
-                    %i.fa.fa-sort
-                  %th Metrics Weight
-                  %th Test Case Grade
-                  %th
-                    Test Case Weight
-                    %i.fa.fa-sort
-                  %th
-                    Final Grade
-                    %i.fa.fa-sort
-              %tbody
-                - @grades.each do |grades|
+
+  - if @grades != nil && !@grades.empty?
+    .row
+      .col-lg-12
+        .panel.panel-primary
+          .panel-heading
+            %h3.panel-title
+              %i.fa.fa-pencil
+              Assignment 1 Grades
+          .panel-body
+            .table-responsive
+              %table.table.table-bordered.table-hover.table-striped.tablesorter
+                %thead
                   %tr
-                    %td
-                      = grades["firstname"]
-                    %td
-                      = grades["lastname"]
-                    %td
-                      = grades["student_id"]
-                    %td
-                      = "#{grades["code_weight"]}%"
-                    %td
-                      = "#{grades["code_grade"]}%"
-                    %td
-                      = "#{grades["test_case_weight"]}%"
-                    %td
-                      = "#{grades["test_case_grade"]}%"
-                    %td
-                      = "#{grades["final_grade"]}%"
-          / TODO create csv
-          .text-right
-            %a{:href => "4/04-03-2014.csv"}
-              Download Grades
-              %i.fa.fa-arrow-circle-right
-      / /.row
-    / /#page-wrapper
-/ /#wrapper
+                    %th
+                      Last Name
+                      %i.fa.fa-sort
+                    %th
+                      First Name
+                      %i.fa.fa-sort
+                    %th
+                      Student Number
+                      %i.fa.fa-sort
+                    %th
+                      Metrics Grade
+                      %i.fa.fa-sort
+                    %th Metrics Weight
+                    %th Test Case Grade
+                    %th
+                      Test Case Weight
+                      %i.fa.fa-sort
+                    %th
+                      Final Grade
+                      %i.fa.fa-sort
+                %tbody
+                  - @grades.each do |grades|
+                    %tr
+                      %td
+                        = grades["firstname"]
+                      %td
+                        = grades["lastname"]
+                      %td
+                        = grades["student_id"]
+                      %td
+                        = "#{grades["code_weight"]}%"
+                      %td
+                        = "#{grades["code_grade"]}%"
+                      %td
+                        = "#{grades["test_case_weight"]}%"
+                      %td
+                        = "#{grades["test_case_grade"]}%"
+                      %td
+                        = "#{grades["final_grade"]}%"
+            .text-right 
+              %a{:href => "4/04-03-2014.csv"}
+                Download Grades
+                %i.fa.fa-arrow-circle-right

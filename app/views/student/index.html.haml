@@ -95,7 +95,7 @@
                     %tr{:class => "#{assignment["class"]}"}
                       %td
                         - if assignment["final"]
-                          %a{:href => "student/file/#{assignment["id"]}"}
+                          %a{:href => "/student/file/#{assignment["id"]}"}
                             = assignment["name"]
                         - elsif assignment["duedate"] == 1 
                           / Show the assignment code

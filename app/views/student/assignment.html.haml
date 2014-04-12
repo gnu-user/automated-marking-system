@@ -60,7 +60,7 @@
           %h3.panel-title Description
         .panel-body
           %p
-            = @assignment.description
+            = @assignment["description"]
     .col-lg-5
       .panel.panel-default
         .panel-heading
@@ -70,22 +70,22 @@
             %ul.list-group
               %li.list-group-item
                 %span.badge
-                  = @assignment.max_time
+                  = @assignment["max_time"]
                 Maximum execution time (seconds)
               %li.list-group-item
                 %span.badge
-                  = @assignment.attempts
+                  = @assignment["attempts"]
                 Maximum attempts
               %li.list-group-item
                 %span.badge C++
                 Language
               %li.list-group-item
                 %span.badge
-                  = "#{@assignment.code_weight}%"
+                  = "#{@assignment['code_weight']}%"
                 Code analysis weight
               %li.list-group-item
                 %span.badge
-                  = "#{@assignment.test_case_weight}%"
+                  = "#{@assignment['test_case_weight']}%"
                 Test case weight
   / TODO add css for more spacing before/after button
   .row
@@ -248,8 +248,8 @@
             %tbody
               %tr
                 %td
-                  = button_to 'Test', {:controller => :student, :action => :test, id: @assignment.id}, :class => 'btn btn-primary btn-lg'
+                  = button_to 'Test', {:controller => :student, :action => :test, id: @assignment["id"]}, :class => 'btn btn-primary btn-lg'
                   / %button#test_assignment.btn.btn-primary.btn-lg{name:"file", type: "file", data: {type: "POST"}} Test
                 %td
-                  = button_to 'Submit', {:controller => :student, :action => :submit, id: @assignment.id}, :class => 'btn btn-success btn-lg'
+                  = button_to 'Submit', {:controller => :student, :action => :submit, id: @assignment["id"]}, :class => 'btn btn-success btn-lg'
                   / %button#submit_assigment.btn.btn-success.btn-lg{:name => "submit", :type => "submit"} Submit
