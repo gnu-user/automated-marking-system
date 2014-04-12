@@ -70,38 +70,30 @@
                   %th
                     Code Similarity
                     %i.fa.fa-sort
-                  %th View Difference
+                  /%th View Difference
               %tbody
-                %tr
-                  %td Gillett
-                  %td Jonathan
-                  %td 100123123
-                  %td Heron
-                  %td Joseph
-                  %td 100123123
-                  %td 0%
-                  %td
-                    %a{:href => "#"} View Difference
-                %tr
-                  %td Gillett
-                  %td Jonathan
-                  %td 100123123
-                  %td Fazal
-                  %td Khalil
-                  %td 100123123
-                  %td 20%
-                  %td
-                    %a{:href => "#"} View Difference
-                %tr.danger
-                  %td Gillett
-                  %td Jonathan
-                  %td 100123123
-                  %td Smullen
-                  %td Daniel
-                  %td 100123123
-                  %td 90%
-                  %td
-                    %a{:href => "#"} View Difference
+                - index = -2
+                - while index + 2 < @cheating.size
+                  - index += 2
+                  %tr{:class => "#{@cheating[index]['similarity'] > 50 ? 'danger' : ''}"}
+                    %td 
+                      = @cheating[index]["first_student"].last_name
+                    %td
+                      = @cheating[index]["first_student"].first_name
+                    %td
+                      = @cheating[index]["first_student"].student_id
+                    %td 
+                      = @cheating[index]["second_student"].last_name
+                    %td
+                      = @cheating[index]["second_student"].first_name
+                    %td
+                      = @cheating[index]["second_student"].student_id
+                    %td
+                      = @cheating[index]["similarity"]
+                    /%td
+                    /  %a{:href => "#"} View Difference
+          .text-right
+            = button_to 'Check for Cheating', {:controller => :admin, :action => :runCheatDetection}, :class => 'btn btn-primary btn-block btn-lg'
       / /.row
     / /#page-wrapper
 / /#wrapper

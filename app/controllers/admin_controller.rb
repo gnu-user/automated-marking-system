@@ -72,11 +72,65 @@ class AdminController < ApplicationController
 		validate_admin
 		latest_assignment
 		getHeaderInfo(2)
-		# TODO handle cheating page using param[:id]
 
+		@assignment_id = params[:id].to_i
+		admin_id = session[:prof_id].to_i
+
+		#subs = Submission.where("assignment_id = #{@assignment_id.to_i}")
+
+		@cheating = ActiveRecord::Base.connection.execute("select clone_incidents.id, clone_incidents.similarity, diff_files.name from  clone_incidents, diff_files where clone_incidents.id = diff_files.clone_incident_id and clone_incidents.assignment_id = #{@assignment_id.to_i} order by clone_incidents.id")
+
+		index = 0
+		while index < @cheating.size
+			# Get the first student's record
+			fileParsed = @cheating[index]["name"].scan(/clone_[0-9_]+\/([0-9]+)_[0-9]+\.cpp/)
+			filename = fileParsed[0][0]
+			@cheating[index]["first_student"] = Student.find_by_id (filename) 
+
+			# Get the second student's record			
+			fileParsed = @cheating[index+1]["name"].scan(/clone_[0-9_]+\/([0-9]+)_[0-9]+\.cpp/)
+			second = fileParsed[0][0]
+			@cheating[index]["second_student"] = Student.find_by_id (second)
+
+			index+=2
+		end
 		#TODO make a query to get all the cheating results stored in db
 		#TODO handle when no entries
 		#TODO create 'generate cheating report' button to create the cheating report
+	end
+
+	def runCheatDetection
+		validate_admin
+
+		admin_id = session[:prof_id].to_i
+		@assignment_id = params[:id].to_i
+
+		subs = Submission.where("assignment_id = #{@assignment_id.to_i}")
+
+		@size = subs.empty?
+
+		directory = "clone_#{admin_id}_#{@assignment_id}"
+
+		if Dir.exist?(directory)
+			FileUtils.rm_r(directory)
+		end
+
+		Dir.mkdir(directory)
+
+		subs.each do |sub|
+			fileName = "#{directory}/#{sub.student_id}_#{@assignment_id}"
+		    file = File.new("#{fileName}.cpp",'w')
+		    file.puts(sub.code)
+		    file.close
+		end
+
+		clone_detector = CloneDetector.new(directory)
+		clone_detector.process
+		clone_detector.parseOutput(@assignment_id)
+
+		FileUtils.rm_r(directory)
+
+		redirect_to "#{root_url}admin/grades/#{@assignment_id}/cheating"
 	end
 
 	def show

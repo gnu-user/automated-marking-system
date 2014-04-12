@@ -63,6 +63,21 @@ class CloneDetector < Manager
 
     def parseOutput(assignment_id)
 
+        clone_incidents = CloneIncident.where("assignment_id = #{assignment_id}")
+
+        clone_incidents.each do |clone_incident|
+            diff_files = DiffFile.where("clone_incident_id = #{clone_incident.id}")
+           
+            diff_files.each do |diff_file|
+                diff_entries = DiffEntry.find_by_diff_file_id(diff_file.id)
+
+                Line.where("diff_entry_id = #{diff_entries.id}").delete_all
+                diff_entries.delete
+            end
+            diff_files.delete_all
+        end
+        clone_incidents.delete_all
+
         #incidents = Array.new
         @output.each do |line|
             #[0] == first file, [1] == percent similarity, [2] == second file
@@ -117,9 +132,9 @@ class CloneDetector < Manager
                     secondDiffEntry.save
                    
                 else
-                    firstFile = File.new
+                    firstFile = Line.new
                     firstFile.diff_entry_id = firstDiffEntry.id
-                    secondFile = File.new
+                    secondFile = Line.new
                     secondFile.diff_entry_id = secondDiffEntry.id
 
                     f1_line = line[0..size-1]

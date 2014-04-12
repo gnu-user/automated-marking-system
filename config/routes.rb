@@ -54,6 +54,7 @@ AutomatedMarkingSystem::Application.routes.draw do
   get 'admin/new' => 'admin#new'
   get 'admin/grades/:id' => 'admin#grading'
   get 'admin/grades/:id/cheating' => 'admin#cheat'
+  post 'admin/grades/:id/cheating' => 'admin#runCheatDetection'
   get 'admin/assignment/:id' => 'admin#show'
   post 'admin/create' => 'admin#create'
   post 'admin/upload' => 'admin#upload'

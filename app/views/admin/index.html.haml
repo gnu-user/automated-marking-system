@@ -147,11 +147,11 @@
                     %td
                       = assignment["submissions"]
                     %td
-                      - if assignment["submissions"] != 0
+                      - if assignment["submissions"] != 0 && assignment["final_grade"]
                         %a{:href => "/admin/grades/#{assignment["id"]}"}
                           = "#{assignment["final_grade"]}%"
-                      - else
-                        = 0
+                      - elsif DateTime.parse(assignment["due"]) < DateTime.now
+                        0 %
           .text-right
             %a{:href => "/admin/new"}
               Add New Assignment
