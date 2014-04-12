@@ -63,6 +63,7 @@ class CloneDetector < Manager
 
     def parseOutput(assignment_id)
 
+        # Delete all the clone incidents
         clone_incidents = CloneIncident.where("assignment_id = #{assignment_id}")
 
         clone_incidents.each do |clone_incident|

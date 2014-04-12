@@ -29,9 +29,6 @@
 require "#{Rails.root}/lib/tasks/clone/clone_detector"
 
 class AdminController < ApplicationController
-	# TODO FOR ALL
-	# handle Grades link for latest assignments (better define)
-	# handle logout
 
 	def index
 		validate_admin
@@ -40,10 +37,6 @@ class AdminController < ApplicationController
 
 		@assignments = ActiveRecord::Base.connection.execute("select assignments.id as id, assignments.name as name, assignments.posted as posted, assignments.due as due, COUNT(submissions.id) as submissions, AVG(grades.final) as final_grade from assignments LEFT OUTER JOIN submissions ON assignments.id = submissions.assignment_id LEFT OUTER JOIN grades ON submissions.id = grades.submission_id GROUP BY assignments.id")
 
-		# TODO handle all the links shown
-		# handle view assignment positing (go to latest assignment)
-		# handle link to assignment page (for review)
-		# handle link to grades for each finished assignment
 		@review_submissions = 12
 		@view_assignment = 9
 		@resolve_issues = 2
@@ -53,10 +46,7 @@ class AdminController < ApplicationController
 		validate_admin
 		latest_assignment
 		getHeaderInfo(0)
-		# TODO handle form submission and populating the db
-		# handle add button
-		# handle upload button
-		# handle button submit assignment
+
 		@assignment = Assignment.new
 	end
 
@@ -94,9 +84,6 @@ class AdminController < ApplicationController
 
 			index+=2
 		end
-		#TODO make a query to get all the cheating results stored in db
-		#TODO handle when no entries
-		#TODO create 'generate cheating report' button to create the cheating report
 	end
 
 	def runCheatDetection
@@ -133,6 +120,18 @@ class AdminController < ApplicationController
 		redirect_to "#{root_url}admin/grades/#{@assignment_id}/cheating"
 	end
 
+	def showDiff
+		validate_admin
+		latest_assignment
+		getHeaderInfo(2)
+
+		assignment_id = params[:id].to_i
+		first_student = params[:first].to_i
+		second_student = params[:first].to_i
+
+		# TODO show the diff entries
+	end
+
 	def show
 		validate_admin
 		latest_assignment
@@ -142,7 +141,7 @@ class AdminController < ApplicationController
 
 		if @assignment == nil
 			#TODO give error message
-			#redirect_to "#{root_url}admin", :notice => "No Activity found!"
+			redirect_to "#{root_url}admin", :notice => "No Activity found!"
 		end
 	end
 

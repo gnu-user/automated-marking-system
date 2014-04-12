@@ -44,7 +44,6 @@ class StudentController < ApplicationController
     graded = 0
     error = 0
 
-    # TODO add pass submission date
     @assignments.each do |assignment|
 
       if assignment["final"]
@@ -60,11 +59,8 @@ class StudentController < ApplicationController
     end
 
     @assignment = {
-        # TODO Generate the number of assignments graded
         graded: graded,
-        # TODO Generate the number of assignments not submitted
         left: left,
-        # TODO Generate the number of assignments submission errors
         error: error
     }
   end
@@ -151,8 +147,6 @@ class StudentController < ApplicationController
     end
 
     redirect_to "#{root_url}student/assignment/#{assignment_id}"
-
-    # TODO: store results in database, redirect back to assignment page
   end
 
   def assignment
@@ -255,7 +249,7 @@ class StudentController < ApplicationController
     assignment_id = params[:id].to_i
 
     submission = Submission.where("assignment_id = #{assignment_id} and student_id = #{session[:user_id].to_i}")
-    # TODO get the code and populate the %pre element, id='code'
+
     if !submission.empty?
       @code = submission[0].code
     else
