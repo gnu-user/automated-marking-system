@@ -160,11 +160,11 @@ class StudentController < ApplicationController
     getHeaderInfo(false)
 
     student_id = session[:user_id]
-    @assignment = ActiveRecord::Base.connection.execute("SELECT submissions.id as id, assignments.* FROM assignments, students, submissions WHERE students.id = #{student_id} and assignments.id = #{params[:id]} and students.id = submissions.student_id and assignments.id = submissions.assignment_id and datetime('now') >= assignments.posted and datetime('now') < assignments.due and (submissions.submit_count < assignments.attempts or submissions.submit_count IS NULL)")
+    @assignment = ActiveRecord::Base.connection.execute("SELECT submissions.id as submission_id, assignments.* FROM assignments, students, submissions WHERE students.id = #{student_id} and assignments.id = #{params[:id]} and students.id = submissions.student_id and assignments.id = submissions.assignment_id and datetime('now') >= assignments.posted and datetime('now') < assignments.due and (submissions.submit_count < assignments.attempts or submissions.submit_count IS NULL)")
   
     if @assignment && !@assignment.empty? && @assignment[0]
       @assignment = @assignment[0]
-      getAssignmentFeedback(nil, student_id, @assignment["id"])
+      getAssignmentFeedback(nil, student_id, @assignment["submission_id"])
 
       @title = @assignment["name"]
     else
@@ -272,8 +272,11 @@ class StudentController < ApplicationController
 
     @assignment = Assignment.find_by_id(assignment_id)
 
-    getAssignmentFeedback(assignment_id, student_id)
-    #submission = Submission.where("assignment_id = #{params[:id].to_i} and student_id = #{session[:user_id].to_i}")
+    if @assignment
+      getAssignmentFeedback(assignment_id, student_id)
+    else
+      redirect_to "#{root_url}student/"
+    end
   end
 
   private
@@ -299,7 +302,7 @@ class StudentController < ApplicationController
 
   def getAssignmentFeedback(assignment_id, student_id, submission_id=nil)
 
-    if submission_id != nil
+    if submission_id == nil
       submission = Submission.where("student_id = #{student_id.to_i} AND assignment_id = #{assignment_id.to_i}")
 
       if submission.empty?
@@ -322,7 +325,7 @@ class StudentController < ApplicationController
       @compiler_issues = ActiveRecord::Base.connection.execute("select compiler_issues.filename as filename, issues.method as method, issues.line_number as line_number, issues.col_number as col_number, issues.issue_type as issue_type, issues.message as message, issues.relavent_code as relavent_code from grades, compiler_issues, issues where grades.submission_id = #{submission_id} and grades.id = compiler_issues.grade_id and compiler_issues.id = issues.compiler_issue_id")
 
       # Get the related tests cases
-      @test_cases = ActiveRecord::Base.connection.execute("select tests.result as result, test_cases.name as name, test_cases.description as description, test_cases.id as test_case_id from grades, tests, test_cases where grades.submission_id = #{submission_id} and grades.id = tests.grade_id and tests.test_case_id = test_cases.id and test_cases.sample = \'t\'")
+      @test_cases = ActiveRecord::Base.connection.execute("select tests.result as result, test_cases.name as name, test_cases.description as description, test_cases.id as test_case_id from grades, tests, test_cases where grades.submission_id = #{submission_id} and grades.id = tests.grade_id and tests.test_case_id = test_cases.id and test_cases.sample = 't'")
 
       if @test_cases
         @test_cases.each do |tcase|

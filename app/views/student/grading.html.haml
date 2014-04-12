@@ -80,6 +80,8 @@
                 %span.badge
                   = "#{@assignment.test_case_weight}%"
                 Test case weight
+  %h
+    =# @test_cases
   - if @compiler_issues != nil && !@compiler_issues.empty?     
     / COMPILER OUTPUT
     .row
