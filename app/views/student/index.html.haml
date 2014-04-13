@@ -91,38 +91,37 @@
                   %th Grade
               %tbody
                 - @assignments.each do |assignment|
-                  - if assignment["post"] == 1
-                    %tr{:class => "#{assignment["class"]}"}
-                      %td
-                        - if assignment["final"]
-                          %a{:href => "/student/file/#{assignment["id"]}"}
-                            = assignment["name"]
-                        - elsif assignment["duedate"] == 1 
-                          / Show the assignment code
-                          %a{:href => "/student/assignment/#{assignment["id"]}"}
-                            = assignment["name"]
-                        - else
+                  %tr{:class => "#{assignment["class"]}"}
+                    %td
+                      - if assignment["final"]
+                        %a{:href => "/student/file/#{assignment["id"]}"}
                           = assignment["name"]
-                      %td
-                        = assignment["posted"]
-                      %td
+                      - elsif assignment["duedate"] == 1
+                        / Show the assignment code
+                        %a{:href => "/student/assignment/#{assignment["id"]}"}
+                          = assignment["name"]
+                      - else
+                        = assignment["name"]
+                    %td
+                      = assignment["posted"]
+                    %td
+                      = assignment["due"]
+                    %td
+                      - if assignment["final"]
+                        / TODO make this date submitted
                         = assignment["due"]
-                      %td
-                        - if assignment["final"]
-                          / TODO make this date submitted
-                          = assignment["due"]
-                        - elsif assignment["duedate"] == 1
-                          %span.label.label-warning
-                            %span.fa.fa-warning
-                            NOT SUBMITTED
-                        - else
-                          %span.label.label-danger
-                            %span.fa.fa-warning
-                            NOT SUBMITTED
-                      %td
-                        - if assignment["final"]
-                          %a{:href => "/student/grades/#{assignment["id"]}"}
-                            = "#{assignment["final"]}%"
+                      - elsif assignment["duedate"] == 1
+                        %span.label.label-warning
+                          %span.fa.fa-warning
+                          NOT SUBMITTED
+                      - else
+                        %span.label.label-danger
+                          %span.fa.fa-warning
+                          NOT SUBMITTED
+                    %td
+                      - if assignment["final"]
+                        %a{:href => "/student/grades/#{assignment["id"]}"}
+                          = "#{assignment["final"]}%"
           
   / /.row
 / /#page-wrapper
