@@ -97,4 +97,5 @@
           %input.form-control{disabled: "true", :name => "testweight", :required => "", :type => "text", :value => @assignment.test_case_weight}
             %span.input-group-addon %
         %p.help-block The weight test cases have on the overall grade.
+        %a.btn.btn-primary.btn-lg{:href => "/admin/grades/#{@assignment_id}/cheating", :role => "button"} Review Cheating
 / /#page-wrapper

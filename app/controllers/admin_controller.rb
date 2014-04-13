@@ -166,7 +166,8 @@ class AdminController < ApplicationController
 		latest_assignment
 		getHeaderInfo(0)
 
-		@assignment = Assignment.find_by_id(params[:id])
+		@assignment_id = params[:id].to_i
+		@assignment = Assignment.find_by_id(@assignment_id)
 
 		if @assignment == nil
 			#TODO give error message
