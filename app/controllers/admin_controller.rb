@@ -60,18 +60,22 @@ class AdminController < ApplicationController
 
 		@grades = ActiveRecord::Base.connection.execute("select students.first_name as firstname, students.last_name as lastname, students.student_id as student_id, assignments.code_weight as code_weight, grades.code as code_grade, assignments.test_case_weight as test_case_weight, grades.testcase as test_case_grade, grades.final as final_grade from students, assignments, submissions, grades where students.id = submissions.student_id and assignments.id = submissions.assignment_id and submissions.id = grades.submission_id and assignments.id = #{@assignment_id}")
 
-
 		#TODO call this once the grades are requested to be downloaded
-		#Create csv
-		if @grades != nil && false
-			# Add the header to the csv
-			csvFile = "Last Name,First Name,Student Number,Metrics Grade,Metrics Weight,Test Case Grade,Test Case Weight,Final Grade"
 
-			@grades.each do |grade|
-				csvFile += "#{grades["firstname"]},#{grades["lastname"]},#{grades["student_id"]},#{grades["code_grade"].to_f},#{grades["code_weight"]},#{grades["test_case_grade"].to_f},#{grades["test_case_weight"]},#{grades["final_grade"].to_f}\n"
-			end
+		#Create csv
+		if @grades != nil
+			# Add the header to the csv
+			#csvFile = "Last Name,First Name,Student Number,Metrics Grade,Metrics Weight,Test Case Grade,Test Case Weight,Final Grade"
+
+			#@grades.each do |grade|
+			#	csvFile += "#{grades["firstname"]},#{grades["lastname"]},#{grades["student_id"]},#{grades["code_grade"].to_f},#{grades["code_weight"]},#{grades["test_case_grade"].to_f},#{grades["test_case_weight"]},#{grades["final_grade"].to_f}\n"
+			#end
 			# Remove the trailing new line
-			csvFile = csvFile[0..-2]
+			#csvFile = csvFile[0..-2]
+
+      respond_to do |format|
+        format.csv { render csv: @grades, filename: params[:csv_file], header: "First Name,Last Name,Student Number,Metrics Weight,Metrics Grade,Test Case Weight,Test Case Grade,Final Grade" }
+      end
 		end
 	end
 
