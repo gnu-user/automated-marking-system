@@ -25,5 +25,43 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+class Array
+  def to_csv
+    (map {|e| e.to_csv}.join ',') + "\n"
+  end
+end
+
+class Hash
+  def to_csv
+    values.to_csv
+  end
+end
+
+class String
+  def to_csv
+    self
+  end
+end
+
+class Fixnum
+  def to_csv
+    self.to_s
+  end
+end
+
+class Float
+  def to_csv
+    self.to_s
+  end
+end
+
 module AdminHelper
+
+
+  ActionController::Renderers.add(:csv) { |obj, options|
+    filename = options[:filename] || 'data'
+    str = (options[:header] || '') + "\n"
+    str += obj.respond_to?(:to_csv) ? obj.to_csv : obj.to_s
+    send_data str, type: Mime::CSV, disposition: "attachment; filename=#{filename}.csv"
+  }
 end
