@@ -154,15 +154,17 @@ class StudentController < ApplicationController
     getHeaderInfo(false)
 
     student_id = session[:user_id]
-    @assignment = ActiveRecord::Base.connection.execute("SELECT submissions.id as submission_id, assignments.* FROM assignments, students, submissions WHERE students.id = #{student_id} and assignments.id = #{params[:id]} and students.id = submissions.student_id and assignments.id = submissions.assignment_id and datetime('now') >= assignments.posted and datetime('now') < assignments.due and (submissions.submit_count < assignments.attempts or submissions.submit_count IS NULL)")
+    assignments = ActiveRecord::Base.connection.execute("SELECT submissions.id as submission_id, assignments.* FROM assignments, students, submissions WHERE students.id = #{student_id} and assignments.id = #{params[:id]} and students.id = submissions.student_id and assignments.id = submissions.assignment_id and datetime('now') >= assignments.posted and datetime('now') < assignments.due and (submissions.submit_count < assignments.attempts or submissions.submit_count IS NULL)")
   
-    if @assignment && !@assignment.empty? && @assignment[0]
-      @assignment = @assignment[0]
+    if assignments && !assignments.empty? && assignments[0]
+      @assignment = assignments[0]
       getAssignmentFeedback(nil, student_id, @assignment["submission_id"])
 
       @title = @assignment["name"]
+    #else
+    #  redirect_to "#{root_url}student/"
     else
-      redirect_to "#{root_url}student/"
+      @assignment = ActiveRecord::Base.connection.execute("SELECT description FROM assignments where assignments.id = #{params[:id]}")
     end
   end
 
