@@ -154,7 +154,6 @@ class StudentController < ApplicationController
     getHeaderInfo(false)
 
     student_id = session[:user_id]
-    @assignment
     @assignment = ActiveRecord::Base.connection.execute("SELECT submissions.id as submission_id, assignments.* FROM assignments LEFT OUTER JOIN submissions ON assignments.id = submissions.assignment_id WHERE assignments.id = #{params[:id].to_i} and (submissions.student_id = #{student_id} or submissions.student_id IS NULL) and datetime('now') >= assignments.posted and datetime('now') < assignments.due and (submissions.submit_count < assignments.attempts or submissions.submit_count IS NULL)")
   
     if @assignment && !@assignment.empty? && @assignment[0]
