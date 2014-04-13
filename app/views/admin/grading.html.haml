@@ -63,10 +63,11 @@
                       Metrics Grade
                       %i.fa.fa-sort
                     %th Metrics Weight
-                    %th Test Case Grade
+                    %th
+                      Test Case Grade
+                      %i.fa.fa-sort
                     %th
                       Test Case Weight
-                      %i.fa.fa-sort
                     %th
                       Final Grade
                       %i.fa.fa-sort
@@ -80,16 +81,16 @@
                       %td
                         = grades["student_id"]
                       %td
-                        = "#{grades["code_grade"].to_i}%"
+                        = "#{grades["code_grade"].to_f}%"
                       %td
                         = "#{grades["code_weight"]}%"
                       %td
-                        = "#{grades["test_case_grade"].to_i}%"
+                        = "#{grades["test_case_grade"].to_f}%"
                       %td
                         = "#{grades["test_case_weight"]}%"
                       %td
-                        = "#{grades["final_grade"].to_i}%"
+                        = "#{grades["final_grade"].to_f}%"
             .text-right 
-              %a{:href => "4/04-03-2014.csv"}
+              %a{:href => "/admin/grades/#{@assignment_id}/#{Time.now.strftime("%m-%d-%Y")}.csv"}
                 Download Grades
                 %i.fa.fa-arrow-circle-right
