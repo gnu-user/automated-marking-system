@@ -58,3 +58,6 @@ gem 'bcrypt-ruby', :require => 'bcrypt'
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+# validation for timestamps
+gem 'validates_timeliness', '~> 3.0'

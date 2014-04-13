@@ -33,4 +33,9 @@ class Assignment < ActiveRecord::Base
 	has_many :clone_incident
 
 	attr_accessor :submission_count, :avg_grade
+
+  #TODO: Doesn't work when trying to enforce that due dates must occur after posted dates
+  #https://github.com/adzap/validates_timeliness/#readme
+  validates_time :posted, on_or_after: :today
+  validates_time :due, on_or_after: :posted
 end

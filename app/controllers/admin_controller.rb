@@ -38,9 +38,9 @@ class AdminController < ApplicationController
 		@assignments = ActiveRecord::Base.connection.execute("select assignments.id as id, assignments.name as name, assignments.posted as posted, assignments.due as due, COUNT(submissions.id) as submissions, AVG(grades.final) as final_grade from assignments LEFT OUTER JOIN submissions ON assignments.id = submissions.assignment_id LEFT OUTER JOIN grades ON submissions.id = grades.submission_id GROUP BY assignments.id")
 
 		#TODO fix these numbers
-		@review_submissions = 12
-		@view_assignment = 9
-		@resolve_issues = 2
+		@review_submissions = 0
+		@view_assignment = 0
+		@resolve_issues = 0
 	end
 
 	def new
@@ -66,6 +66,7 @@ class AdminController < ApplicationController
 		if @grades != nil && false
 			# Add the header to the csv
 			csvFile = "Last Name,First Name,Student Number,Metrics Grade,Metrics Weight,Test Case Grade,Test Case Weight,Final Grade"
+
 			@grades.each do |grade|
 				csvFile += "#{grades["firstname"]},#{grades["lastname"]},#{grades["student_id"]},#{grades["code_grade"].to_f},#{grades["code_weight"]},#{grades["test_case_grade"].to_f},#{grades["test_case_weight"]},#{grades["final_grade"].to_f}\n"
 			end
@@ -198,9 +199,9 @@ class AdminController < ApplicationController
 
 		if @assignment.save
 			#Create the new TestCase Sample and TestCase Eval
-			session[:assignment_id] = @assignment.id 
+			session[:assignment_id] = @assignment.id
 		else
-			redirect_to "#{root_url}admin/new"
+			redirect_to "#{root_url}admin/new", flash: {alert: @assignment.errors.full_messages}
 		end
 	end
 

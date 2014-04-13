@@ -48,6 +48,12 @@
         %ul
           - for message in @assignment.errors.full_messages
             %li= message
+    - elsif flash[:alert]
+      .error_messages
+      %h2 Form is invalid
+      %ul
+      - for message in flash[:alert]
+        %li=message
     .row
       .col-lg-6
         / DESCRIPTION
