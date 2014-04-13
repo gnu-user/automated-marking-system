@@ -126,10 +126,23 @@ class AdminController < ApplicationController
 		getHeaderInfo(2)
 
 		assignment_id = params[:id].to_i
-		first_student = params[:first].to_i
-		second_student = params[:first].to_i
+		clone_id = params[:clone_id]
+		@first_student = params[:first].to_i
+		@second_student = params[:second].to_i
 
-		# TODO show the diff entries
+		# Get the diff entries
+		@clone_incidents = ActiveRecord::Base.connection.execute("select clone_incidents.similarity, diff_files.name, diff_entries.position, diff_entries.id as diff_entry_id from clone_incidents, diff_files, diff_entries where clone_incidents.assignment_id = #{assignment_id} and clone_incidents.id = diff_files.clone_incident_id and diff_files.id = diff_entries.diff_file_id and clone_incidents.id = #{clone_id}")
+
+		if @clone_incidents
+			@clone_incidents[0]["person"] = Student.find_by_id(@first_student)
+			@clone_incidents[1]["person"] = Student.find_by_id(@second_student)
+			@clone_incidents.each do |incident|
+
+				incident["code"] = Line.find_all_by_diff_entry_id(incident["diff_entry_id"])
+			end
+		else
+			redirect_to "#{root_url}admin/#{assignment_id}/cheating"
+		end
 	end
 
 	def show

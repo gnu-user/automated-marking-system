@@ -1,0 +1,11 @@
+#page-wrapper
+  .row
+    - @clone_incidents.each do |incident|
+      .col-lg-6
+        %h1
+          = "#{incident["person"].first_name} #{incident["person"].last_name}"
+        %pre
+          - incident["code"].each do |code|
+            - if code.text_line && !code.text_line.match(/^\s*$/)
+              = "#{code.text_line}"
+              /%br

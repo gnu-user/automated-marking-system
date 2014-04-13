@@ -91,5 +91,5 @@
                     %td
                       = @cheating[index]["similarity"]
                     %td
-                      %a{:href => "#"} View Difference
+                      = link_to "View Differences", "/admin/grades/#{@assignment_id}/cheating/#{@cheating[index]['id']}/#{@cheating[index]['first_student'].id}/#{@cheating[index]['second_student'].id}"
   = button_to 'Check for Cheating', {:controller => :admin, :action => :runCheatDetection}, :class => 'btn btn-primary btn-block btn-lg'
