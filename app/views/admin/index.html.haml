@@ -141,9 +141,9 @@
                       %a{:href => "/admin/assignment/#{assignment["id"]}"}
                         = assignment["name"]
                     %td
-                      = Time.zone.parse(assignment["posted"])
+                      = Time.zone.at(assignment["posted"])
                     %td
-                      = Time.zone.parse(assignment["due"])
+                      = Time.zone.at(assignment["due"])
                     %td
                       = assignment["submissions"]
                     %td

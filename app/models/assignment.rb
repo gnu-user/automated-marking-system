@@ -36,6 +36,12 @@ class Assignment < ActiveRecord::Base
 
   #TODO: Doesn't work when trying to enforce that due dates must occur after posted dates
   #https://github.com/adzap/validates_timeliness/#readme
-  validates_time :posted, on_or_after: :today
-  validates_time :due, on_or_after: :posted
+  #validates_time :posted, on_or_after: :today
+  #validates_time :due, on_or_after: :posted
+  validates :posted, numericality: true
+  validates :due, numericality: true
+
+  #def valid_post_date
+  #
+  #end
 end

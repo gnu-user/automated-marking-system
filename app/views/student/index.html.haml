@@ -103,13 +103,13 @@
                       - else
                         = assignment["name"]
                     %td
-                      = Time.zone.parse(assignment["posted"])
+                      = Time.zone.at(assignment["posted"])
                     %td
-                      = Time.zone.parse(assignment["due"])
+                      = Time.zone.at(assignment["due"])
                     %td
                       - if assignment["final"]
                         / TODO make this date submitted
-                        = Time.zone.parse(assignment["due"])
+                        = Time.zone.at(assignment["due"])
                       - elsif assignment["duedate"] == 1
                         %span.label.label-warning
                           %span.fa.fa-warning

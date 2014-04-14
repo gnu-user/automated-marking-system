@@ -191,6 +191,8 @@ class AdminController < ApplicationController
     latest_assignment
     getHeaderInfo(0)
 
+    time_zone_offset = 4 * 60 * 60
+
     # TODO check if at least 1 evaluation testcase has been submitted
     @value = params.require(:assignment).permit(:name, :description, :posted, :due, :max_time, :attempts, :code_weight, :test_case_weight)
     #@value[:posted] =
@@ -198,8 +200,8 @@ class AdminController < ApplicationController
     @assignment.name = @value[:name]
     @assignment.description = @value[:description]
 
-    @assignment.posted = DateTime.parse(fixDate(@value[:posted])).strftime('%s')
-    @assignment.due = DateTime.parse(fixDate(@value[:due])).strftime('%s')
+    @assignment.posted = DateTime.parse(fixDate(@value[:posted])).strftime('%s').to_i + time_zone_offset
+    @assignment.due = DateTime.parse(fixDate(@value[:due])).strftime('%s').to_i + time_zone_offset
     @assignment.max_time = @value[:max_time]
     @assignment.attempts = @value[:attempts]
     @assignment.code_weight = @value[:code_weight]
