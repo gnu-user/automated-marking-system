@@ -56,8 +56,6 @@ class Float
 end
 
 module AdminHelper
-
-
   ActionController::Renderers.add(:csv) { |obj, options|
     filename = options[:filename] || 'data'
     str = (options[:header] || '') + "\n"

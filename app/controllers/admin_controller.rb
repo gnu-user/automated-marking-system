@@ -38,8 +38,8 @@ class AdminController < ApplicationController
     @assignments = ActiveRecord::Base.connection.execute("select assignments.id as id, assignments.name as name, assignments.posted as posted, assignments.due as due, COUNT(submissions.id) as submissions, AVG(grades.final) as final_grade from assignments LEFT OUTER JOIN submissions ON assignments.id = submissions.assignment_id LEFT OUTER JOIN grades ON submissions.id = grades.submission_id GROUP BY assignments.id")
 
     #TODO fix these numbers
-    @review_submissions = 0
-    @view_assignment = 0
+    @review_submissions = Submission.count
+    @view_assignment = Student.count * Assignment.count - @review_submissions
     @resolve_issues = 0
   end
 
