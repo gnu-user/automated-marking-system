@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140409171623) do
+ActiveRecord::Schema.define(version: 20140414020300) do
 
   create_table "admins", force: true do |t|
     t.string   "first_name"
@@ -35,8 +35,8 @@ ActiveRecord::Schema.define(version: 20140409171623) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "released"
-    t.datetime "posted"
-    t.datetime "due"
+    t.integer  "posted",           limit: 255
+    t.integer  "due",              limit: 255
   end
 
   create_table "clone_incidents", force: true do |t|

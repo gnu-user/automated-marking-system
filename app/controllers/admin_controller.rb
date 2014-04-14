@@ -198,8 +198,8 @@ class AdminController < ApplicationController
     @assignment.name = @value[:name]
     @assignment.description = @value[:description]
 
-    @assignment.posted = fixDate(@value[:posted])
-    @assignment.due = fixDate(@value[:due])
+    @assignment.posted = DateTime.parse(fixDate(@value[:posted])).strftime('%s')
+    @assignment.due = DateTime.parse(fixDate(@value[:due])).strftime('%s')
     @assignment.max_time = @value[:max_time]
     @assignment.attempts = @value[:attempts]
     @assignment.code_weight = @value[:code_weight]

@@ -60,4 +60,6 @@ gem 'bcrypt-ruby', :require => 'bcrypt'
 # gem 'debugger', group: [:development, :test]
 
 # validation for timestamps
-gem 'validates_timeliness', '~> 3.0'
+#gem 'validates_timeliness', '~> 3.0'
+
+#gem 'detect_timezone_rails'
