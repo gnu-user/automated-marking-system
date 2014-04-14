@@ -150,7 +150,7 @@
                       - if assignment["submissions"] != 0 && assignment["final_grade"]
                         %a{:href => "/admin/grades/#{assignment["id"]}"}
                           = "#{assignment["final_grade"]}%"
-                      - elsif DateTime.parse(assignment["due"]) < DateTime.now
+                      - elsif Time.zone.at(assignment["due"]) < Time.zone.now
                         0 %
           .text-right
             %a{:href => "/admin/new"}
